@@ -15,8 +15,9 @@ public class GameComponent extends JComponent {
 	private int height;
 	private int width;
 
-	public GameComponent() throws IOException{
-		frame = (TyperFrame)this.getTopLevelAncestor();
+	public GameComponent(TyperFrame frame) throws IOException{
+		//frame = (TyperFrame)this.getTopLevelAncestor();
+		this.frame = frame;
 		width = 0;
 		height = 0;
 
@@ -35,39 +36,38 @@ public class GameComponent extends JComponent {
 
 		pen.drawRect(width/8, height/4, 3*width/4, height/2);
 
-		//paintWords(pen);
-		// if (frame.getIsHome() && !frame.getGameStart()){
-		// 	paintStartButton(pen);
-		// } else if (!frame.getIsHome() && frame.getGameStart()){
-		// 	paintWords(pen);
-		// }
+		if (frame.getIsHome() && !frame.getGameStart()){
+			paintStartButton(pen);
+		} else if (!frame.getIsHome() && frame.getGameStart()){
+			paintWords(pen);
+		}
 	
 	}
 
 	private void paintWords(Graphics2D pen){
 		Font stringFont = new Font( "SansSerif", Font. PLAIN, width / 20);
-		for (int i = 0; i < frame.getGameSize(); i++){
+		// for (int i = 0; i < frame.getGameSize(); i++){
 
-			if (i > i / 4){
+		// 	if (i > i / 4){
 
-			}
-		}
-		for (String word : wordArr){
-			pen.drawString(word, width / 2, height / 2);
-		}
+		// 	}
+		// }
+		// for (String word : wordArr){
+		// 	pen.drawString(word, width / 2, height / 2);
+		// }
 	}	
 
 	private void paintStartButton(Graphics2D pen){
-
+		pen.drawPolygon(new int[] {3*width/8, 5*width/8, 5*width/8}, new int[] {height/2, 3*height/8, 5*height/8,}, 3);
 	}
 
 	public void initWordArr() throws IOException{
 		Scanner scan = new Scanner(new File("dictionary.txt"));
 		ArrayList<String> hold = new ArrayList<String>();
+		wordArr = new ArrayList<String>();
 		while (scan.hasNextLine()){
 			hold.add(scan.nextLine().strip());
 		}
-
 		for (int i = 0; i < frame.getGameSize(); i++){
 			int randInt =  (int)((Math.random() * (frame.getGameSize()) + 1));
 			wordArr.add(hold.get(randInt));

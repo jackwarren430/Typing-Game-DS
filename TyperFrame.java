@@ -16,13 +16,16 @@ public class TyperFrame extends JFrame{
 	public static final int WIDTH = 1300;
 	public static final int HEIGHT = 700;
 
+	//jframe vars
 	private JFrame thisFrame = this;
 	private JPanel mainPanel;
 	private GameComponent game;
 
+	//navigation vars
 	private Boolean gameStart;
 	private Boolean isHome;
 
+	//game vars
 	private int gameSize;
 
 	public TyperFrame() throws IOException{
@@ -34,18 +37,18 @@ public class TyperFrame extends JFrame{
 
 		this.setSize(WIDTH, HEIGHT + 25);
 		this.setTitle("Typing Wizard");
-				
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	  	this.setVisible(true);
+
+	  	addPanel();
+	  	repaint();
   	}
 
   	public void go() throws IOException{
-  		addComponents();
   		t.start();
   	}
 
-  	public void addComponents() throws IOException{
-  		mainPanel = new JPanel(new BorderLayout());
+  	public void addPanel() throws IOException{
   		configurePanel();
   		this.add(mainPanel);
 		t = new Timer(500, new MovementListener());
@@ -55,21 +58,16 @@ public class TyperFrame extends JFrame{
   	}
 
   	private void configurePanel() throws IOException{
-  		game = new GameComponent();
+  		mainPanel = new JPanel(new BorderLayout());
+  		game = new GameComponent(this);
   		mainPanel.add(game, BorderLayout.CENTER);
   	}
 
   	public int[] getFrameSize(){
-  		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
   		Dimension screenSize = getSize();
-  		//pack(); // Need this, otherwise insets() show as 0.  
 		int scrW = (int)screenSize.getWidth();
-		int scrH = (int)screenSize.getHeight();
-		int innerW = scrW; //scrW - getInsets().left - getInsets().right;
-		int innerH = scrH - 22;//scrH - getInsets().top - getInsets().bottom;
-  		// Need to setSize(), otherwise pack() will collapse the empty JFrame
-  		//setSize(scrW, scrH);
-  		int[] toReturn = {innerW, innerH};
+		int scrH = (int)screenSize.getHeight() - 23;
+  		int[] toReturn = {scrW, scrH};
   		return toReturn;
 
   	}
