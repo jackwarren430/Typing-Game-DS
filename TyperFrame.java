@@ -5,8 +5,11 @@ import java.awt.*;
 import javax.swing.*;
 import java.lang.Math;
 
+import java.io.*;
+
 
 public class TyperFrame extends JFrame{
+	private static final long serialVersionUID = 0000;
 
 	private Timer t;
 
@@ -22,7 +25,7 @@ public class TyperFrame extends JFrame{
 
 	private int gameSize;
 
-	public TyperFrame(){
+	public TyperFrame() throws IOException{
 
 		gameStart = false;
 		isHome = true;
@@ -31,16 +34,17 @@ public class TyperFrame extends JFrame{
 
 		this.setSize(WIDTH, HEIGHT + 25);
 		this.setTitle("Typing Wizard");
-		addComponents();		
+				
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	  	this.setVisible(true);
   	}
 
-  	public void go(){
+  	public void go() throws IOException{
+  		addComponents();
   		t.start();
   	}
 
-  	public void addComponents(){
+  	public void addComponents() throws IOException{
   		mainPanel = new JPanel(new BorderLayout());
   		configurePanel();
   		this.add(mainPanel);
@@ -50,7 +54,7 @@ public class TyperFrame extends JFrame{
   		this.setFocusable(true);
   	}
 
-  	private void configurePanel(){
+  	private void configurePanel() throws IOException{
   		game = new GameComponent();
   		mainPanel.add(game, BorderLayout.CENTER);
   	}

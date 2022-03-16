@@ -8,33 +8,52 @@ import java.util.*;
 
 public class GameComponent extends JComponent {
 	private static final long serialVersionUID = 0000;
+
 	private ArrayList<String> wordArr;
 	TyperFrame frame;
 
-	public GameComponent() throws IOException{
-		initWordArr();
+	private int height;
+	private int width;
 
+	public GameComponent() throws IOException{
 		frame = (TyperFrame)this.getTopLevelAncestor();
+		width = 0;
+		height = 0;
+
+		initWordArr();
+		
 	}
 
 	public void paintComponent(Graphics g){
 		Graphics2D pen = (Graphics2D) g;
-		int width = frame.getFrameSize()[0];
-		int height = frame.getFrameSize()[1];
+		width = frame.getFrameSize()[0];
+		height = frame.getFrameSize()[1];
 
+		// Rectangle border = new Rectangle(width/8, height/4, 3*width/4, height/2);
+		// pen.draw(border);
+		// frame.repaint();
 
-		if (frame.getIsHome() && !frame.getGameStart()){
-			paintStartButton(pen);
-		} else if (!frame.getIsHome() && frame.getGameStart()){
-			paintWords(pen);
-		}
-		
+		pen.drawRect(width/8, height/4, 3*width/4, height/2);
+
+		//paintWords(pen);
+		// if (frame.getIsHome() && !frame.getGameStart()){
+		// 	paintStartButton(pen);
+		// } else if (!frame.getIsHome() && frame.getGameStart()){
+		// 	paintWords(pen);
+		// }
 	
 	}
 
 	private void paintWords(Graphics2D pen){
+		Font stringFont = new Font( "SansSerif", Font. PLAIN, width / 20);
+		for (int i = 0; i < frame.getGameSize(); i++){
+
+			if (i > i / 4){
+
+			}
+		}
 		for (String word : wordArr){
-			pen.drawString(word, );
+			pen.drawString(word, width / 2, height / 2);
 		}
 	}	
 
@@ -44,14 +63,14 @@ public class GameComponent extends JComponent {
 
 	public void initWordArr() throws IOException{
 		Scanner scan = new Scanner(new File("dictionary.txt"));
-		hold = new ArrayList<String>();
+		ArrayList<String> hold = new ArrayList<String>();
 		while (scan.hasNextLine()){
 			hold.add(scan.nextLine().strip());
 		}
 
 		for (int i = 0; i < frame.getGameSize(); i++){
-			int randInt = 0 + (int)(Math.random() * ((frame.getGameSize()) + 1));
-			wordArr.add(hold.at(randInt));
+			int randInt =  (int)((Math.random() * (frame.getGameSize()) + 1));
+			wordArr.add(hold.get(randInt));
 		}
 	}
 
