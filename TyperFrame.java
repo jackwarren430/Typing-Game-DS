@@ -17,7 +17,7 @@ public class TyperFrame extends JFrame{
 
 	public TyperFrame(){
 		this.setSize(WIDTH, HEIGHT + 25);
-		this.setTitle("Visuals");
+		this.setTitle("Typing Wizard");
 		addComponents();		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	  	this.setVisible(true);
@@ -33,5 +33,23 @@ public class TyperFrame extends JFrame{
 		this.addMouseMotionListener(new MouseMovementListener());
   		this.setFocusable(true);
   	}
+
+  	class MouseMovementListener implements MouseMotionListener{
+  		public void mouseMoved(MouseEvent me){
+  		
+      	}
+      	public void mouseDragged(MouseEvent me){
+      		
+      	}
+      	public void mouseClicked(MouseEvent me){
+
+      	}
+  	}
+  	
+  	class MovementListener implements ActionListener{
+    	public void actionPerformed(ActionEvent e){
+        	repaint();
+    	}
+   	}
 
 }

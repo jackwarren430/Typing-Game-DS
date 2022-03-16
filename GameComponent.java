@@ -13,7 +13,8 @@ public class GameComponent extends JComponent{
 	}
 
 	public void paintComponent(Graphics g){
-		
+		Graphics2D pen = (Graphics2D) g;
+		pen.drawString("wham", 200, 200);
 	}
 
 
