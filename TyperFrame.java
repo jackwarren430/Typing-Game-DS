@@ -75,7 +75,7 @@ public class TyperFrame extends JFrame{
 
   	class MovementListener implements ActionListener{
     	public void actionPerformed(ActionEvent e){
-        	
+        	repaint();
     	}
    	}
 

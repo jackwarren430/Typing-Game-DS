@@ -58,7 +58,10 @@ public class GameComponent extends JComponent {
 	}	
 
 	private void paintStartButton(Graphics2D pen){
-		pen.drawPolygon(new int[] {3*width/8, 5*width/8, 5*width/8}, new int[] {height/2, 3*height/8, 5*height/8,}, 3);
+		int[] xVals = new int[] {7*width/16, 9*width/16, 9*width/16};
+		int[] yVals = new int[] {height/2, 3*height/8, 5*height/8};
+		Polygon startButton = new Polygon(xVals, yVals, 3);
+		pen.drawPolygon(startButton);
 	}
 
 	public void initWordArr() throws IOException{
