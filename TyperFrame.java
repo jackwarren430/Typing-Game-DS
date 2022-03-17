@@ -37,11 +37,11 @@ public class TyperFrame extends JFrame{
 
 		this.setSize(WIDTH, HEIGHT + 25);
 		this.setTitle("Typing Wizard");
+
+		addPanel();
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	  	this.setVisible(true);
-
-	  	addPanel();
-	  	repaint();
   	}
 
   	public void go() throws IOException{
@@ -52,7 +52,7 @@ public class TyperFrame extends JFrame{
   		configurePanel();
   		this.add(mainPanel);
 		t = new Timer(500, new MovementListener());
-		this.addMouseMotionListener(new MouseMovementListener());
+		this.addMouseListener(new MouseMovementListener());
 		this.addKeyListener(new KeyBoardListener());
   		this.setFocusable(true);
   	}
@@ -66,8 +66,8 @@ public class TyperFrame extends JFrame{
   	public int[] getFrameSize(){
   		Dimension screenSize = getSize();
 		int scrW = (int)screenSize.getWidth();
-		int scrH = (int)screenSize.getHeight() - 23;
-  		int[] toReturn = {scrW, scrH};
+		int scrH = (int)screenSize.getHeight() - 25;
+  		int[] toReturn = new int[] {scrW, scrH};
   		return toReturn;
 
   	}
@@ -75,22 +75,24 @@ public class TyperFrame extends JFrame{
 
   	class MovementListener implements ActionListener{
     	public void actionPerformed(ActionEvent e){
-        	repaint();
+    		//System.out.println(getFrameSize()[0]);
     	}
-   	}
+   }
 
 
-  	class MouseMovementListener implements MouseMotionListener{
-  		public void mouseMoved(MouseEvent me){
-  			
-      	}
-      	public void mouseDragged(MouseEvent me){
-      		
-      		//System.out.println(getSize());
-      	}
-      	public void mouseClicked(MouseEvent me){
-
-      	}
+  	class MouseMovementListener implements MouseListener{
+		public void mouseEntered(MouseEvent me){}
+		public void mouseExited(MouseEvent me){}
+		public void mousePressed(MouseEvent me){}
+		public void mouseReleased(MouseEvent me){}
+		public void mouseClicked(MouseEvent me){
+			int x = me.getX();
+			int y = me.getY() - 25;
+			if (!gameStart && isHome){
+				game.checkForStartClick(x, y);
+				//System.out.println("click!");
+			}
+		}
   	}
   	
 

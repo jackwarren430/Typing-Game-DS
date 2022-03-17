@@ -14,15 +14,18 @@ public class GameComponent extends JComponent {
 
 	private int height;
 	private int width;
+	private Polygon startButton;
+	private Font stringFont;
 
 	public GameComponent(TyperFrame frame) throws IOException{
 		//frame = (TyperFrame)this.getTopLevelAncestor();
 		this.frame = frame;
-		width = 0;
-		height = 0;
+		width = frame.getFrameSize()[0];
+		height = frame.getFrameSize()[1];
 
 		initWordArr();
-		
+
+		stringFont = new Font( "SansSerif", Font. PLAIN, width / 20);
 	}
 
 	public void paintComponent(Graphics g){
@@ -36,32 +39,37 @@ public class GameComponent extends JComponent {
 
 		pen.drawRect(width/8, height/4, 3*width/4, height/2);
 
-		if (frame.getIsHome() && !frame.getGameStart()){
+		if (!frame.getGameStart()){
 			paintStartButton(pen);
-		} else if (!frame.getIsHome() && frame.getGameStart()){
+		} else {
 			paintWords(pen);
 		}
 	
 	}
 
 	private void paintWords(Graphics2D pen){
-		Font stringFont = new Font( "SansSerif", Font. PLAIN, width / 20);
-		// for (int i = 0; i < frame.getGameSize(); i++){
-
-		// 	if (i > i / 4){
-
-		// 	}
-		// }
-		// for (String word : wordArr){
-		// 	pen.drawString(word, width / 2, height / 2);
-		// }
+		pen.setFont(stringFont);
+		pen.drawString("hellooooooo", width/2, height/2);
+		
 	}	
 
 	private void paintStartButton(Graphics2D pen){
 		int[] xVals = new int[] {7*width/16, 9*width/16, 9*width/16};
 		int[] yVals = new int[] {height/2, 3*height/8, 5*height/8};
-		Polygon startButton = new Polygon(xVals, yVals, 3);
+		startButton = new Polygon(xVals, yVals, 3);
 		pen.drawPolygon(startButton);
+	}
+
+	public void checkForStartClick(int x, int y){
+		if (startButton.contains(x, y)){
+			frame.setGameStart(true);
+			//System.out.println("button clicked");
+			frame.repaint();
+		}
+	}
+
+	public void changeFont(){
+
 	}
 
 	public void initWordArr() throws IOException{
