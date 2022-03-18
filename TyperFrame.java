@@ -1,12 +1,12 @@
 
-import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.lang.Math;
 
 import java.io.*;
-
+import java.util.*;
 
 public class TyperFrame extends JFrame{
 	private static final long serialVersionUID = 0000;
@@ -19,7 +19,7 @@ public class TyperFrame extends JFrame{
 	//jframe vars
 	private JFrame thisFrame = this;
 	private JPanel mainPanel;
-	private GameComponent game;
+	private GameComponent gameComp;
 
 	//navigation vars
 	private Boolean gameStart;
@@ -27,6 +27,13 @@ public class TyperFrame extends JFrame{
 
 	//game vars
 	private int gameSize;
+	private ArrayList<String> gameInput;
+	private int gameTimeCount;
+	private int gameTimeLength;
+	private String gameMode; // count -> end at gameSize; time -> end at GameTimeLength
+
+	//storage/stats
+	private Profile loadedProfile;
 
 	public TyperFrame() throws IOException{
 
@@ -34,6 +41,10 @@ public class TyperFrame extends JFrame{
 		isHome = true;
 
 		gameSize = 20;
+		gameTimeLength = 30;
+		gameMode = "count";
+
+		loadedProfile = new Profile();
 
 		this.setSize(WIDTH, HEIGHT + 25);
 		this.setTitle("Typing Wizard");
@@ -48,10 +59,21 @@ public class TyperFrame extends JFrame{
   		t.start();
   	}
 
+  	public void startGame(){
+  		gameStart = true;
+  		gameTimeCount = 0;
+  		gameInput = new ArrayList<String>();
+  	}
+
+  	public void endGame(){
+  		gameStart = false;
+  		gameComp.wrapUpGame(gameInput, gameTimeCount);
+  	}
+
   	public void addPanel() throws IOException{
   		configurePanel();
   		this.add(mainPanel);
-		t = new Timer(500, new MovementListener());
+		t = new Timer(1000, new MovementListener());
 		this.addMouseListener(new MouseMovementListener());
 		this.addKeyListener(new KeyBoardListener());
   		this.setFocusable(true);
@@ -59,8 +81,8 @@ public class TyperFrame extends JFrame{
 
   	private void configurePanel() throws IOException{
   		mainPanel = new JPanel(new BorderLayout());
-  		game = new GameComponent(this);
-  		mainPanel.add(game, BorderLayout.CENTER);
+  		gameComp = new GameComponent(this);
+  		mainPanel.add(gameComp, BorderLayout.CENTER);
   	}
 
   	public int[] getFrameSize(){
@@ -72,11 +94,26 @@ public class TyperFrame extends JFrame{
 
   	}
 
-
   	class MovementListener implements ActionListener{
     	public void actionPerformed(ActionEvent e){
-    		//System.out.println(getFrameSize()[0]);
+    		repaint();
+    		if (gameStart){
+    			if (gameMode.equals("count")){
+    				updateCountMode();
+    			} else if (gameMode.equals("time")){
+    				updateTimeMode();
+    			}
+    		}
     	}
+   }
+
+   private void updateCountMode(){
+   		gameTimeCount++;
+
+   }
+
+   private void updateTimeMode(){
+
    }
 
 
@@ -89,25 +126,50 @@ public class TyperFrame extends JFrame{
 			int x = me.getX();
 			int y = me.getY() - 25;
 			if (!gameStart && isHome){
-				game.checkForStartClick(x, y);
-				//System.out.println("click!");
+				try {
+					gameComp.checkForStartClick(x, y);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
   	}
   	
 
    	class KeyBoardListener implements KeyListener {
-   /*
-      final int UP = 38;
-         final int DOWN = 40;
-         final int LEFT = 37;
-         final int RIGHT = 39;
-   */
+   		private String tempIn = "";
+
 		public void keyTyped(KeyEvent e){}
 		public void keyReleased(KeyEvent e){}
 		public void keyPressed(KeyEvent e){
+			if (gameStart){
+				int keyCode = e.getKeyCode();
+				String charIn = String.valueOf(Character.toString(keyCode));
+				//System.out.println(keyCode + " -> " + charIn);
+				if (gameMode.equals("count")){
+					if (keyCode == 32){
+						if (!tempIn.strip().equals("")){
+							gameInput.add(tempIn);
+							tempIn = "";
+							if (gameInput.size() == gameSize){
+								endGame();
+							}
+						} else {
+ 							// do nothing!!!! :D :D :D :D :D
+						}
+					} else if (keyCode == 8){
+						if (tempIn.equals("") && !gameInput.isEmpty()){
+							tempIn = gameInput.remove(gameInput.size()-1);
+						} else if (!tempIn.equals("")){
+							tempIn = tempIn.substring(0, tempIn.length()-1);
+						}
+					} else {
+						tempIn += charIn;
+					}
+				} else if (gameMode.equals("time")){
 
-
+				}
+			}
 		}
 
     }
@@ -134,6 +196,22 @@ public class TyperFrame extends JFrame{
 
     public void setGameSize(int s){
     	gameSize = s;
+    }
+
+    public String getGameMode(){
+    	return gameMode;
+    }
+
+    public void setGameMode(String m){
+    	gameMode = m;
+    }
+
+    public Profile getLoadedProfile(){
+    	return loadedProfile;
+    }
+
+    public void setLoadedProfile(Profile p){
+    	loadedProfile = p;
     }
 
 }

@@ -9,8 +9,8 @@ import java.util.*;
 public class GameComponent extends JComponent {
 	private static final long serialVersionUID = 0000;
 
-	private ArrayList<String> wordArr;
 	TyperFrame frame;
+	TyperGame game;
 
 	private int height;
 	private int width;
@@ -21,21 +21,17 @@ public class GameComponent extends JComponent {
 		//frame = (TyperFrame)this.getTopLevelAncestor();
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1];
+		height = frame.getFrameSize()[1] - 25;
 
-		initWordArr();
+		game = null;
 
-		stringFont = new Font( "SansSerif", Font. PLAIN, width / 20);
+		stringFont = new Font( "GillSans", Font. PLAIN, width / 40);
 	}
 
 	public void paintComponent(Graphics g){
 		Graphics2D pen = (Graphics2D) g;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1];
-
-		// Rectangle border = new Rectangle(width/8, height/4, 3*width/4, height/2);
-		// pen.draw(border);
-		// frame.repaint();
+		height = frame.getFrameSize()[1] - 25;
 
 		pen.drawRect(width/8, height/4, 3*width/4, height/2);
 
@@ -49,7 +45,16 @@ public class GameComponent extends JComponent {
 
 	private void paintWords(Graphics2D pen){
 		pen.setFont(stringFont);
-		pen.drawString("hellooooooo", width/2, height/2);
+		ArrayList<String> wordArr = game.getWordArr();
+		int wordsPerRow = frame.getGameSize() / 4;
+		for (int i = 0; i < 4; i++){
+			for (int j = 0; j < wordsPerRow; j++){
+				String currWord = wordArr.get((i * wordsPerRow) + j);
+				int locX = width/8 + ((j * 3*width)/(4 * wordsPerRow)) + width/32;
+				int locY = height/4 + (((i+1) * height)/(8)) - 3*height/64;
+				pen.drawString(currWord, locX, locY);
+			}
+		}
 		
 	}	
 
@@ -60,11 +65,16 @@ public class GameComponent extends JComponent {
 		pen.drawPolygon(startButton);
 	}
 
-	public void checkForStartClick(int x, int y){
+	public void wrapUpGame(ArrayList<String> finalInput, int finalTime){
+		ArrayList<String> missedWords = game.getErrors(finalInput);
+		GameStat toAdd = new GameStat(missedWords, finalTime, game.getTotalCharCount(), frame.getGameSize());
+		System.out.println(toAdd);
+	}
+
+	public void checkForStartClick(int x, int y) throws IOException{
 		if (startButton.contains(x, y)){
-			frame.setGameStart(true);
-			//System.out.println("button clicked");
-			frame.repaint();
+			game = new TyperGame(frame.getGameSize());
+			frame.startGame();
 		}
 	}
 
@@ -72,17 +82,5 @@ public class GameComponent extends JComponent {
 
 	}
 
-	public void initWordArr() throws IOException{
-		Scanner scan = new Scanner(new File("dictionary.txt"));
-		ArrayList<String> hold = new ArrayList<String>();
-		wordArr = new ArrayList<String>();
-		while (scan.hasNextLine()){
-			hold.add(scan.nextLine().strip());
-		}
-		for (int i = 0; i < frame.getGameSize(); i++){
-			int randInt =  (int)((Math.random() * (frame.getGameSize()) + 1));
-			wordArr.add(hold.get(randInt));
-		}
-	}
 
 }
