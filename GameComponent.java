@@ -12,6 +12,7 @@ public class GameComponent extends JComponent {
 	TyperFrame frame;
 	TyperGame game;
 
+
 	private int height;
 	private int width;
 	private Polygon startButton;
@@ -67,8 +68,8 @@ public class GameComponent extends JComponent {
 
 	public void wrapUpGame(ArrayList<String> finalInput, int finalTime){
 		ArrayList<String> missedWords = game.getErrors(finalInput);
-		GameStat toAdd = new GameStat(missedWords, finalTime, game.getTotalCharCount(), frame.getGameSize());
-		System.out.println(toAdd);
+		GameStat recentGameStat = new GameStat(missedWords, finalTime, game.getTotalCharCount(), frame.getGameSize());
+		frame.getLoadedProfile().add(recentGameStat);
 	}
 
 	public void checkForStartClick(int x, int y) throws IOException{

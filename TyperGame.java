@@ -42,7 +42,7 @@ public class TyperGame {
 			hold.add(scan.nextLine().strip());
 		}
 		for (int i = 0; i < gameSize; i++){
-			int randInt =  (int)((Math.random() * gameSize + 1));
+			int randInt =  (int)((Math.random() * hold.size()));
 			String word = hold.get(randInt);
 			wordArr.add(word);
 			totalCharCount += word.length();

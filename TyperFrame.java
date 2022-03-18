@@ -20,6 +20,7 @@ public class TyperFrame extends JFrame{
 	private JFrame thisFrame = this;
 	private JPanel mainPanel;
 	private GameComponent gameComp;
+	private BottomBarComponent bottomBarComp;
 
 	//navigation vars
 	private Boolean gameStart;
@@ -59,17 +60,6 @@ public class TyperFrame extends JFrame{
   		t.start();
   	}
 
-  	public void startGame(){
-  		gameStart = true;
-  		gameTimeCount = 0;
-  		gameInput = new ArrayList<String>();
-  	}
-
-  	public void endGame(){
-  		gameStart = false;
-  		gameComp.wrapUpGame(gameInput, gameTimeCount);
-  	}
-
   	public void addPanel() throws IOException{
   		configurePanel();
   		this.add(mainPanel);
@@ -82,7 +72,21 @@ public class TyperFrame extends JFrame{
   	private void configurePanel() throws IOException{
   		mainPanel = new JPanel(new BorderLayout());
   		gameComp = new GameComponent(this);
+  		bottomBarComp = new BottomBarComponent(this);
+
   		mainPanel.add(gameComp, BorderLayout.CENTER);
+  		mainPanel.add(bottomBarComp, BorderLayout.PAGE_END);
+  	}
+
+  	public void startGame(){
+  		gameStart = true;
+  		gameTimeCount = 0;
+  		gameInput = new ArrayList<String>();
+  	}
+
+  	public void endGame(){
+  		gameStart = false;
+  		gameComp.wrapUpGame(gameInput, gameTimeCount);
   	}
 
   	public int[] getFrameSize(){
@@ -103,13 +107,18 @@ public class TyperFrame extends JFrame{
     			} else if (gameMode.equals("time")){
     				updateTimeMode();
     			}
+    			updateBottomBar();
     		}
     	}
    }
 
+   private void updateBottomBar(){
+   		double currWPM = (double)gameInput.size() / (double)gameTimeCount;
+   		bottomBarComp.update(currWPM, gameTimeCount);
+   }
+
    private void updateCountMode(){
    		gameTimeCount++;
-
    }
 
    private void updateTimeMode(){
