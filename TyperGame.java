@@ -34,7 +34,7 @@ public class TyperGame {
 		return totalCharCount;
 	}
 
-	private void initWordArr() throws IOException{
+	public void initWordArr() throws IOException{
 		Scanner scan = new Scanner(new File("dictionary.txt"));
 		ArrayList<String> hold = new ArrayList<String>();
 		wordArr = new ArrayList<String>();

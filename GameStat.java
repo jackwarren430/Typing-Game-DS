@@ -8,8 +8,8 @@ public class GameStat {
 	private int totalCharCount;
 	private int gameSize;
 
-	private double WPM;
-	private double CPS;
+	private int WPM;
+	private float CPS;
 
 	public GameStat(ArrayList<String> missedWords, int finalTime, int totalCharCount, int gameSize){
 		this.finalTime = finalTime;
@@ -21,8 +21,10 @@ public class GameStat {
 	}
 
 	private void calcSpeeds(){
-		WPM = 60 * (float)gameSize / (float)finalTime;
+		WPM = 60 * gameSize / finalTime;
 		CPS = (float)totalCharCount / (float)finalTime;
+		WPM = Math.round(WPM);
+		CPS = Math.round(CPS * 100)/100;
 		
 	}
 

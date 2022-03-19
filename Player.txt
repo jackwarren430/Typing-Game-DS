@@ -1,0 +1,9 @@
+ProfileName: Player
+%
+tag: 0
+Total Errors: 3
+Missed Words: don't, caught, save, 
+Final Time: 33 seconds
+Words Per Minute (WPM): 36 w/m
+Characters Per Second (CPS): 2.0 c/s
+

@@ -35,7 +35,6 @@ public class TyperFrame extends JFrame{
 
 	//storage/stats
 	private Profile loadedProfile;
-	private JButton south;
 
 	public TyperFrame() throws IOException{
 
@@ -73,7 +72,7 @@ public class TyperFrame extends JFrame{
 
   	private void configurePanel() throws IOException{
   		mainPanel = new JPanel();
-  		mainPanel.setBackground(Color.blue);
+  		//mainPanel.setBackground(Color.blue);
   		mainPanel.setLayout(new BorderLayout());
 
   		gameComp = new GameComponent(this);
@@ -98,6 +97,7 @@ public class TyperFrame extends JFrame{
   	public void endGame(){
   		gameStart = false;
   		gameComp.wrapUpGame(gameInput, gameTimeCount);
+  		loadedProfile.saveProfile();
   	}
 
   	public int[] getFrameSize(){
@@ -126,7 +126,7 @@ public class TyperFrame extends JFrame{
    }
 
    private void updateBottomBar(){
-   		double currWPM = (double)gameInput.size() / (double)gameTimeCount;
+   		int currWPM = 60 * gameInput.size() / gameTimeCount;
    		bottomBarComp.update(currWPM, gameTimeCount);
    }
 

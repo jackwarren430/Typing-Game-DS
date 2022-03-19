@@ -7,9 +7,9 @@ import java.io.*;
 import java.util.*;
 
 
-public class BottomBarComponent extends JComponent {
+public class BottomBarComponent extends JPanel {
 	private static final long serialVersionUID = 0000;
-	private double WPM;
+	private int WPM;
 	private int errors;
 	private int time;
 	private Boolean displayErrors;
@@ -18,8 +18,13 @@ public class BottomBarComponent extends JComponent {
 	int width;
 	int height;
 
+	private JLabel WPMLabel;
+	private JLabel timeLabel;
+	private JLabel errorsLabel;
+
 
 	public BottomBarComponent(TyperFrame frame){
+		setLayout(new GridLayout(1, 3));
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
 		height = frame.getFrameSize()[1] - 25;
@@ -28,32 +33,43 @@ public class BottomBarComponent extends JComponent {
 		errors = 0;
 		time = 0;
 		displayErrors = false;
+
+		display();
 	}
 
-	public void paintComponent(Graphics g){
-		setBorder(BorderFactory.createLineBorder(Color.black));
-		Graphics2D pen = (Graphics2D) g;
+	public void display(){
 		width = frame.getFrameSize()[0];
 		height = frame.getFrameSize()[1] - 25;
 
-		pen.drawRect(width/8, 13*height/16, 3*width/4, height/8);
+		timeLabel = new JLabel(time + "s", SwingConstants.CENTER);
+		WPMLabel = new JLabel("WPM: " + WPM, SwingConstants.CENTER);
+		errorsLabel = new JLabel("Errors: " + errors);
 
-		pen.drawString(time + "s", width/4, 7*height/8);
-		pen.drawString("WPM: " + WPM, width/2, 7*height/8);
+		add(timeLabel);
+		add(WPMLabel);
+
+		//pen.drawString(time + "s", width/4, 7*height/8);
+		//pen.drawString("WPM: " + WPM, width/2, 7*height/8);
 		//pen.drawString("WPM: " + WPM, 10, 10);
-
-		if (displayErrors){
-			pen.drawString("Errors: " + errors, width/4, 7*height/8);
-		}
 	}
 
-	public void update(double WPM, int time){
+	public void update(int WPM, int time){
 		this.WPM = WPM;
 		this.time = time;
+		WPMLabel.setText("WPM: " + WPM);
+		timeLabel.setText(time + "s");
 	}
 
 	public void setErrors(int errors){
 		this.errors = errors;
+	}
+
+	public void displayErrors(){
+		//addLayoutComponent("errors", errorsLabel);
+	}
+
+	public void hideErrors(){
+
 	}
 
 	public void setDisplayErrors(boolean b){
