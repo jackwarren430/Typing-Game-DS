@@ -14,9 +14,10 @@ public class BottomBarComponent extends JComponent {
 	private int time;
 	private Boolean displayErrors;
 
-	TyperFrame frame;
+	private TyperFrame frame;
 	int width;
 	int height;
+
 
 	public BottomBarComponent(TyperFrame frame){
 		this.frame = frame;
@@ -30,12 +31,16 @@ public class BottomBarComponent extends JComponent {
 	}
 
 	public void paintComponent(Graphics g){
+		setBorder(BorderFactory.createLineBorder(Color.black));
 		Graphics2D pen = (Graphics2D) g;
 		width = frame.getFrameSize()[0];
 		height = frame.getFrameSize()[1] - 25;
 
+		pen.drawRect(width/8, 13*height/16, 3*width/4, height/8);
+
 		pen.drawString(time + "s", width/4, 7*height/8);
-		pen.drawString("WPM: " + WPM, width/4, 7*height/8);
+		pen.drawString("WPM: " + WPM, width/2, 7*height/8);
+		//pen.drawString("WPM: " + WPM, 10, 10);
 
 		if (displayErrors){
 			pen.drawString("Errors: " + errors, width/4, 7*height/8);

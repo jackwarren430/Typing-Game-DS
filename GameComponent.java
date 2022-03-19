@@ -60,7 +60,7 @@ public class GameComponent extends JComponent {
 	}	
 
 	private void paintStartButton(Graphics2D pen){
-		int[] xVals = new int[] {7*width/16, 9*width/16, 9*width/16};
+		int[] xVals = new int[] {9*width/16, 7*width/16, 7*width/16 };
 		int[] yVals = new int[] {height/2, 3*height/8, 5*height/8};
 		startButton = new Polygon(xVals, yVals, 3);
 		pen.drawPolygon(startButton);
@@ -70,6 +70,7 @@ public class GameComponent extends JComponent {
 		ArrayList<String> missedWords = game.getErrors(finalInput);
 		GameStat recentGameStat = new GameStat(missedWords, finalTime, game.getTotalCharCount(), frame.getGameSize());
 		frame.getLoadedProfile().add(recentGameStat);
+		System.out.println(recentGameStat);
 	}
 
 	public void checkForStartClick(int x, int y) throws IOException{

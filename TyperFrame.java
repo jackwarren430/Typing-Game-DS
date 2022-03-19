@@ -35,6 +35,7 @@ public class TyperFrame extends JFrame{
 
 	//storage/stats
 	private Profile loadedProfile;
+	private JButton south;
 
 	public TyperFrame() throws IOException{
 
@@ -63,6 +64,7 @@ public class TyperFrame extends JFrame{
   	public void addPanel() throws IOException{
   		configurePanel();
   		this.add(mainPanel);
+  		//mainPanel.setOpaque(false);
 		t = new Timer(1000, new MovementListener());
 		this.addMouseListener(new MouseMovementListener());
 		this.addKeyListener(new KeyBoardListener());
@@ -70,12 +72,21 @@ public class TyperFrame extends JFrame{
   	}
 
   	private void configurePanel() throws IOException{
-  		mainPanel = new JPanel(new BorderLayout());
+  		mainPanel = new JPanel();
+  		mainPanel.setBackground(Color.blue);
+  		mainPanel.setLayout(new BorderLayout());
+
   		gameComp = new GameComponent(this);
   		bottomBarComp = new BottomBarComponent(this);
+  		//south = new JButton("South");
 
   		mainPanel.add(gameComp, BorderLayout.CENTER);
-  		mainPanel.add(bottomBarComp, BorderLayout.PAGE_END);
+  		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
+  		//mainPanel.add(south, BorderLayout.SOUTH);
+
+  		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
+  		
+  		//south.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
   	}
 
   	public void startGame(){
@@ -101,6 +112,8 @@ public class TyperFrame extends JFrame{
   	class MovementListener implements ActionListener{
     	public void actionPerformed(ActionEvent e){
     		repaint();
+    		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
+
     		if (gameStart){
     			if (gameMode.equals("count")){
     				updateCountMode();
