@@ -16,11 +16,14 @@ public class TyperFrame extends JFrame{
 	public static final int WIDTH = 1300;
 	public static final int HEIGHT = 700;
 
-	//jframe vars
+	//component vars
 	private JFrame thisFrame = this;
 	private JPanel mainPanel;
+	private BorderLayout mainLayout;
 	private GameComponent gameComp;
 	private BottomBarComponent bottomBarComp;
+	private TopBarComponent menuBarComp;
+	private InfoComponent infoComp;
 
 	//navigation vars
 	private Boolean gameStart;
@@ -73,19 +76,20 @@ public class TyperFrame extends JFrame{
   	private void configurePanel() throws IOException{
   		mainPanel = new JPanel();
   		//mainPanel.setBackground(Color.blue);
-  		mainPanel.setLayout(new BorderLayout());
+		mainLayout = new BorderLayout();
+  		mainPanel.setLayout(mainLayout);
 
   		gameComp = new GameComponent(this);
   		bottomBarComp = new BottomBarComponent(this);
-  		//south = new JButton("South");
+  		menuBarComp = new TopBarComponent(this);
+  		infoComp = new InfoComponent(this);
 
   		mainPanel.add(gameComp, BorderLayout.CENTER);
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
-  		//mainPanel.add(south, BorderLayout.SOUTH);
+  		mainPanel.add(menuBarComp, BorderLayout.NORTH);
 
   		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
-  		
-  		//south.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
+    	menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
   	}
 
   	public void startGame(){
@@ -97,7 +101,7 @@ public class TyperFrame extends JFrame{
   	public void endGame(){
   		gameStart = false;
   		gameComp.wrapUpGame(gameInput, gameTimeCount);
-  		loadedProfile.saveProfile();
+  		
   	}
 
   	public int[] getFrameSize(){
@@ -113,6 +117,7 @@ public class TyperFrame extends JFrame{
     	public void actionPerformed(ActionEvent e){
     		repaint();
     		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
+    		menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
 
     		if (gameStart){
     			if (gameMode.equals("count")){
@@ -121,6 +126,8 @@ public class TyperFrame extends JFrame{
     				updateTimeMode();
     			}
     			updateBottomBar();
+    		} else {
+
     		}
     	}
    }
@@ -137,7 +144,6 @@ public class TyperFrame extends JFrame{
    private void updateTimeMode(){
 
    }
-
 
   	class MouseMovementListener implements MouseListener{
 		public void mouseEntered(MouseEvent me){}
@@ -156,7 +162,6 @@ public class TyperFrame extends JFrame{
 			}
 		}
   	}
-  	
 
    	class KeyBoardListener implements KeyListener {
    		private String tempIn = "";
@@ -195,6 +200,37 @@ public class TyperFrame extends JFrame{
 		}
 
     }
+
+    public void goHomePage(){
+    	System.out.println("home pressed, " + isHome + gameStart);
+    	if (!isHome && !gameStart){
+    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainPanel.add(gameComp, BorderLayout.CENTER);
+    	}
+    }
+
+    public void goStatsPage(){
+
+    }
+
+    public void goInfoPage(){
+    	System.out.println("stats pressed, " + isHome + gameStart);
+    	if (!gameStart){
+    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainPanel.add(infoComp, BorderLayout.CENTER);
+    		repaint();
+    	}
+    }
+
+    public void goGameOptPage(){
+
+    }
+
+    public void goSettingsPage(){
+
+    }
+
+
 
     public Boolean getIsHome(){
     	return isHome;
