@@ -34,12 +34,16 @@ public class GameComponent extends JComponent {
 		width = frame.getFrameSize()[0];
 		height = frame.getFrameSize()[1] - 25;
 
-		pen.drawRect(width/8, height/4, 3*width/4, height/2);
+		
 
-		if (!frame.getGameStart()){
+		if (!frame.getGameStart() && frame.getIsHome()){
+			pen.drawRect(width/8, height/4, 3*width/4, height/2);
 			paintStartButton(pen);
-		} else {
+		} else if (frame.getIsHome()){
+			pen.drawRect(width/8, height/4, 3*width/4, height/2);
 			paintWords(pen);
+		} else {
+			super.paintComponent(g);
 		}
 	
 	}

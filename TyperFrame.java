@@ -28,6 +28,7 @@ public class TyperFrame extends JFrame{
 	//navigation vars
 	private Boolean gameStart;
 	private Boolean isHome;
+	private Boolean isInfoPage;
 
 	//game vars
 	private int gameSize;
@@ -43,6 +44,7 @@ public class TyperFrame extends JFrame{
 
 		gameStart = false;
 		isHome = true;
+		isInfoPage = false;
 
 		gameSize = 20;
 		gameTimeLength = 30;
@@ -88,8 +90,9 @@ public class TyperFrame extends JFrame{
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
   		mainPanel.add(menuBarComp, BorderLayout.NORTH);
 
-  		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
+  		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     	menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
+    	mainLayout.getLayoutComponent(BorderLayout.CENTER).setPreferredSize(new Dimension(getFrameSize()[0], 6*getFrameSize()[1]/8));
   	}
 
   	public void startGame(){
@@ -116,8 +119,9 @@ public class TyperFrame extends JFrame{
   	class MovementListener implements ActionListener{
     	public void actionPerformed(ActionEvent e){
     		repaint();
-    		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
-    		menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/4));
+    		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
+    		menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
+    		mainLayout.getLayoutComponent(BorderLayout.CENTER).setPreferredSize(new Dimension(getFrameSize()[0], 6*getFrameSize()[1]/8));
 
     		if (gameStart){
     			if (gameMode.equals("count")){
@@ -202,10 +206,13 @@ public class TyperFrame extends JFrame{
     }
 
     public void goHomePage(){
-    	System.out.println("home pressed, " + isHome + gameStart);
     	if (!isHome && !gameStart){
+    		clearNavVars();
+    		isHome = true;
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
     		mainPanel.add(gameComp, BorderLayout.CENTER);
+    		setVisible(true);
+    		mainPanel.repaint();
     	}
     }
 
@@ -214,11 +221,13 @@ public class TyperFrame extends JFrame{
     }
 
     public void goInfoPage(){
-    	System.out.println("stats pressed, " + isHome + gameStart);
     	if (!gameStart){
+    		clearNavVars();
+    		isInfoPage = true;
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
     		mainPanel.add(infoComp, BorderLayout.CENTER);
-    		repaint();
+    		setVisible(true);
+    		mainPanel.repaint();
     	}
     }
 
@@ -230,7 +239,9 @@ public class TyperFrame extends JFrame{
 
     }
 
-
+    public Boolean getIsInfoPage(){
+    	return isInfoPage;
+    }
 
     public Boolean getIsHome(){
     	return isHome;
@@ -238,6 +249,11 @@ public class TyperFrame extends JFrame{
 
     public void setIsHome(Boolean b){
     	isHome = b;
+    }
+
+    public void clearNavVars(){
+    	isHome = false;
+    	isInfoPage = false;
     }
 
     public Boolean getGameStart(){
