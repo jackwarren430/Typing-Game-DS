@@ -24,11 +24,15 @@ public class TyperFrame extends JFrame{
 	private BottomBarComponent bottomBarComp;
 	private TopBarComponent menuBarComp;
 	private InfoComponent infoComp;
+	private GameStatsComponent gameStatsComp;
 
 	//navigation vars
 	private Boolean gameStart;
 	private Boolean isHome;
 	private Boolean isInfoPage;
+	private Boolean isStatsPage;
+	private Boolean isGameOptPage;
+	private Boolean isSettingsPage;
 
 	//game vars
 	private int gameSize;
@@ -45,6 +49,9 @@ public class TyperFrame extends JFrame{
 		gameStart = false;
 		isHome = true;
 		isInfoPage = false;
+		isStatsPage = false;
+		isGameOptPage = false;
+		isSettingsPage = false;
 
 		gameSize = 20;
 		gameTimeLength = 30;
@@ -85,6 +92,7 @@ public class TyperFrame extends JFrame{
   		bottomBarComp = new BottomBarComponent(this);
   		menuBarComp = new TopBarComponent(this);
   		infoComp = new InfoComponent(this);
+  		gameStatsComp = new GameStatsComponent(this);
 
   		mainPanel.add(gameComp, BorderLayout.CENTER);
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
@@ -119,7 +127,10 @@ public class TyperFrame extends JFrame{
   	class MovementListener implements ActionListener{
     	public void actionPerformed(ActionEvent e){
     		repaint();
-    		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
+    		if (isHome || isStatsPage){
+    			bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
+    		}
+    		
     		menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     		mainLayout.getLayoutComponent(BorderLayout.CENTER).setPreferredSize(new Dimension(getFrameSize()[0], 6*getFrameSize()[1]/8));
 
@@ -217,7 +228,14 @@ public class TyperFrame extends JFrame{
     }
 
     public void goStatsPage(){
-
+    	if (!gameStart){
+    		clearNavVars();
+    		isStatsPage = true;
+    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainPanel.add(gameStatsComp, BorderLayout.CENTER);
+    		setVisible(true);
+    		mainPanel.repaint();
+    	}
     }
 
     public void goInfoPage(){
@@ -232,15 +250,27 @@ public class TyperFrame extends JFrame{
     }
 
     public void goGameOptPage(){
-
+    	mainLayout.removeLayoutComponent(bottomBarComp);
     }
 
     public void goSettingsPage(){
-
+    	mainLayout.removeLayoutComponent(bottomBarComp);
     }
 
     public Boolean getIsInfoPage(){
     	return isInfoPage;
+    }
+
+    public Boolean getIsGameOptPage(){
+    	return isGameOptPage;
+    }
+
+    public Boolean getIsStatsPage(){
+    	return isStatsPage;
+    }
+
+    public Boolean getIsSettingsPage(){
+    	return isSettingsPage;
     }
 
     public Boolean getIsHome(){
@@ -254,6 +284,9 @@ public class TyperFrame extends JFrame{
     public void clearNavVars(){
     	isHome = false;
     	isInfoPage = false;
+    	isStatsPage = false;
+    	isGameOptPage = false;
+    	isSettingsPage = false;
     }
 
     public Boolean getGameStart(){
@@ -278,6 +311,10 @@ public class TyperFrame extends JFrame{
 
     public void setGameMode(String m){
     	gameMode = m;
+    }
+
+    public GameStatsComponent getGameStatsComp(){
+    	return gameStatsComp;
     }
 
     public Profile getLoadedProfile(){

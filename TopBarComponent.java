@@ -20,6 +20,8 @@ public class TopBarComponent extends JPanel implements ActionListener{
 	private JButton gameOptButt;
 	private JButton infoButt;
 
+
+
 	public TopBarComponent(TyperFrame frame){
 		setLayout(new GridLayout(1, 5));
 		this.frame = frame;
@@ -41,6 +43,12 @@ public class TopBarComponent extends JPanel implements ActionListener{
 		settingsButt.addActionListener(this);
 		gameOptButt.addActionListener(this);
 		infoButt.addActionListener(this);
+
+		homeButt.setFocusable(false);
+		statsButt.setFocusable(false);
+		settingsButt.setFocusable(false);
+		gameOptButt.setFocusable(false);
+		infoButt.setFocusable(false);
 
 		add(homeButt);
 		add(statsButt);

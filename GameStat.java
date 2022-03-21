@@ -41,5 +41,25 @@ public class GameStat {
 		return toReturn;
 	}
 
+	public int getTime(){
+		return finalTime;
+	}
+
+	public int getNumMissedWords(){
+		return numMissedWords;
+	}
+
+	public ArrayList<String> getMissedWords(){
+		return missedWords;
+	}
+
+	public int getWPM(){
+		return WPM;
+	}
+
+	public float getCPS(){
+		return CPS;
+	}
+
 
 }
