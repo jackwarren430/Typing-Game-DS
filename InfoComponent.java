@@ -17,13 +17,13 @@ public class InfoComponent extends JComponent {
 	public InfoComponent(TyperFrame frame){
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1] - 25;
+		height = 6*frame.getFrameSize()[1]/8;
 	}
 
 	public void paintComponent(Graphics g){
 		Graphics2D pen = (Graphics2D) g;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1] - 25;
+		height = 6*frame.getFrameSize()[1]/8;
 
 		if (frame.getIsInfoPage()){
 			paintInfo(pen);

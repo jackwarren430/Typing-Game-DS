@@ -22,7 +22,7 @@ public class GameComponent extends JComponent {
 		//frame = (TyperFrame)this.getTopLevelAncestor();
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1] - 25;
+		height = 6*frame.getFrameSize()[1]/8;
 
 		game = null;
 
@@ -32,15 +32,15 @@ public class GameComponent extends JComponent {
 	public void paintComponent(Graphics g){
 		Graphics2D pen = (Graphics2D) g;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1] - 25;
+		height = 6*frame.getFrameSize()[1]/8;;
 
-		
+		//height = height - 50;
 
 		if (!frame.getGameStart() && frame.getIsHome()){
-			pen.drawRect(width/8, height/4, 3*width/4, height/2);
+			pen.drawRect(width/8, height/8, 3*width/4, 3*height/4);
 			paintStartButton(pen);
 		} else if (frame.getIsHome()){
-			pen.drawRect(width/8, height/4, 3*width/4, height/2);
+			pen.drawRect(width/8, height/8, 3*width/4, 3*height/4);
 			paintWords(pen);
 		} else {
 			super.paintComponent(g);
@@ -74,10 +74,10 @@ public class GameComponent extends JComponent {
 		ArrayList<String> missedWords = game.getErrors(finalInput);
 		GameStat recentGameStat = new GameStat(missedWords, finalTime, game.getTotalCharCount(), frame.getGameSize());
 		frame.getLoadedProfile().add(recentGameStat);
-		System.out.println(recentGameStat);
 	}
 
 	public void checkForStartClick(int x, int y) throws IOException{
+		y = 6*y/8;
 		if (startButton.contains(x, y)){
 			game = new TyperGame(frame.getGameSize());
 			frame.startGame();

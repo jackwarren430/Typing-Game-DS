@@ -26,6 +26,7 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 
 	private JButton statsNextButt;
 	private JButton statsPrevButt;
+	private JLabel whichStatLabel;
 
 	public BottomBarComponent(TyperFrame frame){
 		setLayout(new GridLayout(1, 3));
@@ -39,6 +40,13 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 
 		statsNextButt = new JButton(">");
 		statsPrevButt = new JButton("<");
+		whichStatLabel = new JLabel(frame.getGameStatsComp().getWhichGameStat() + "", SwingConstants.CENTER);
+
+		statsNextButt.addActionListener(this);
+		statsPrevButt.addActionListener(this);
+		statsNextButt.setFocusable(false);
+		statsPrevButt.setFocusable(false);
+
 
 		WPM = 0;
 		errors = 0;
@@ -52,31 +60,44 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 		width = frame.getFrameSize()[0];
 		height = frame.getFrameSize()[1] - 25;
 
+
 		if (frame.getIsHome()){
 			add(timeLabel);
 			add(WPMLabel);
+			remove(statsNextButt);
+			remove(whichStatLabel);
+			remove(statsPrevButt);
 		} else if (frame.getIsStatsPage()){
-			add(statsNextButt);
+			
 			add(statsPrevButt);
+			add(whichStatLabel);
+			add(statsNextButt);
+			remove(timeLabel);
+			remove(WPMLabel);
 		} else {
 			remove(timeLabel);
 			remove(WPMLabel);
 			remove(statsNextButt);
+			remove(whichStatLabel);
 			remove(statsPrevButt);
 		}
-
-
-
 	}
 
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand().equals(">")){
+			System.out.println("moving up");
 			int order = frame.getGameStatsComp().getWhichGameStat();
 			int maxSize = frame.getGameStatsComp().getNumGameStats();
+
 			if (order < maxSize-1){
-				frame.getGameStatsComp().setWhichGameStat(order);
+				frame.getGameStatsComp().setWhichGameStat(order++);
+				System.out.println("moving up in the world");
 			}
-			
+		} else if (e.getActionCommand().equals("<")){
+			int order = frame.getGameStatsComp().getWhichGameStat();
+			if (order > 0){
+				frame.getGameStatsComp().setWhichGameStat(order--);
+			}
 		}
 	}
 

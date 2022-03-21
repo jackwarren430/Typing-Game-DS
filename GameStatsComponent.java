@@ -21,7 +21,7 @@ public class GameStatsComponent extends JComponent{
 	public GameStatsComponent(TyperFrame frame){
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1] - 25;
+		height = 6*frame.getFrameSize()[1]/8;
 
 		loadedProfile = frame.getLoadedProfile();
 		numGameStats = loadedProfile.getGamesPlayed().size();
@@ -34,7 +34,7 @@ public class GameStatsComponent extends JComponent{
 		numGameStats = loadedProfile.getGamesPlayed().size();
 		Graphics2D pen = (Graphics2D) g;
 		width = frame.getFrameSize()[0];
-		height = frame.getFrameSize()[1] - 25;
+		height = 6*frame.getFrameSize()[1]/8;
 
 		if (frame.getIsStatsPage() && numGameStats == 0){
 			pen.drawString("No games played", width/2, height/2);

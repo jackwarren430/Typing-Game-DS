@@ -39,7 +39,7 @@ public class TyperFrame extends JFrame{
 	private ArrayList<String> gameInput;
 	private int gameTimeCount;
 	private int gameTimeLength;
-	private String gameMode; // count -> end at gameSize; time -> end at GameTimeLength
+	private String gameMode; // "count" -> end at gameSize; "time" -> end at GameTimeLength
 
 	//storage/stats
 	private Profile loadedProfile;
@@ -53,7 +53,7 @@ public class TyperFrame extends JFrame{
 		isGameOptPage = false;
 		isSettingsPage = false;
 
-		gameSize = 20;
+		gameSize = 12;
 		gameTimeLength = 30;
 		gameMode = "count";
 
@@ -84,19 +84,20 @@ public class TyperFrame extends JFrame{
 
   	private void configurePanel() throws IOException{
   		mainPanel = new JPanel();
-  		//mainPanel.setBackground(Color.blue);
+  		mainPanel.setBackground(Color.green);
 		mainLayout = new BorderLayout();
   		mainPanel.setLayout(mainLayout);
 
   		gameComp = new GameComponent(this);
+  		gameStatsComp = new GameStatsComponent(this);
   		bottomBarComp = new BottomBarComponent(this);
   		menuBarComp = new TopBarComponent(this);
   		infoComp = new InfoComponent(this);
-  		gameStatsComp = new GameStatsComponent(this);
-
-  		mainPanel.add(gameComp, BorderLayout.CENTER);
-  		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
+  		
   		mainPanel.add(menuBarComp, BorderLayout.NORTH);
+  		mainPanel.add(gameComp, BorderLayout.CENTER, SwingConstants.CENTER);
+  		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
+  		
 
   		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     	menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
@@ -222,6 +223,7 @@ public class TyperFrame extends JFrame{
     		isHome = true;
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
     		mainPanel.add(gameComp, BorderLayout.CENTER);
+    		bottomBarComp.display();
     		setVisible(true);
     		mainPanel.repaint();
     	}
@@ -233,6 +235,7 @@ public class TyperFrame extends JFrame{
     		isStatsPage = true;
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
     		mainPanel.add(gameStatsComp, BorderLayout.CENTER);
+    		bottomBarComp.display();
     		setVisible(true);
     		mainPanel.repaint();
     	}
@@ -244,6 +247,7 @@ public class TyperFrame extends JFrame{
     		isInfoPage = true;
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
     		mainPanel.add(infoComp, BorderLayout.CENTER);
+    		bottomBarComp.display();
     		setVisible(true);
     		mainPanel.repaint();
     	}
