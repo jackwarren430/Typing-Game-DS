@@ -76,7 +76,7 @@ public class TyperFrame extends JFrame{
   		configurePanel();
   		this.add(mainPanel);
   		//mainPanel.setOpaque(false);
-		t = new Timer(1000, new MovementListener());
+		t = new Timer(100, new MovementListener());
 		this.addMouseListener(new MouseMovementListener());
 		this.addKeyListener(new KeyBoardListener());
   		this.setFocusable(true);
@@ -126,25 +126,32 @@ public class TyperFrame extends JFrame{
   	}
 
   	class MovementListener implements ActionListener{
+  		int count = 0;
     	public void actionPerformed(ActionEvent e){
+
     		repaint();
-    		if (isHome || isStatsPage){
+			if (isHome || isStatsPage){
     			bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     		}
-    		
-    		menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
+  			menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     		mainLayout.getLayoutComponent(BorderLayout.CENTER).setPreferredSize(new Dimension(getFrameSize()[0], 6*getFrameSize()[1]/8));
 
-    		if (gameStart){
-    			if (gameMode.equals("count")){
-    				updateCountMode();
-    			} else if (gameMode.equals("time")){
-    				updateTimeMode();
-    			}
-    			updateBottomBar();
-    		} else {
+    		if (count == 10){
+    			if (gameStart){
+	    			if (gameMode.equals("count")){
+	    				updateCountMode();
+	    			} else if (gameMode.equals("time")){
+	    				updateTimeMode();
+	    			}
+	    			updateBottomBar();
+	    		} else {
 
+	    		}
+	    		count = 0;
+    		} else {
+    			count++;
     		}
+    		
     	}
    }
 
@@ -161,7 +168,7 @@ public class TyperFrame extends JFrame{
 
    }
 
-  	class MouseMovementListener implements MouseListener{
+  	class MouseMovementListener implements MouseListener {
 		public void mouseEntered(MouseEvent me){}
 		public void mouseExited(MouseEvent me){}
 		public void mousePressed(MouseEvent me){}
@@ -221,11 +228,11 @@ public class TyperFrame extends JFrame{
     	if (!isHome && !gameStart){
     		clearNavVars();
     		isHome = true;
-    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
+    		mainLayout.removeLayoutComponent(mainComp);
+    		mainComp.setVisible(false);
     		mainPanel.add(gameComp, BorderLayout.CENTER);
-    		bottomBarComp.display();
-    		setVisible(true);
-    		mainPanel.repaint();
+    		gameComp.setVisible(true);
     	}
     }
 
@@ -233,11 +240,11 @@ public class TyperFrame extends JFrame{
     	if (!gameStart){
     		clearNavVars();
     		isStatsPage = true;
+    		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainComp.setVisible(false);
     		mainPanel.add(gameStatsComp, BorderLayout.CENTER);
-    		bottomBarComp.display();
-    		setVisible(true);
-    		mainPanel.repaint();
+    		gameStatsComp.setVisible(true);
     	}
     }
 
@@ -245,11 +252,11 @@ public class TyperFrame extends JFrame{
     	if (!gameStart){
     		clearNavVars();
     		isInfoPage = true;
+    		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainComp.setVisible(false);
     		mainPanel.add(infoComp, BorderLayout.CENTER);
-    		bottomBarComp.display();
-    		setVisible(true);
-    		mainPanel.repaint();
+    		infoComp.setVisible(true);
     	}
     }
 
@@ -319,6 +326,10 @@ public class TyperFrame extends JFrame{
 
     public GameStatsComponent getGameStatsComp(){
     	return gameStatsComp;
+    }
+
+    public BottomBarComponent getBottomBarComp(){
+    	return bottomBarComp;
     }
 
     public Profile getLoadedProfile(){

@@ -25,11 +25,7 @@ public class InfoComponent extends JComponent {
 		width = frame.getFrameSize()[0];
 		height = 6*frame.getFrameSize()[1]/8;
 
-		if (frame.getIsInfoPage()){
-			paintInfo(pen);
-		} else {
-			super.paintComponent(g);
-		}
+		paintInfo(pen);
 	}
 
 	private void paintInfo(Graphics2D pen){

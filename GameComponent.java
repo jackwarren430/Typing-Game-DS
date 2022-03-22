@@ -36,14 +36,12 @@ public class GameComponent extends JComponent {
 
 		//height = height - 50;
 
-		if (!frame.getGameStart() && frame.getIsHome()){
+		if (!frame.getGameStart()){
 			pen.drawRect(width/8, height/8, 3*width/4, 3*height/4);
 			paintStartButton(pen);
-		} else if (frame.getIsHome()){
+		} else {
 			pen.drawRect(width/8, height/8, 3*width/4, 3*height/4);
 			paintWords(pen);
-		} else {
-			super.paintComponent(g);
 		}
 	
 	}

@@ -40,7 +40,7 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 
 		statsNextButt = new JButton(">");
 		statsPrevButt = new JButton("<");
-		whichStatLabel = new JLabel(frame.getGameStatsComp().getWhichGameStat() + "", SwingConstants.CENTER);
+		whichStatLabel = new JLabel(frame.getGameStatsComp().getWhichGameStat() + 1 + "", SwingConstants.CENTER);
 
 		statsNextButt.addActionListener(this);
 		statsPrevButt.addActionListener(this);
@@ -59,6 +59,7 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 	public void display(){
 		width = frame.getFrameSize()[0];
 		height = frame.getFrameSize()[1] - 25;
+		
 
 		if (frame.getIsHome()){
 			add(timeLabel);
@@ -84,17 +85,19 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand().equals(">")){
 			int order = frame.getGameStatsComp().getWhichGameStat();
-			int maxSize = frame.getGameStatsComp().getNumGameStats();
-			if (order < maxSize-1){
+			int maxSize = frame.getGameStatsComp().getNumGameStats() - 1;
+			if (order < maxSize){
 				frame.getGameStatsComp().setWhichGameStat(order + 1);
-				whichStatLabel = new JLabel(order + 1 + "", SwingConstants.CENTER);
+				whichStatLabel.setText(order + 2 + "");
 			}
+			display();
 		} else if (e.getActionCommand().equals("<")){
 			int order = frame.getGameStatsComp().getWhichGameStat();
 			if (order > 0){
 				frame.getGameStatsComp().setWhichGameStat(order - 1);
-				whichStatLabel = new JLabel(order - 1 + "", SwingConstants.CENTER);
+				whichStatLabel.setText(order + "");
 			}
+			display();
 		}
 	}
 

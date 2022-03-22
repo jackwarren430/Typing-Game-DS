@@ -58,6 +58,7 @@ public class TopBarComponent extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e){
+
 		if (e.getActionCommand().equals("Game Stats")){
 			frame.goStatsPage();
 		} else if (e.getActionCommand().equals("Home")){
@@ -69,6 +70,6 @@ public class TopBarComponent extends JPanel implements ActionListener{
 		} else if (e.getActionCommand().equals("Info")){
 			frame.goInfoPage();
 		}
-	
+		frame.getBottomBarComp().display();
 	}
 }
