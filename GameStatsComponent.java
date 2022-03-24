@@ -20,11 +20,16 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 	int width;
 	int height;
 
+	private SaveProfileComp saveComp;
+	private LoadProfileComp loadComp;
+
 	private Profile loadedProfile;
 	private int numGameStats;
 	private int whichGameStat;
 
+	private JButton viewStatsButt;
 	private JButton saveProfileButt;
+	private JButton loadProfileButt;
 
 	public GameStatsComponent(TyperFrame frame){
 		this.frame = frame;
@@ -39,18 +44,29 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		setLayout(layout);
 		buttonsLayout = new GridLayout(1,3);
 		buttons = new JPanel(buttonsLayout);
-		mainComp = new MainStatsComp();
 		fillLeft = new Filler();
 		fillRight = new Filler();
 
+		saveComp = new SaveProfileComp();
+		loadComp = new LoadProfileComp();
+		mainComp = new MainStatsComp();
+
+		viewStatsButt = new JButton("View Stats");
 		saveProfileButt = new JButton("Save Profile");
+		loadProfileButt = new JButton("Load Profile");
 		
 		saveProfileButt.addActionListener(this);
 		saveProfileButt.setFocusable(false);
+		loadProfileButt.addActionListener(this);
+		loadProfileButt.setFocusable(false);
+		viewStatsButt.addActionListener(this);
+		viewStatsButt.setFocusable(false);
 
 		
 		buttons.add(fillLeft);
+		buttons.add(viewStatsButt);
 		buttons.add(saveProfileButt);
+		buttons.add(loadProfileButt);
 		buttons.add(fillRight);
 		add(buttons, BorderLayout.NORTH);
 		add(mainComp, BorderLayout.CENTER);
@@ -61,7 +77,19 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 
 	public void actionPerformed(ActionEvent e){
-		
+		Component center = layout.getLayoutComponent(BorderLayout.CENTER);
+		remove(center);
+		center.setVisible(false);
+		if (e.getActionCommand().equals("View Stats")){
+			add(mainComp);
+			mainComp.setVisible(true);
+		} else if (e.getActionCommand().equals("Save Profile")){
+			add(saveComp);
+			saveComp.setVisible(true);
+		} else {
+			add(loadComp);
+			loadComp.setVisible(true);
+		}
 	}
 
 	public int getNumGameStats(){
@@ -74,6 +102,34 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 	public int getWhichGameStat(){
 		return whichGameStat;
+	}
+
+	class SaveProfileComp extends JPanel {
+		private static final long serialVersionUID = 0000;
+
+		private JButton saveButt;
+		private TextField enterName;
+
+		public SaveProfileComp(){
+			setLayout(new GridLayout(2, 1));
+			saveButt = new JButton("Save");
+			enterName = new TextField("enter name");
+
+			add(enterName);
+			add(saveButt);
+		}
+	}
+
+	class LoadProfileComp extends JPanel {
+		private static final long serialVersionUID = 0000;
+
+		private JButton loadButt;
+		private TextField enterName;
+
+		public LoadProfileComp(){
+			setLayout(new GridLayout(1,3));
+
+		}
 	}
 
 	class MainStatsComp extends JComponent {
@@ -90,6 +146,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			setPrefSize();
 
 			if (numGameStats == 0){
+				pen.drawString("Profile Name: " + loadedProfile.getName(), width/4, height/4);
 				pen.drawString("No games played", width/2, height/2);
 			} else {
 				GameStat gameStats = loadedProfile.getGamesPlayed().get(whichGameStat);

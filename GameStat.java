@@ -24,7 +24,7 @@ public class GameStat {
 		WPM = 60 * gameSize / finalTime;
 		CPS = (float)totalCharCount / (float)finalTime;
 		WPM = Math.round(WPM);
-		CPS = Math.round(CPS * 100)/100;
+		CPS = Math.round(CPS * 100.00f)/100.00f;
 		
 	}
 

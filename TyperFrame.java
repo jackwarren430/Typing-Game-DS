@@ -138,11 +138,7 @@ public class TyperFrame extends JFrame{
 
     		if (count == 10){
     			if (gameStart){
-	    			if (gameMode.equals("count")){
-	    				updateCountMode();
-	    			} else if (gameMode.equals("time")){
-	    				updateTimeMode();
-	    			}
+	    			gameTimeCount++;
 	    			updateBottomBar();
 	    		} else {
 
@@ -158,14 +154,6 @@ public class TyperFrame extends JFrame{
    private void updateBottomBar(){
    		int currWPM = 60 * gameInput.size() / gameTimeCount;
    		bottomBarComp.update(currWPM, gameTimeCount);
-   }
-
-   private void updateCountMode(){
-   		gameTimeCount++;
-   }
-
-   private void updateTimeMode(){
-
    }
 
   	class MouseMovementListener implements MouseListener {

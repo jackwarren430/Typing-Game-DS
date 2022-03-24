@@ -12,7 +12,6 @@ public class GameComponent extends JComponent {
 	TyperFrame frame;
 	TyperGame game;
 
-
 	private int height;
 	private int width;
 	private Polygon startButton;

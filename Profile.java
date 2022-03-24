@@ -50,4 +50,8 @@ public class Profile {
 
 		return toReturn;
 	}
+
+	public String getName(){
+		return playerName;
+	}
 }
