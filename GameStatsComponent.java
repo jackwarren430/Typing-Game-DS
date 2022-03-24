@@ -42,7 +42,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 		layout = new BorderLayout();
 		setLayout(layout);
-		buttonsLayout = new GridLayout(1,3);
+		buttonsLayout = new GridLayout(1,5);
 		buttons = new JPanel(buttonsLayout);
 		fillLeft = new Filler();
 		fillRight = new Filler();
@@ -78,17 +78,20 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e){
 		Component center = layout.getLayoutComponent(BorderLayout.CENTER);
-		remove(center);
+		//remove(center);
+		layout.removeLayoutComponent(center);
 		center.setVisible(false);
 		if (e.getActionCommand().equals("View Stats")){
-			add(mainComp);
+			add(mainComp, BorderLayout.CENTER);
 			mainComp.setVisible(true);
 		} else if (e.getActionCommand().equals("Save Profile")){
-			add(saveComp);
+			add(saveComp, BorderLayout.CENTER);
 			saveComp.setVisible(true);
-		} else {
-			add(loadComp);
+		} else if (e.getActionCommand().equals("Load Profile")){
+			add(loadComp, BorderLayout.CENTER);
 			loadComp.setVisible(true);
+			setVisible(true);
+			repaint();
 		}
 	}
 
@@ -111,29 +114,25 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private TextField enterName;
 
 		private FillerPanel savePan;
-		private FillerPanel namePan;
+		private FillerPanel enterPan;
 
 		public SaveProfileComp(){
 			setLayout(new GridLayout(2, 1));
 			saveButt = new JButton("Save");
 			enterName = new TextField("enter name");
 
-			savePan = new FillerPanel();
-			namePan = new FillerPanel();
+			savePan = new FillerPanel(saveButt);
+			enterPan = new FillerPanel(enterName);
 
-			savePan.add(saveButt);
-			namePan.add(enterName);
-
-			
-			add(namePan, BorderLayout.NORTH);
-			add(savePan, BorderLayout.CENTER);
+			add(enterPan);
+			add(savePan);
 		}
 
 		public void adjust(){
-			saveButt.setPreferredSize(new Dimension(width/5,height/5));
-			enterName.setPreferredSize(new Dimension(width/5, height/5));
-			savePan.adjust(width/5, height/5);
-			namePan.adjust(width/5, height/5);
+			saveButt.setPreferredSize(new Dimension(width/3, height/9));
+			enterName.setPreferredSize(new Dimension(width/3, height/9));
+			savePan.adjust(width/3, height/9);
+			enterPan.adjust(width/3, height/9);
 		}
 	}
 
@@ -151,22 +150,19 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			loadButt = new JButton("Load");
 			enterName = new TextField("enter name");
 
-			loadPan = new FillerPanel();
-			enterPan = new FillerPanel();
+			loadPan = new FillerPanel(loadButt);
+			enterPan = new FillerPanel(enterName);
 
-			loadPan.add(loadButt);
-			enterPan.add(enterName);
-
-			add(loadPan);
 			add(enterPan);
+			add(loadPan);
 			
 		}
 
 		public void adjust(){
-			loadButt.setPreferredSize(new Dimension(width/5,height/5));
-			enterName.setPreferredSize(new Dimension(width/5, height/5));
-			// savePan.adjust(width/5, height/5);
-			// namePan.adjust(width/5, height/5);
+			loadButt.setPreferredSize(new Dimension(width/3,height/9));
+			enterName.setPreferredSize(new Dimension(width/3, height/9));
+			loadPan.adjust(width/3, height/9);
+			enterPan.adjust(width/3, height/9);
 		}
 	}
 
@@ -186,6 +182,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 				pen.drawString("No games played", width/2, height/2);
 			} else {
 				GameStat gameStats = loadedProfile.getGamesPlayed().get(whichGameStat);
+				pen.drawString("Profile Name: " + loadedProfile.getName(), width/4, height/4);
 				pen.drawString("Time: " + gameStats.getTime() + "s", width/2, 5*height/16);
 				pen.drawString("Errors: " + gameStats.getNumMissedWords(), width/2, 6*height/16);
 				pen.drawString("Missed Words: " + gameStats.getMissedWords(), width/2, 7*height/16);

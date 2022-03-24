@@ -10,28 +10,44 @@ public class FillerPanel extends JPanel {
 	private Filler fill3;
 	private Filler fill4;
 
-	public FillerPanel(){
+	private Filler fill5;
+	private Filler fill6;
+	private Filler fill7;
+	private Filler fill8;
+
+	public FillerPanel(Component comp){
 		fill1 = new Filler();
 		fill2 = new Filler();
 		fill3 = new Filler();
 		fill4 = new Filler();
+		fill5 = new Filler();
+		fill6 = new Filler();
+		fill7 = new Filler();
+		fill8 = new Filler();
 
-		add(fill1, BorderLayout.NORTH);
-		add(fill2, BorderLayout.SOUTH);
-		add(fill3, BorderLayout.EAST);
-		add(fill4, BorderLayout.WEST);
-		setVisible(true);
-	}
-
-	public void add(JComponent comp){
-		super.add(comp, BorderLayout.CENTER);
+		setLayout(new GridLayout(3,3));
+		
+		add(fill1);
+		add(fill2);
+		add(fill3);
+		add(fill4);
+		add(comp);
+		add(fill5);
+		add(fill6);
+		add(fill7);
+		add(fill8);
 	}
 
 	public void adjust(int width, int height){
-		fill1.setPreferredSize(new Dimension(width*3, height));
-		fill2.setPreferredSize(new Dimension(width*3, height));
-		fill3.setPreferredSize(new Dimension(width,height));
-		fill4.setPreferredSize(new Dimension(width,height));
+		fill1.setPreferredSize(new Dimension(width, height));
+		fill2.setPreferredSize(new Dimension(width, height));
+		fill3.setPreferredSize(new Dimension(width, height));
+		fill4.setPreferredSize(new Dimension(width, height));
+		fill5.setPreferredSize(new Dimension(width, height));
+		fill6.setPreferredSize(new Dimension(width, height));
+		fill7.setPreferredSize(new Dimension(width, height));
+		fill8.setPreferredSize(new Dimension(width, height));
+
 	}
 
 }
