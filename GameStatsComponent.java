@@ -110,13 +110,30 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private JButton saveButt;
 		private TextField enterName;
 
+		private FillerPanel savePan;
+		private FillerPanel namePan;
+
 		public SaveProfileComp(){
 			setLayout(new GridLayout(2, 1));
 			saveButt = new JButton("Save");
 			enterName = new TextField("enter name");
 
-			add(enterName);
-			add(saveButt);
+			savePan = new FillerPanel();
+			namePan = new FillerPanel();
+
+			savePan.add(saveButt);
+			namePan.add(enterName);
+
+			
+			add(namePan, BorderLayout.NORTH);
+			add(savePan, BorderLayout.CENTER);
+		}
+
+		public void adjust(){
+			saveButt.setPreferredSize(new Dimension(width/5,height/5));
+			enterName.setPreferredSize(new Dimension(width/5, height/5));
+			savePan.adjust(width/5, height/5);
+			namePan.adjust(width/5, height/5);
 		}
 	}
 
@@ -126,9 +143,30 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private JButton loadButt;
 		private TextField enterName;
 
-		public LoadProfileComp(){
-			setLayout(new GridLayout(1,3));
+		private JPanel loadPan;
+		private JPanel enterPan;
 
+		public LoadProfileComp(){
+			setLayout(new GridLayout(2,1));
+			loadButt = new JButton("Load");
+			enterName = new TextField("enter name");
+
+			loadPan = new FillerPanel();
+			enterPan = new FillerPanel();
+
+			loadPan.add(loadButt);
+			enterPan.add(enterName);
+
+			add(loadPan);
+			add(enterPan);
+			
+		}
+
+		public void adjust(){
+			loadButt.setPreferredSize(new Dimension(width/5,height/5));
+			enterName.setPreferredSize(new Dimension(width/5, height/5));
+			// savePan.adjust(width/5, height/5);
+			// namePan.adjust(width/5, height/5);
 		}
 	}
 
@@ -142,8 +180,6 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			height = 6*frame.getFrameSize()[1]/8;
 			Graphics2D pen = (Graphics2D) g;
 			numGameStats = loadedProfile.getGamesPlayed().size();
-
-			setPrefSize();
 
 			if (numGameStats == 0){
 				pen.drawString("Profile Name: " + loadedProfile.getName(), width/4, height/4);
@@ -159,15 +195,11 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		}
 	}
 
-	class Filler extends JComponent {
-		private static final long serialVersionUID = 0000;
-		public Filler(){}
-		public void paintComponent(Graphics g){}
-	}
-
-	private void setPrefSize(){
+	public void setPrefSize(){
 		buttons.setPreferredSize(new Dimension(width/2, height/8));
 		mainComp.setPreferredSize(new Dimension(width/2, 7*height/8));
+		saveComp.adjust();
+		loadComp.adjust();
 	}
 	
 }

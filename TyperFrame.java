@@ -135,7 +135,9 @@ public class TyperFrame extends JFrame{
     		}
   			menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     		mainLayout.getLayoutComponent(BorderLayout.CENTER).setPreferredSize(new Dimension(getFrameSize()[0], 6*getFrameSize()[1]/8));
-
+    		if (isStatsPage){
+    			gameStatsComp.setPrefSize();
+    		}
     		if (count == 10){
     			if (gameStart){
 	    			gameTimeCount++;
