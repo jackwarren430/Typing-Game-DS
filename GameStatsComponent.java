@@ -142,11 +142,11 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private JButton loadButt;
 		private TextField enterName;
 
-		private JPanel loadPan;
-		private JPanel enterPan;
+		private FillerPanel loadPan;
+		private FillerPanel enterPan;
 
 		public LoadProfileComp(){
-			setLayout(new GridLayout(2,1));
+			setLayout(new GridLayout(2, 1));
 			loadButt = new JButton("Load");
 			enterName = new TextField("enter name");
 
@@ -155,11 +155,10 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 			add(enterPan);
 			add(loadPan);
-			
 		}
 
 		public void adjust(){
-			loadButt.setPreferredSize(new Dimension(width/3,height/9));
+			loadButt.setPreferredSize(new Dimension(width/3, height/9));
 			enterName.setPreferredSize(new Dimension(width/3, height/9));
 			loadPan.adjust(width/3, height/9);
 			enterPan.adjust(width/3, height/9);
