@@ -54,4 +54,8 @@ public class Profile {
 	public String getName(){
 		return playerName;
 	}
+
+	public void setName(String name){
+		playerName = name;
+	}
 }

@@ -47,8 +47,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		fillLeft = new Filler();
 		fillRight = new Filler();
 
-		saveComp = new SaveProfileComp();
-		loadComp = new LoadProfileComp();
+		saveComp = new SaveProfileComp(this);
+		loadComp = new LoadProfileComp(this);
 		mainComp = new MainStatsComp();
 
 		viewStatsButt = new JButton("View Stats");
@@ -77,21 +77,31 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 
 	public void actionPerformed(ActionEvent e){
-		Component center = layout.getLayoutComponent(BorderLayout.CENTER);
-		//remove(center);
-		layout.removeLayoutComponent(center);
-		center.setVisible(false);
+		
 		if (e.getActionCommand().equals("View Stats")){
+			Component center = layout.getLayoutComponent(BorderLayout.CENTER);
+			layout.removeLayoutComponent(center);
+			center.setVisible(false);
 			add(mainComp, BorderLayout.CENTER);
 			mainComp.setVisible(true);
 		} else if (e.getActionCommand().equals("Save Profile")){
+			Component center = layout.getLayoutComponent(BorderLayout.CENTER);
+			layout.removeLayoutComponent(center);
+			center.setVisible(false);
 			add(saveComp, BorderLayout.CENTER);
 			saveComp.setVisible(true);
 		} else if (e.getActionCommand().equals("Load Profile")){
+			Component center = layout.getLayoutComponent(BorderLayout.CENTER);
+			layout.removeLayoutComponent(center);
+			center.setVisible(false);
 			add(loadComp, BorderLayout.CENTER);
 			loadComp.setVisible(true);
 			setVisible(true);
 			repaint();
+		} else if (e.getActionCommand().equals("Save")){
+			System.out.println("saving");
+		} else if (e.getActionCommand().equals("Load")){
+			System.out.println("loading");
 		}
 	}
 
@@ -110,16 +120,23 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 	class SaveProfileComp extends JPanel {
 		private static final long serialVersionUID = 0000;
 
+		private GameStatsComponent parent;
+
 		private JButton saveButt;
 		private TextField enterName;
 
 		private FillerPanel savePan;
 		private FillerPanel enterPan;
 
-		public SaveProfileComp(){
+		public SaveProfileComp(GameStatsComponent parent){
 			setLayout(new GridLayout(2, 1));
+			this.parent = parent;
+
 			saveButt = new JButton("Save");
 			enterName = new TextField("enter name");
+
+			saveButt.addActionListener(parent);
+			saveButt.setFocusable(false);
 
 			savePan = new FillerPanel(saveButt);
 			enterPan = new FillerPanel(enterName);
@@ -139,16 +156,23 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 	class LoadProfileComp extends JPanel {
 		private static final long serialVersionUID = 0000;
 
+		private GameStatsComponent parent;
+
 		private JButton loadButt;
 		private TextField enterName;
 
 		private FillerPanel loadPan;
 		private FillerPanel enterPan;
 
-		public LoadProfileComp(){
+		public LoadProfileComp(GameStatsComponent parent){
 			setLayout(new GridLayout(2, 1));
+			this.parent = parent;
+
 			loadButt = new JButton("Load");
 			enterName = new TextField("enter name");
+
+			loadButt.addActionListener(parent);
+			loadButt.setFocusable(false);
 
 			loadPan = new FillerPanel(loadButt);
 			enterPan = new FillerPanel(enterName);
@@ -183,10 +207,11 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 				GameStat gameStats = loadedProfile.getGamesPlayed().get(whichGameStat);
 				pen.drawString("Profile Name: " + loadedProfile.getName(), width/4, height/4);
 				pen.drawString("Time: " + gameStats.getTime() + "s", width/2, 5*height/16);
-				pen.drawString("Errors: " + gameStats.getNumMissedWords(), width/2, 6*height/16);
-				pen.drawString("Missed Words: " + gameStats.getMissedWords(), width/2, 7*height/16);
-				pen.drawString("Words Per Minute (WPM): " + gameStats.getWPM(), width/2, 8*height/16);
-				pen.drawString("Characters Per Second (CPS): " + gameStats.getCPS(), width/2, 9*height/16);
+				pen.drawString("Game Size: " + gameStats.getGameSize() + " words", width/2, 6*height/16);
+				pen.drawString("Errors: " + gameStats.getNumMissedWords(), width/2, 7*height/16);
+				pen.drawString("Missed Words: " + gameStats.getMissedWords(), width/2, 8*height/16);
+				pen.drawString("Words Per Minute (WPM): " + gameStats.getWPM(), width/2, 9*height/16);
+				pen.drawString("Characters Per Second (CPS): " + gameStats.getCPS(), width/2, 10*height/16);
 			}
 		}
 	}

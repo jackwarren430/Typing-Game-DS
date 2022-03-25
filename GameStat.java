@@ -30,6 +30,7 @@ public class GameStat {
 
 	public String toString(){
 		String toReturn = "";
+		toReturn += "Game Size: " + gameSize + " words";
 		toReturn += "Total Errors: " + numMissedWords + "\n";
 		toReturn += "Missed Words: ";
 		for (String word : missedWords){
@@ -43,6 +44,10 @@ public class GameStat {
 
 	public int getTime(){
 		return finalTime;
+	}
+
+	public int getGameSize(){
+		return gameSize;
 	}
 
 	public int getNumMissedWords(){

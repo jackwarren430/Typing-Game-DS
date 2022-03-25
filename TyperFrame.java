@@ -222,6 +222,8 @@ public class TyperFrame extends JFrame{
     		mainLayout.removeLayoutComponent(mainComp);
     		mainComp.setVisible(false);
     		mainPanel.add(gameComp, BorderLayout.CENTER);
+    		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
+    		bottomBarComp.setVisible(true);
     		gameComp.setVisible(true);
     	}
     }
@@ -231,9 +233,11 @@ public class TyperFrame extends JFrame{
     		clearNavVars();
     		isStatsPage = true;
     		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
-    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainLayout.removeLayoutComponent(mainComp);
     		mainComp.setVisible(false);
     		mainPanel.add(gameStatsComp, BorderLayout.CENTER);
+    		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
+    		bottomBarComp.setVisible(true);
     		gameStatsComp.setVisible(true);
     	}
     }
@@ -243,7 +247,9 @@ public class TyperFrame extends JFrame{
     		clearNavVars();
     		isInfoPage = true;
     		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
-    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainLayout.removeLayoutComponent(mainComp);
+    		mainLayout.removeLayoutComponent(bottomBarComp);
+    		bottomBarComp.setVisible(false);
     		mainComp.setVisible(false);
     		mainPanel.add(infoComp, BorderLayout.CENTER);
     		infoComp.setVisible(true);
@@ -251,11 +257,35 @@ public class TyperFrame extends JFrame{
     }
 
     public void goGameOptPage(){
-    	mainLayout.removeLayoutComponent(bottomBarComp);
+    	if (!gameStart){
+    		clearNavVars();
+    		isGameOptPage = true;
+    		mainLayout.removeLayoutComponent(bottomBarComp);
+    		bottomBarComp.setVisible(false);
+    		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
+    		mainLayout.removeLayoutComponent(mainComp);
+    		mainComp.setVisible(false);
+
+    		Filler fill = new Filler();
+    		mainPanel.add(fill);
+
+    	}
     }
 
     public void goSettingsPage(){
-    	mainLayout.removeLayoutComponent(bottomBarComp);
+    	if (!gameStart){
+    		clearNavVars();
+    		isSettingsPage = true;
+    		mainLayout.removeLayoutComponent(bottomBarComp);
+    		bottomBarComp.setVisible(false);
+    		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
+    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
+    		mainComp.setVisible(false);
+    		
+    		Filler fill = new Filler();
+    		mainPanel.add(fill);
+    		
+    	}
     }
 
     public Boolean getIsInfoPage(){
