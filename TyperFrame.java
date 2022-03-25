@@ -288,6 +288,15 @@ public class TyperFrame extends JFrame{
     	}
     }
 
+    public void saveProfile(String name){
+    	loadedProfile.setName(name);
+    	loadedProfile.saveProfile();
+    }
+
+    public void loadProfile(){
+
+    }
+
     public Boolean getIsInfoPage(){
     	return isInfoPage;
     }

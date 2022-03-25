@@ -99,7 +99,12 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			setVisible(true);
 			repaint();
 		} else if (e.getActionCommand().equals("Save")){
-			System.out.println("saving");
+			if (saveComp.getName().equals("")){
+				System.out.println("YOU NEED TO ENTER A NAME SLY GUY");
+			} else {
+				frame.saveProfile(saveComp.getName());
+			}
+			
 		} else if (e.getActionCommand().equals("Load")){
 			System.out.println("loading");
 		}
@@ -133,7 +138,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			this.parent = parent;
 
 			saveButt = new JButton("Save");
-			enterName = new TextField("enter name");
+			enterName = new TextField("Player");
 
 			saveButt.addActionListener(parent);
 			saveButt.setFocusable(false);
@@ -150,6 +155,10 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			enterName.setPreferredSize(new Dimension(width/3, height/9));
 			savePan.adjust(width/3, height/9);
 			enterPan.adjust(width/3, height/9);
+		}
+
+		public String getName(){
+			return enterName.getText();
 		}
 	}
 

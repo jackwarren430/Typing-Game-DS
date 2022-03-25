@@ -38,7 +38,7 @@ public class GameStat {
 		}
 		toReturn += "\nFinal Time: " + finalTime + " seconds\n";
 		toReturn += "Words Per Minute (WPM): " + WPM + " w/m\n";
-		toReturn += "Characters Per Second (CPS): " + CPS + " c/s\n";
+		toReturn += "Characters Per Second (CPS): " + CPS + " c/s";
 		return toReturn;
 	}
 

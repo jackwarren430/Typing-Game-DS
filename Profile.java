@@ -25,7 +25,8 @@ public class Profile {
 	public void saveProfile(){
 		PrintWriter writer = null;
 		try {
-			writer = new PrintWriter(playerName + ".txt", "UTF-8");
+			String fileDir = "SavedProfiles" + File.separator + playerName + ".txt";
+			writer = new PrintWriter(fileDir, "UTF-8");
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -39,15 +40,14 @@ public class Profile {
 
 	public String getString(){
 		String toReturn = "";
-
-		toReturn += "ProfileName: " + playerName;
+		toReturn += "ProfileName: " + playerName + "\n";
+		toReturn += "#Games: " + gamesPlayed.size();
 		int count = 0;
 		for (GameStat stat : gamesPlayed){
 			toReturn += "\n%\ntag: " + count + "\n";
 			toReturn += stat;
 			count++;
 		}
-
 		return toReturn;
 	}
 
