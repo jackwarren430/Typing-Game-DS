@@ -70,7 +70,7 @@ public class GameComponent extends JComponent {
 	public void wrapUpGame(ArrayList<String> finalInput, int finalTime){
 		ArrayList<String> missedWords = game.getErrors(finalInput);
 		GameStat recentGameStat = new GameStat(missedWords, finalTime, game.getTotalCharCount(), frame.getGameSize());
-		frame.getLoadedProfile().add(recentGameStat);
+		frame.getLoadedProfile().add(recentGameStat, missedWords);
 	}
 
 	public void checkForStartClick(int x, int y) throws IOException{

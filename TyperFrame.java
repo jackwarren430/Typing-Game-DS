@@ -187,7 +187,7 @@ public class TyperFrame extends JFrame{
 				String charIn = String.valueOf(Character.toString(keyCode));
 				//System.out.println(keyCode + " -> " + charIn);
 				if (gameMode.equals("count")){
-					if (keyCode == 32){
+					if (keyCode == 32 || keyCode == 13){
 						if (!tempIn.strip().equals("")){
 							gameInput.add(tempIn);
 							tempIn = "";
@@ -293,8 +293,8 @@ public class TyperFrame extends JFrame{
     	loadedProfile.saveProfile();
     }
 
-    public void loadProfile(){
-
+    public void loadProfile(String name){
+    	loadedProfile = new Profile(name);
     }
 
     public Boolean getIsInfoPage(){

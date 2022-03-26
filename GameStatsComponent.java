@@ -99,14 +99,28 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			setVisible(true);
 			repaint();
 		} else if (e.getActionCommand().equals("Save")){
+			File f = new File("SavedProfiles");
+			String[] fileList = f.list();
+			Boolean doSave = true;
+			for (String n : fileList){
+				if (n.equals(saveComp.getName() + ".txt")){
+					doSave = false;
+				}
+			}
 			if (saveComp.getName().equals("")){
 				System.out.println("YOU NEED TO ENTER A NAME SLY GUY");
-			} else {
+			} else if (doSave){
 				frame.saveProfile(saveComp.getName());
+			} else {
+				System.out.println("A file with that name already exists");
 			}
 			
 		} else if (e.getActionCommand().equals("Load")){
-			System.out.println("loading");
+			if (loadComp.getName() != null){
+				frame.loadProfile(loadComp.getName());
+			} else {
+				System.out.println("Nothing selected");
+			}
 		}
 	}
 
@@ -168,33 +182,39 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private GameStatsComponent parent;
 
 		private JButton loadButt;
-		private TextField enterName;
+		private JList<String> fileList;
+		private JScrollPane filePan;
 
 		private FillerPanel loadPan;
-		private FillerPanel enterPan;
+		private FillerPanel pickPan;
 
 		public LoadProfileComp(GameStatsComponent parent){
 			setLayout(new GridLayout(2, 1));
 			this.parent = parent;
 
 			loadButt = new JButton("Load");
-			enterName = new TextField("enter name");
-
+			fileList = new JList<String>(new File("SavedProfiles").list());
+			filePan = new JScrollPane(fileList);
+			
 			loadButt.addActionListener(parent);
 			loadButt.setFocusable(false);
 
 			loadPan = new FillerPanel(loadButt);
-			enterPan = new FillerPanel(enterName);
+			pickPan = new FillerPanel(filePan);
 
-			add(enterPan);
+			add(pickPan);
 			add(loadPan);
 		}
 
 		public void adjust(){
 			loadButt.setPreferredSize(new Dimension(width/3, height/9));
-			enterName.setPreferredSize(new Dimension(width/3, height/9));
+			filePan.setPreferredSize(new Dimension(width/3, height/9));
 			loadPan.adjust(width/3, height/9);
-			enterPan.adjust(width/3, height/9);
+			pickPan.adjust(width/3, height/9);
+		}
+
+		public String getName(){
+			return fileList.getSelectedValue();
 		}
 	}
 
@@ -214,13 +234,14 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 				pen.drawString("No games played", width/2, height/2);
 			} else {
 				GameStat gameStats = loadedProfile.getGamesPlayed().get(whichGameStat);
-				pen.drawString("Profile Name: " + loadedProfile.getName(), width/4, height/4);
-				pen.drawString("Time: " + gameStats.getTime() + "s", width/2, 5*height/16);
-				pen.drawString("Game Size: " + gameStats.getGameSize() + " words", width/2, 6*height/16);
-				pen.drawString("Errors: " + gameStats.getNumMissedWords(), width/2, 7*height/16);
-				pen.drawString("Missed Words: " + gameStats.getMissedWords(), width/2, 8*height/16);
-				pen.drawString("Words Per Minute (WPM): " + gameStats.getWPM(), width/2, 9*height/16);
-				pen.drawString("Characters Per Second (CPS): " + gameStats.getCPS(), width/2, 10*height/16);
+				pen.drawString("Profile Name: " + loadedProfile.getName(), 3*width/16, 2*height/16);
+				pen.drawString("Frequently Missed Words: " + loadedProfile.getfreqMissedWords(), 3*width/16, 3*height/16);
+				pen.drawString("Time: " + gameStats.getTime() + "s", 7*width/16, 5*height/16);
+				pen.drawString("Game Size: " + gameStats.getGameSize() + " words", 7*width/16, 6*height/16);
+				pen.drawString("Errors: " + gameStats.getNumMissedWords(), 7*width/16, 7*height/16);
+				pen.drawString("Missed Words: " + gameStats.getMissedWords(), 7*width/16, 8*height/16);
+				pen.drawString("Words Per Minute (WPM): " + gameStats.getWPM(), 7*width/16, 9*height/16);
+				pen.drawString("Characters Per Second (CPS): " + gameStats.getCPS(), 7*width/16, 10*height/16);
 			}
 		}
 	}

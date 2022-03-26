@@ -30,17 +30,23 @@ public class GameStat {
 
 	public String toString(){
 		String toReturn = "";
-		toReturn += "Game Size: " + gameSize + " words";
+		toReturn += "Game Size: " + gameSize + "\n";
 		toReturn += "Total Errors: " + numMissedWords + "\n";
-		toReturn += "Missed Words: ";
-		for (String word : missedWords){
-			toReturn += word + ", ";
-		}
-		toReturn += "\nFinal Time: " + finalTime + " seconds\n";
-		toReturn += "Words Per Minute (WPM): " + WPM + " w/m\n";
-		toReturn += "Characters Per Second (CPS): " + CPS + " c/s";
+		toReturn += "Missed Words: " + missedWords + "\n";
+		toReturn += "\nFinal Time(s): " + finalTime + "\n";
+		toReturn += "Words Per Minute (WPM): " + WPM + "\n";
+		toReturn += "Characters Per Second (CPS): " + CPS;
 		return toReturn;
 	}
+
+	public static String arrListToString(ArrayList<String> arrList){
+		String toReturn = "";
+		for (String word : arrList){
+			toReturn += word + ", ";
+		}
+		return toReturn;
+	}
+
 
 	public int getTime(){
 		return finalTime;
@@ -54,8 +60,8 @@ public class GameStat {
 		return numMissedWords;
 	}
 
-	public ArrayList<String> getMissedWords(){
-		return missedWords;
+	public String getMissedWords(){
+		return arrListToString(missedWords);
 	}
 
 	public int getWPM(){
