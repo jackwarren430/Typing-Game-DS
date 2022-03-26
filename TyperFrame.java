@@ -295,6 +295,7 @@ public class TyperFrame extends JFrame{
 
     public void loadProfile(String name){
     	loadedProfile = new Profile(name);
+    	gameStatsComp = new GameStatsComponent(this);
     }
 
     public Boolean getIsInfoPage(){

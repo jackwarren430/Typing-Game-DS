@@ -1,0 +1,20 @@
+ProfileName: Player
+#Games: 2
+AvgWPM: 62
+FreqMissedWords: [common, power]
+%
+tag: 0
+Game Size: 12
+Total Errors: 1
+Missed Words: [common]
+Final Time(s): 12
+Words Per Minute (WPM): 60
+Characters Per Second (CPS): 5.0
+%
+tag: 1
+Game Size: 12
+Total Errors: 1
+Missed Words: [power]
+Final Time(s): 11
+Words Per Minute (WPM): 65
+Characters Per Second (CPS): 5.18

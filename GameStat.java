@@ -33,7 +33,7 @@ public class GameStat {
 		toReturn += "Game Size: " + gameSize + "\n";
 		toReturn += "Total Errors: " + numMissedWords + "\n";
 		toReturn += "Missed Words: " + missedWords + "\n";
-		toReturn += "\nFinal Time(s): " + finalTime + "\n";
+		toReturn += "Final Time(s): " + finalTime + "\n";
 		toReturn += "Words Per Minute (WPM): " + WPM + "\n";
 		toReturn += "Characters Per Second (CPS): " + CPS;
 		return toReturn;
@@ -47,6 +47,13 @@ public class GameStat {
 		return toReturn;
 	}
 
+	public void setWPM(int WPM){
+		this.WPM = WPM;
+	}
+
+	public void setCPS(float CPS){
+		this.CPS = CPS;
+	}
 
 	public int getTime(){
 		return finalTime;

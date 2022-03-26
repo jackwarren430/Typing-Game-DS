@@ -117,24 +117,13 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			
 		} else if (e.getActionCommand().equals("Load")){
 			if (loadComp.getName() != null){
-				frame.loadProfile(loadComp.getName());
+				frame.loadProfile(loadComp.getName() + ".txt");
 			} else {
 				System.out.println("Nothing selected");
 			}
 		}
 	}
 
-	public int getNumGameStats(){
-		return numGameStats;
-	}
-
-	public void setWhichGameStat(int i){
-		whichGameStat = i;
-	}
-
-	public int getWhichGameStat(){
-		return whichGameStat;
-	}
 
 	class SaveProfileComp extends JPanel {
 		private static final long serialVersionUID = 0000;
@@ -193,7 +182,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			this.parent = parent;
 
 			loadButt = new JButton("Load");
-			fileList = new JList<String>(new File("SavedProfiles").list());
+			updateList();
 			filePan = new JScrollPane(fileList);
 			
 			loadButt.addActionListener(parent);
@@ -201,7 +190,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 			loadPan = new FillerPanel(loadButt);
 			pickPan = new FillerPanel(filePan);
-
+			
 			add(pickPan);
 			add(loadPan);
 		}
@@ -215,6 +204,17 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 		public String getName(){
 			return fileList.getSelectedValue();
+		}
+
+		public void updateList(){
+			String[] list = new File("SavedProfiles").list();
+			String[] goodList = new String[list.length-1];
+			for (int i = 0; i < list.length - 1; i++){
+				goodList[i] = list[i+1].substring(0, list[i+1].length()-4);
+			}
+	
+			fileList = new JList<String>(goodList);
+			
 		}
 	}
 
@@ -235,7 +235,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			} else {
 				GameStat gameStats = loadedProfile.getGamesPlayed().get(whichGameStat);
 				pen.drawString("Profile Name: " + loadedProfile.getName(), 3*width/16, 2*height/16);
-				pen.drawString("Frequently Missed Words: " + loadedProfile.getfreqMissedWords(), 3*width/16, 3*height/16);
+				pen.drawString("Frequently Missed Words: " + loadedProfile.getFreqMissedWords(), 3*width/16, 3*height/16);
+				pen.drawString("Average WPM: " + loadedProfile.getAvgWPM(), 3*width/16, 4*height/16);
 				pen.drawString("Time: " + gameStats.getTime() + "s", 7*width/16, 5*height/16);
 				pen.drawString("Game Size: " + gameStats.getGameSize() + " words", 7*width/16, 6*height/16);
 				pen.drawString("Errors: " + gameStats.getNumMissedWords(), 7*width/16, 7*height/16);
@@ -252,6 +253,19 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		saveComp.adjust();
 		loadComp.adjust();
 	}
+
+	public int getNumGameStats(){
+		return numGameStats;
+	}
+
+	public void setWhichGameStat(int i){
+		whichGameStat = i;
+	}
+
+	public int getWhichGameStat(){
+		return whichGameStat;
+	}
+
 	
 }
 

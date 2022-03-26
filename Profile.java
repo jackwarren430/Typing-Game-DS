@@ -6,6 +6,7 @@ public class Profile {
 	ArrayList<String> freqMissedWords;
 	ArrayList<GameStat> gamesPlayed;
 	String playerName;
+	int avgWPM;
 
 	public Profile(){
 		gamesPlayed = new ArrayList<GameStat>();
@@ -24,22 +25,40 @@ public class Profile {
 			Scanner scan = new Scanner(new File("SavedProfiles" + File.separator + file));
 			playerName = scan.nextLine().substring(13);
 			int numGames = Integer.valueOf(scan.nextLine().substring(8));
-			String fmw = scan.nextLine().substring(17);
+			avgWPM = Integer.valueOf(scan.nextLine().substring(8));
+			String fmw = scan.nextLine().substring(18);
 			String temp = "";
 			for (int i = 0; i < fmw.length(); i++){
 				String c = fmw.substring(i,i+1);
-				if (c.equals(",")){
+				if (c.equals(",") || c.equals("]")){
 					freqMissedWords.add(temp);
 				} else {
 					temp += c;
 				}
 			}
 			for (int i = 0; i < numGames; i++){
-				scan.nextLine();
-				scan.nextLine();
+				scan.nextLine(); // %
+				scan.nextLine(); // tag
 				int gameSize = Integer.valueOf(scan.nextLine().substring(11));
 				int numErrors = Integer.valueOf(scan.nextLine().substring(14));
-				System.out.println("gameSize: " + gameSize + "numErrors");
+				ArrayList<String> missedWords = new ArrayList<String>();
+				String mw = scan.nextLine().substring(15);
+				temp = "";
+				for (int j = 0; j < mw.length(); j++){
+					String c = mw.substring(j,j+1);
+					if (c.equals(",") || c.equals("]")){
+						missedWords.add(temp);
+					} else {
+						temp += c;
+					}
+				}
+				int finalTime = Integer.valueOf(scan.nextLine().substring(15));
+				int WPM = Integer.valueOf(scan.nextLine().substring(24));
+				float CPS = Float.valueOf(scan.nextLine().substring(29));
+				GameStat toAdd = new GameStat(missedWords, finalTime, 0, gameSize);
+				toAdd.setCPS(CPS);
+				gamesPlayed.add(toAdd);
+
 			}
 			
 		} catch (IOException e){
@@ -62,7 +81,9 @@ public class Profile {
 				freqMissedWords.add(s);
 			}
 		}
-		//if (freqMissedWords.size() > 
+		while (freqMissedWords.size() > 36){
+			freqMissedWords.remove(freqMissedWords.size()-1);
+		}
 	}
 
 	public void saveProfile(){
@@ -85,6 +106,7 @@ public class Profile {
 		String toReturn = "";
 		toReturn += "ProfileName: " + playerName + "\n";
 		toReturn += "#Games: " + gamesPlayed.size() + "\n";
+		toReturn += "AvgWPM: " + calcAvgWPM() + "\n";
 		toReturn += "FreqMissedWords: " + freqMissedWords;
 		int count = 0;
 		for (GameStat stat : gamesPlayed){
@@ -95,12 +117,24 @@ public class Profile {
 		return toReturn;
 	}
 
-	public String getfreqMissedWords(){
+	public String getFreqMissedWords(){
 		return GameStat.arrListToString(freqMissedWords);
 	}
 
 	public String getName(){
 		return playerName;
+	}
+
+	public int getAvgWPM(){
+		return calcAvgWPM();
+	}
+
+	public int calcAvgWPM(){
+		int collect = 0;
+		for (GameStat s : gamesPlayed){
+			collect += s.getWPM();
+		}
+		return collect / gamesPlayed.size();
 	}
 
 	public void setName(String name){
