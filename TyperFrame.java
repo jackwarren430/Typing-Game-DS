@@ -53,7 +53,7 @@ public class TyperFrame extends JFrame{
 		isGameOptPage = false;
 		isSettingsPage = false;
 
-		gameSize = 12;
+		gameSize = 8;
 		gameTimeLength = 30;
 		gameMode = "count";
 
@@ -187,7 +187,7 @@ public class TyperFrame extends JFrame{
 				String charIn = String.valueOf(Character.toString(keyCode));
 				//System.out.println(keyCode + " -> " + charIn);
 				if (gameMode.equals("count")){
-					if (keyCode == 32 || keyCode == 13){
+					if (keyCode == 32 || keyCode == 10){
 						if (!tempIn.strip().equals("")){
 							gameInput.add(tempIn);
 							tempIn = "";

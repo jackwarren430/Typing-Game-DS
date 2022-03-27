@@ -32,6 +32,7 @@ public class Profile {
 				String c = fmw.substring(i,i+1);
 				if (c.equals(",") || c.equals("]")){
 					freqMissedWords.add(temp);
+					temp = "";
 				} else {
 					temp += c;
 				}
@@ -48,6 +49,7 @@ public class Profile {
 					String c = mw.substring(j,j+1);
 					if (c.equals(",") || c.equals("]")){
 						missedWords.add(temp);
+						temp = "";
 					} else {
 						temp += c;
 					}

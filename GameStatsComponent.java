@@ -74,10 +74,12 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		setPrefSize();
 	}
 
-
+	public void refresh(){
+		frame.goStatsPage();
+	}
 
 	public void actionPerformed(ActionEvent e){
-		
+		saveComp.setVisible(false);
 		if (e.getActionCommand().equals("View Stats")){
 			Component center = layout.getLayoutComponent(BorderLayout.CENTER);
 			layout.removeLayoutComponent(center);
@@ -94,6 +96,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			Component center = layout.getLayoutComponent(BorderLayout.CENTER);
 			layout.removeLayoutComponent(center);
 			center.setVisible(false);
+			loadComp = new LoadProfileComp(this);
 			add(loadComp, BorderLayout.CENTER);
 			loadComp.setVisible(true);
 			setVisible(true);
@@ -107,12 +110,15 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 					doSave = false;
 				}
 			}
-			if (saveComp.getName().equals("")){
-				System.out.println("YOU NEED TO ENTER A NAME SLY GUY");
+			if (saveComp.getName().equals("") || saveComp.getName().equals("Player")){
+				saveComp.noNameError();
+			} else if (frame.getLoadedProfile().getGamesPlayed().size() == 0){
+				saveComp.noGamesPlayedError();
 			} else if (doSave){
 				frame.saveProfile(saveComp.getName());
+				saveComp.success();
 			} else {
-				System.out.println("A file with that name already exists");
+				saveComp.override();
 			}
 			
 		} else if (e.getActionCommand().equals("Load")){
@@ -122,6 +128,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 				System.out.println("Nothing selected");
 			}
 		}
+		refresh();
 	}
 
 
@@ -132,36 +139,68 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 		private JButton saveButt;
 		private TextField enterName;
+		private JLabel error;
+		private JButton overrideButt;
 
 		private FillerPanel savePan;
 		private FillerPanel enterPan;
+		private FillerPanel errorPan;
+
 
 		public SaveProfileComp(GameStatsComponent parent){
-			setLayout(new GridLayout(2, 1));
+			setLayout(new GridLayout(3, 1));
 			this.parent = parent;
 
 			saveButt = new JButton("Save");
 			enterName = new TextField("Player");
+			error = new JLabel("");
+			overrideButt = new JButton("override");
 
 			saveButt.addActionListener(parent);
 			saveButt.setFocusable(false);
 
 			savePan = new FillerPanel(saveButt);
 			enterPan = new FillerPanel(enterName);
+			errorPan = new FillerPanel(error);
 
+			add(errorPan);
 			add(enterPan);
 			add(savePan);
 		}
 
 		public void adjust(){
-			saveButt.setPreferredSize(new Dimension(width/3, height/9));
-			enterName.setPreferredSize(new Dimension(width/3, height/9));
-			savePan.adjust(width/3, height/9);
-			enterPan.adjust(width/3, height/9);
+			savePan.adjust(width, height/3);
+			enterPan.adjust(width, height/3);
 		}
 
 		public String getName(){
 			return enterName.getText();
+		}
+
+		public void noNameError(){
+			error.setText("Enter a name before saving");
+			errorPan.setVisible(true);
+		}
+
+		public void noGamesPlayedError(){
+			error.setText("Play some games before saving!");
+			errorPan.setVisible(true);
+		}
+
+		public void success(){
+			error.setText("Profile saved!");
+			errorPan.setVisible(true);
+		}
+
+		public void override(){
+			error.setText("A profile already exists with that name. Override?");
+			errorPan.setVisible(true);
+		}
+
+		public void removeError(){
+			error.setText("");
+
+			errorPan.setVisible(false);
 		}
 	}
 
@@ -196,10 +235,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		}
 
 		public void adjust(){
-			loadButt.setPreferredSize(new Dimension(width/3, height/9));
-			filePan.setPreferredSize(new Dimension(width/3, height/9));
-			loadPan.adjust(width/3, height/9);
-			pickPan.adjust(width/3, height/9);
+			loadPan.adjust(width, height/2);
+			pickPan.adjust(width, height/2, "DOWN", 0.7f);
 		}
 
 		public String getName(){
