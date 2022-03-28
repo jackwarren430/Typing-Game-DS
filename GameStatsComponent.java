@@ -79,7 +79,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e){
-		saveComp.setVisible(false);
+		saveComp.removeError();
 		if (e.getActionCommand().equals("View Stats")){
 			Component center = layout.getLayoutComponent(BorderLayout.CENTER);
 			layout.removeLayoutComponent(center);
@@ -127,6 +127,10 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			} else {
 				System.out.println("Nothing selected");
 			}
+		} else if (e.getActionCommand().equals("override")){
+			File f = new File("SavedProfiles" + File.separator + saveComp.getName() + ".txt");
+			f.delete();
+			frame.saveProfile(saveComp.getName());
 		}
 		refresh();
 	}
@@ -141,11 +145,13 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private TextField enterName;
 		private JLabel error;
 		private JButton overrideButt;
+		private JPanel combPan;
 
 		private FillerPanel savePan;
 		private FillerPanel enterPan;
 		private FillerPanel errorPan;
 
+		private Boolean overrideStart;
 
 		public SaveProfileComp(GameStatsComponent parent){
 			setLayout(new GridLayout(3, 1));
@@ -158,10 +164,17 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 			saveButt.addActionListener(parent);
 			saveButt.setFocusable(false);
+			overrideButt.addActionListener(parent);
+			overrideButt.setFocusable(false);
+			overrideButt.setVisible(false);
+
+			combPan = new JPanel(new GridLayout(2,1));
+			combPan.add(error);
+			combPan.add(overrideButt);
 
 			savePan = new FillerPanel(saveButt);
 			enterPan = new FillerPanel(enterName);
-			errorPan = new FillerPanel(error);
+			errorPan = new FillerPanel(combPan);
 
 			add(errorPan);
 			add(enterPan);
@@ -194,13 +207,14 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 		public void override(){
 			error.setText("A profile already exists with that name. Override?");
+			overrideButt.setVisible(true);
 			errorPan.setVisible(true);
 		}
 
 		public void removeError(){
 			error.setText("");
-
 			errorPan.setVisible(false);
+			overrideButt.setVisible(false);
 		}
 	}
 

@@ -1,0 +1,20 @@
+ProfileName: jack1
+#Games: 2
+AvgWPM: 60
+FreqMissedWords: []
+%
+tag: 0
+Game Size: 8
+Total Errors: 1
+Missed Words: []
+Final Time(s): 9
+Words Per Minute (WPM): 53
+Characters Per Second (CPS): 4.22
+%
+tag: 1
+Game Size: 8
+Total Errors: 0
+Missed Words: []
+Final Time(s): 7
+Words Per Minute (WPM): 68
+Characters Per Second (CPS): 4.86
