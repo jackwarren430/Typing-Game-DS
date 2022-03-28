@@ -17,8 +17,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 	private GridLayout buttonsLayout;
 	private JPanel buttons;
 	private TyperFrame frame;
-	int width;
-	int height;
+	private int width;
+	private int height;
 
 	private SaveProfileComp saveComp;
 	private LoadProfileComp loadComp;

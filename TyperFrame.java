@@ -25,6 +25,7 @@ public class TyperFrame extends JFrame{
 	private TopBarComponent menuBarComp;
 	private InfoComponent infoComp;
 	private GameStatsComponent gameStatsComp;
+	private SettingsComponent settingsComp;
 
 	//navigation vars
 	private Boolean gameStart;
@@ -45,7 +46,6 @@ public class TyperFrame extends JFrame{
 	private Profile loadedProfile;
 
 	public TyperFrame() throws IOException{
-
 		gameStart = false;
 		isHome = true;
 		isInfoPage = false;
@@ -84,7 +84,6 @@ public class TyperFrame extends JFrame{
 
   	private void configurePanel() throws IOException{
   		mainPanel = new JPanel();
-  		mainPanel.setBackground(Color.green);
 		mainLayout = new BorderLayout();
   		mainPanel.setLayout(mainLayout);
 
@@ -93,15 +92,28 @@ public class TyperFrame extends JFrame{
   		bottomBarComp = new BottomBarComponent(this);
   		menuBarComp = new TopBarComponent(this);
   		infoComp = new InfoComponent(this);
+  		settingsComp = new SettingsComponent(this);
   		
   		mainPanel.add(menuBarComp, BorderLayout.NORTH);
   		mainPanel.add(gameComp, BorderLayout.CENTER, SwingConstants.CENTER);
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
-  		
+
+  		updateColors(Styles.teal, Styles.coral);
+  		//updateFont();
 
   		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     	menuBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
     	mainLayout.getLayoutComponent(BorderLayout.CENTER).setPreferredSize(new Dimension(getFrameSize()[0], 6*getFrameSize()[1]/8));
+  	}
+
+  	public void updateColors(Color backgroundColor, Color foregroundColor){
+  		mainPanel.setBackground(backgroundColor);
+  		mainPanel.setForeground(foregroundColor);
+  		bottomBarComp.updateColors(backgroundColor, foregroundColor);
+  	}
+
+  	public void updateFont(Font f){
+  		
   	}
 
   	public void startGame(){
@@ -194,8 +206,6 @@ public class TyperFrame extends JFrame{
 							if (gameInput.size() == gameSize){
 								endGame();
 							}
-						} else {
- 							// do nothing!!!! :D :D :D :D :D
 						}
 					} else if (keyCode == 8){
 						if (tempIn.equals("") && !gameInput.isEmpty()){
@@ -281,9 +291,8 @@ public class TyperFrame extends JFrame{
     		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
     		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
     		mainComp.setVisible(false);
-    		
-    		Filler fill = new Filler();
-    		mainPanel.add(fill);
+    		mainPanel.add(settingsComp, BorderLayout.CENTER);
+    		settingsComp.setVisible(true);
     		
     	}
     }

@@ -64,7 +64,7 @@ public class GameComponent extends JComponent {
 		int[] xVals = new int[] {9*width/16, 7*width/16, 7*width/16 };
 		int[] yVals = new int[] {height/2, 3*height/8, 5*height/8};
 		startButton = new Polygon(xVals, yVals, 3);
-		pen.drawPolygon(startButton);
+		pen.fillPolygon(startButton);
 	}
 
 	public void wrapUpGame(ArrayList<String> finalInput, int finalTime){

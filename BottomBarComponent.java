@@ -42,6 +42,11 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 		statsPrevButt = new JButton("<");
 		whichStatLabel = new JLabel(frame.getGameStatsComp().getWhichGameStat() + 1 + "", SwingConstants.CENTER);
 
+		statsNextButt.setFont(Styles.buttonFont);
+		statsPrevButt.setFont(Styles.buttonFont);
+		timeLabel.setFont(Styles.labelsFont);
+		WPMLabel.setFont(Styles.labelsFont);
+
 		statsNextButt.addActionListener(this);
 		statsPrevButt.addActionListener(this);
 		statsNextButt.setFocusable(false);
@@ -124,5 +129,15 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 		displayErrors = b;
 	}
 
+	public void updateColors(Color backgroundColor, Color foregroundColor){
+		setBackground(backgroundColor);
+		setForeground(foregroundColor);
+		timeLabel.setForeground(foregroundColor);
+		WPMLabel.setForeground(foregroundColor);
+		statsNextButt.setBackground(backgroundColor);
+		statsNextButt.setForeground(foregroundColor);
+		statsPrevButt.setBackground(backgroundColor);
+		statsPrevButt.setForeground(foregroundColor);
+	}
 
 }
