@@ -24,7 +24,7 @@ public class InfoComponent extends JComponent {
 		Graphics2D pen = (Graphics2D) g;
 		width = frame.getFrameSize()[0];
 		height = 6*frame.getFrameSize()[1]/8;
-
+		pen.setFont(Styles.logiFont);
 		paintInfo(pen);
 	}
 

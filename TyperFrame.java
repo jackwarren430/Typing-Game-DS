@@ -46,6 +46,13 @@ public class TyperFrame extends JFrame{
 	private Profile loadedProfile;
 
 	public TyperFrame() throws IOException{
+
+		try {
+			UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		gameStart = false;
 		isHome = true;
 		isInfoPage = false;
@@ -110,6 +117,9 @@ public class TyperFrame extends JFrame{
   		mainPanel.setBackground(backgroundColor);
   		mainPanel.setForeground(foregroundColor);
   		bottomBarComp.updateColors(backgroundColor, foregroundColor);
+  		gameStatsComp.updateColors(backgroundColor, foregroundColor);
+
+
   	}
 
   	public void updateFont(Font f){

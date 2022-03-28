@@ -74,10 +74,6 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		setPrefSize();
 	}
 
-	public void refresh(){
-		frame.goStatsPage();
-	}
-
 	public void actionPerformed(ActionEvent e){
 		saveComp.removeError();
 		if (e.getActionCommand().equals("View Stats")){
@@ -124,6 +120,14 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		} else if (e.getActionCommand().equals("Load")){
 			if (loadComp.getName() != null){
 				frame.loadProfile(loadComp.getName() + ".txt");
+				loadedProfile = frame.getLoadedProfile();
+		
+				Component center = layout.getLayoutComponent(BorderLayout.CENTER);
+				layout.removeLayoutComponent(center);
+				center.setVisible(false);
+				add(mainComp, BorderLayout.CENTER);
+				mainComp.setVisible(true);
+
 			} else {
 				System.out.println("Nothing selected");
 			}
@@ -131,8 +135,9 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			File f = new File("SavedProfiles" + File.separator + saveComp.getName() + ".txt");
 			f.delete();
 			frame.saveProfile(saveComp.getName());
+			
 		}
-		refresh();
+		revalidate();
 	}
 
 
@@ -263,10 +268,10 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			for (int i = 0; i < list.length - 1; i++){
 				goodList[i] = list[i+1].substring(0, list[i+1].length()-4);
 			}
-	
 			fileList = new JList<String>(goodList);
-			
 		}
+
+
 	}
 
 	class MainStatsComp extends JComponent {
@@ -279,7 +284,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			height = 6*frame.getFrameSize()[1]/8;
 			Graphics2D pen = (Graphics2D) g;
 			numGameStats = loadedProfile.getGamesPlayed().size();
-
+			pen.setFont(Styles.logiFont);
+			//updateColors(getBackground(), getForeground());
 			if (numGameStats == 0){
 				pen.drawString("Profile Name: " + loadedProfile.getName(), width/4, height/4);
 				pen.drawString("No games played", width/2, height/2);
@@ -296,6 +302,18 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 				pen.drawString("Characters Per Second (CPS): " + gameStats.getCPS(), 7*width/16, 10*height/16);
 			}
 		}
+
+		public void updateColors(Color backgroundColor, Color foregroundColor){
+			setBackground(backgroundColor);
+			setForeground(foregroundColor);
+		}
+	}
+
+	public void updateColors(Color backgroundColor, Color foregroundColor){
+		setBackground(backgroundColor);
+		setForeground(foregroundColor);
+		mainComp.updateColors(backgroundColor, foregroundColor);
+
 	}
 
 	public void setPrefSize(){

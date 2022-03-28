@@ -29,6 +29,7 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 	private JLabel whichStatLabel;
 
 	public BottomBarComponent(TyperFrame frame){
+
 		setLayout(new GridLayout(1, 3));
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
@@ -46,6 +47,11 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 		statsPrevButt.setFont(Styles.buttonFont);
 		timeLabel.setFont(Styles.labelsFont);
 		WPMLabel.setFont(Styles.labelsFont);
+		whichStatLabel.setFont(Styles.buttonFont);
+		statsNextButt.setOpaque(false);
+		statsPrevButt.setOpaque(true);
+		statsNextButt.setBorderPainted(false);
+		statsPrevButt.setBorderPainted(false);
 
 		statsNextButt.addActionListener(this);
 		statsPrevButt.addActionListener(this);
@@ -134,6 +140,7 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 		setForeground(foregroundColor);
 		timeLabel.setForeground(foregroundColor);
 		WPMLabel.setForeground(foregroundColor);
+		whichStatLabel.setForeground(foregroundColor);
 		statsNextButt.setBackground(backgroundColor);
 		statsNextButt.setForeground(foregroundColor);
 		statsPrevButt.setBackground(backgroundColor);

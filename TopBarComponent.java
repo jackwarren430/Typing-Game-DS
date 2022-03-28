@@ -71,5 +71,6 @@ public class TopBarComponent extends JPanel implements ActionListener{
 			frame.goInfoPage();
 		}
 		frame.getBottomBarComp().display();
+		frame.revalidate();
 	}
 }

@@ -8,4 +8,7 @@ public class Styles {
 	//fonts
 	public static Font buttonFont = new Font("Ariel", Font.PLAIN, 40);
 	public static Font labelsFont = new Font("Ariel", Font.BOLD, 20);
+	public static Font logiFont = new Font("Ariel", Font.PLAIN, 15);
+
+
 }
