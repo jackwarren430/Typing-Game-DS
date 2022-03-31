@@ -259,6 +259,7 @@ public class TyperFrame extends JFrame{
     		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
     		bottomBarComp.setVisible(true);
     		gameStatsComp.setVisible(true);
+    		gameStatsComp.updateColors(mainPanel.getBackground(), mainPanel.getForeground());
     	}
     }
 

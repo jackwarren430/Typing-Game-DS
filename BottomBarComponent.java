@@ -48,8 +48,6 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 		timeLabel.setFont(Styles.labelsFont);
 		WPMLabel.setFont(Styles.labelsFont);
 		whichStatLabel.setFont(Styles.buttonFont);
-		statsNextButt.setOpaque(false);
-		statsPrevButt.setOpaque(true);
 		statsNextButt.setBorderPainted(false);
 		statsPrevButt.setBorderPainted(false);
 

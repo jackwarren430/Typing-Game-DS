@@ -72,38 +72,62 @@ public class FillerPanel extends JPanel {
 		int height = theight / 3;
 		if (dir.equals("UP")){
 			//2
+			System.out.println("called");
+			fill1.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
 			fill2.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
-			fill4.setPreferredSize(new Dimension(width, height));
+			fill3.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
+			fill4.setPreferredSize(new Dimension(width, height + (int)(height*percent)));
 			comp.setPreferredSize(new Dimension(width, height + (int)(height*percent)));
-			fill5.setPreferredSize(new Dimension(width, height));
+			fill5.setPreferredSize(new Dimension(width, height + (int)(height*percent)));
+			fill6.setPreferredSize(new Dimension(width, height));
 			fill7.setPreferredSize(new Dimension(width, height));
+			fill8.setPreferredSize(new Dimension(width, height));
 		} else if (dir.equals("DOWN")){
 			//7
+			fill1.setPreferredSize(new Dimension(width, height));
 			fill2.setPreferredSize(new Dimension(width, height));
-			fill4.setPreferredSize(new Dimension(width, height));
+			fill3.setPreferredSize(new Dimension(width, height));
+			fill4.setPreferredSize(new Dimension(width, height + (int)(height*percent)));
 			comp.setPreferredSize(new Dimension(width, height + (int)(height*percent)));
-			fill5.setPreferredSize(new Dimension(width, height));
+			fill5.setPreferredSize(new Dimension(width, height + (int)(height*percent)));
+			fill6.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
 			fill7.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
+			fill8.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
 			//System.out.println("height: " + height + ", percent: " + percent + ", newhight: " + (int)(height*percent));
 		} else if (dir.equals("RIGHT")){
 			//5
-			fill2.setPreferredSize(new Dimension(width, height));
+			fill1.setPreferredSize(new Dimension(width, height));
+			fill2.setPreferredSize(new Dimension(width + (int)(width*percent), height));
+			fill3.setPreferredSize(new Dimension(width  - (int)(width*percent), height));
 			fill4.setPreferredSize(new Dimension(width, height));
 			comp.setPreferredSize(new Dimension(width + (int)(width*percent), height));
 			fill5.setPreferredSize(new Dimension(width - (int)(width*percent), height));
-			fill7.setPreferredSize(new Dimension(width, height));
+			fill6.setPreferredSize(new Dimension(width, height));
+			fill7.setPreferredSize(new Dimension(width + (int)(width*percent), height));
+			fill8.setPreferredSize(new Dimension(width - (int)(width*percent), height));
 		} else if (dir.equals("LEFT")){
 			//4
-			fill2.setPreferredSize(new Dimension(width, height));
+			fill1.setPreferredSize(new Dimension(width - (int)(width*percent), height));
+			fill2.setPreferredSize(new Dimension(width + (int)(width*percent), height));
+			fill3.setPreferredSize(new Dimension(width, height));
 			fill4.setPreferredSize(new Dimension(width - (int)(width*percent), height));
 			comp.setPreferredSize(new Dimension(width + (int)(width*percent), height));
 			fill5.setPreferredSize(new Dimension(width, height));
+			fill6.setPreferredSize(new Dimension(width - (int)(width*percent), height));
+			fill7.setPreferredSize(new Dimension(width + (int)(width*percent), height));
+			fill8.setPreferredSize(new Dimension(width, height));
+		}	else if (dir.equals("test")){
+			System.out.println("testing size");
+			fill1.setPreferredSize(new Dimension(width, 0));
+			fill2.setPreferredSize(new Dimension(width, 0));
+			fill3.setPreferredSize(new Dimension(width, 0));
+			fill4.setPreferredSize(new Dimension(width, 2 *height));
+			comp.setPreferredSize(new Dimension(width, 2 *height));
+			fill5.setPreferredSize(new Dimension(width, 2 *height));
+			fill6.setPreferredSize(new Dimension(width, height));
 			fill7.setPreferredSize(new Dimension(width, height));
+			fill8.setPreferredSize(new Dimension(width, height));
 		}
-		fill1.setPreferredSize(new Dimension(width, height));
-		fill3.setPreferredSize(new Dimension(width, height));
-		fill6.setPreferredSize(new Dimension(width, height));
-		fill8.setPreferredSize(new Dimension(width, height));
 	}
 
 }

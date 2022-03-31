@@ -94,6 +94,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			center.setVisible(false);
 			loadComp = new LoadProfileComp(this);
 			add(loadComp, BorderLayout.CENTER);
+			updateColors(getBackground(), getForeground());
 			loadComp.setVisible(true);
 			setVisible(true);
 			repaint();
@@ -159,7 +160,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private Boolean overrideStart;
 
 		public SaveProfileComp(GameStatsComponent parent){
-			setLayout(new GridLayout(3, 1));
+			setLayout(new FlowLayout());
 			this.parent = parent;
 
 			saveButt = new JButton("Save");
@@ -167,6 +168,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			error = new JLabel("");
 			overrideButt = new JButton("override");
 
+			saveButt.setBorderPainted(true);
 			saveButt.addActionListener(parent);
 			saveButt.setFocusable(false);
 			overrideButt.addActionListener(parent);
@@ -187,7 +189,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		}
 
 		public void adjust(){
-			savePan.adjust(width, height/3);
+			savePan.adjust(width, height/3, "UP", 1f);
 			enterPan.adjust(width, height/3);
 		}
 
@@ -221,12 +223,29 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			errorPan.setVisible(false);
 			overrideButt.setVisible(false);
 		}
+
+		public void updateColors(Color backgroundColor, Color foregroundColor){
+			setBackground(backgroundColor);
+			setForeground(foregroundColor);
+			errorPan.setBackground(backgroundColor);
+			errorPan.setForeground(foregroundColor);
+			enterPan.setBackground(backgroundColor);
+			//enterPan.setForeground(foregroundColor);
+			savePan.setBackground(backgroundColor);
+			savePan.setForeground(foregroundColor);
+			saveButt.setBackground(foregroundColor);
+			saveButt.setForeground(backgroundColor);
+			combPan.setBackground(backgroundColor);
+			combPan.setForeground(foregroundColor);
+			error.setForeground(foregroundColor);
+		}
 	}
 
 	class LoadProfileComp extends JPanel {
 		private static final long serialVersionUID = 0000;
 
 		private GameStatsComponent parent;
+		private GridLayout glay;
 
 		private JButton loadButt;
 		private JList<String> fileList;
@@ -236,13 +255,16 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private FillerPanel pickPan;
 
 		public LoadProfileComp(GameStatsComponent parent){
-			setLayout(new GridLayout(2, 1));
+			glay = new GridLayout(2,1);
+			setLayout(glay);
 			this.parent = parent;
 
 			loadButt = new JButton("Load");
 			updateList();
 			filePan = new JScrollPane(fileList);
-			
+
+			loadButt.setFont(Styles.buttonFont2);
+			loadButt.setBorderPainted(true);
 			loadButt.addActionListener(parent);
 			loadButt.setFocusable(false);
 
@@ -271,6 +293,16 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			fileList = new JList<String>(goodList);
 		}
 
+		public void updateColors(Color backgroundColor, Color foregroundColor){
+			setBackground(backgroundColor);
+			setForeground(foregroundColor);
+			pickPan.setBackground(backgroundColor);
+			pickPan.setForeground(foregroundColor);
+			loadPan.setBackground(backgroundColor);
+			loadPan.setForeground(foregroundColor);
+			loadButt.setBackground(foregroundColor);
+			loadButt.setForeground(backgroundColor);
+		}
 
 	}
 
@@ -306,6 +338,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		public void updateColors(Color backgroundColor, Color foregroundColor){
 			setBackground(backgroundColor);
 			setForeground(foregroundColor);
+			repaint();
 		}
 	}
 
@@ -313,6 +346,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		setBackground(backgroundColor);
 		setForeground(foregroundColor);
 		mainComp.updateColors(backgroundColor, foregroundColor);
+		loadComp.updateColors(backgroundColor, foregroundColor);
+		saveComp.updateColors(backgroundColor, foregroundColor);
 
 	}
 
