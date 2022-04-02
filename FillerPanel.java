@@ -18,8 +18,10 @@ public class FillerPanel extends JPanel {
 
 	private HashMap<Integer, Filler> table;
 	private Component comp;
+	private GridBagLayout gridBag;
+	private GridBagConstraints c;
 
-	public FillerPanel(Component comp){
+	public FillerPanel(Component comp, String Orientation){
 		fill1 = new Filler();
 		fill2 = new Filler();
 		fill3 = new Filler();
@@ -29,7 +31,8 @@ public class FillerPanel extends JPanel {
 		fill7 = new Filler();
 		fill8 = new Filler();
 
-		setLayout(new GridLayout(3,3));
+		gridBag = new GridBagLayout();
+		setLayout(gridBag);
 		this.comp = comp;
 		table = new HashMap<Integer, Filler>();
 
@@ -42,15 +45,33 @@ public class FillerPanel extends JPanel {
 		table.put(7, fill7);
 		table.put(8, fill8);
 
-		add(fill1);
-		add(fill2);
-		add(fill3);
-		add(fill4);
-		add(comp);
-		add(fill5);
-		add(fill6);
-		add(fill7);
-		add(fill8);
+		c = new GridBagConstraints();
+
+		// if (Orientation.equals("vertical")){
+		// 	c.fill = GridBagConstraints.HORIZONTAL;
+		// } else {
+		// 	c.fill = GridBagConstraints.VERTICAL;
+		// }
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridwidth = 1;
+
+		addComp(0, 0, fill1);
+		addComp(1, 0, fill2);
+		addComp(2, 0, fill3);
+		addComp(0, 1, fill4);
+		addComp(1, 1, comp);
+		addComp(2, 1, fill5);
+		addComp(0, 2, fill6);
+		addComp(1, 2, fill7);
+		addComp(2, 2, fill8);
+
+	}
+
+	public void addComp(int x, int y, Component toAdd){
+		c.gridx = x;
+		c.gridy = y;
+		add(toAdd, c);
 	}
 
 	public void adjust(int twidth, int theight){
@@ -72,7 +93,14 @@ public class FillerPanel extends JPanel {
 		int height = theight / 3;
 		if (dir.equals("UP")){
 			//2
-			System.out.println("called");
+			// //System.out.println("called");
+			// fill1.setMaximumSize(new Dimension(width, height - (int)(height*percent)));
+			// fill2.setMaximumSize(new Dimension(width, height - (int)(height*percent)));
+			// fill3.setMaximumSize(new Dimension(width, height - (int)(height*percent)));
+			// fill4.setMaximumSize(new Dimension(width, height +(int)(height*percent)));
+			// comp.setMaximumSize(new Dimension(width, height + (int)(height*percent)));
+			// fill5.setMaximumSize(new Dimension(width, height + (int)(height*percent)));
+
 			fill1.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
 			fill2.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
 			fill3.setPreferredSize(new Dimension(width, height - (int)(height*percent)));
@@ -117,7 +145,7 @@ public class FillerPanel extends JPanel {
 			fill7.setPreferredSize(new Dimension(width + (int)(width*percent), height));
 			fill8.setPreferredSize(new Dimension(width, height));
 		}	else if (dir.equals("test")){
-			System.out.println("testing size");
+			//System.out.println("testing size");
 			fill1.setPreferredSize(new Dimension(width, 0));
 			fill2.setPreferredSize(new Dimension(width, 0));
 			fill3.setPreferredSize(new Dimension(width, 0));

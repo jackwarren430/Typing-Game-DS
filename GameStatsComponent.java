@@ -160,7 +160,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private Boolean overrideStart;
 
 		public SaveProfileComp(GameStatsComponent parent){
-			setLayout(new FlowLayout());
+			setLayout(new GridLayout(3,1));
 			this.parent = parent;
 
 			saveButt = new JButton("Save");
@@ -179,9 +179,10 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			combPan.add(error);
 			combPan.add(overrideButt);
 
-			savePan = new FillerPanel(saveButt);
-			enterPan = new FillerPanel(enterName);
-			errorPan = new FillerPanel(combPan);
+			savePan = new FillerPanel(saveButt, "vertical");
+			enterPan = new FillerPanel(enterName, "vertical");
+			errorPan = new FillerPanel(combPan, "vertical");
+
 
 			add(errorPan);
 			add(enterPan);
@@ -189,7 +190,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		}
 
 		public void adjust(){
-			savePan.adjust(width, height/3, "UP", 1f);
+			//savePan.adjust(width, height/3, "UP", 1f);
+			savePan.adjust(width, height/3);
 			enterPan.adjust(width, height/3);
 		}
 
@@ -268,8 +270,8 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			loadButt.addActionListener(parent);
 			loadButt.setFocusable(false);
 
-			loadPan = new FillerPanel(loadButt);
-			pickPan = new FillerPanel(filePan);
+			loadPan = new FillerPanel(loadButt, "vertical");
+			pickPan = new FillerPanel(filePan, "vertical");
 			
 			add(pickPan);
 			add(loadPan);
