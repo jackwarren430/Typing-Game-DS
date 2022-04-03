@@ -7,7 +7,7 @@ public class Filler extends JComponent {
 	private static final long serialVersionUID = 0000;
 	public Filler(){}
 	public void paintComponent(Graphics g){
-		showBord(g);
+		//showBord(g);
 	}
 
 	public void showBord(Graphics g){

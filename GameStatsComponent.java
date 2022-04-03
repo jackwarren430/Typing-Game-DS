@@ -146,28 +146,29 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private static final long serialVersionUID = 0000;
 
 		private GameStatsComponent parent;
-
+		private GridBagConstraints c;
 		private JButton saveButt;
 		private TextField enterName;
 		private JLabel error;
 		private JButton overrideButt;
-		private JPanel combPan;
-
-		private FillerPanel savePan;
-		private FillerPanel enterPan;
-		private FillerPanel errorPan;
-
 		private Boolean overrideStart;
 
+		private Filler fill1;
+		private Filler fill2;
+
 		public SaveProfileComp(GameStatsComponent parent){
-			setLayout(new GridLayout(3,1));
+			setLayout(new GridBagLayout());
+			c = new GridBagConstraints();
 			this.parent = parent;
 
 			saveButt = new JButton("Save");
 			enterName = new TextField("Player");
 			error = new JLabel("");
 			overrideButt = new JButton("override");
+			fill1 = new Filler();
+			fill2 = new Filler();
 
+			saveButt.setFont(Styles.buttonFont2);
 			saveButt.setBorderPainted(true);
 			saveButt.addActionListener(parent);
 			saveButt.setFocusable(false);
@@ -175,24 +176,41 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			overrideButt.setFocusable(false);
 			overrideButt.setVisible(false);
 
-			combPan = new JPanel(new GridLayout(2,1));
-			combPan.add(error);
-			combPan.add(overrideButt);
+			c.insets = new Insets(0,60,0,60);
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 0;
+			add(error, c);
 
-			savePan = new FillerPanel(saveButt, "vertical");
-			enterPan = new FillerPanel(enterName, "vertical");
-			errorPan = new FillerPanel(combPan, "vertical");
+			c.gridx = 0;
+			c.gridy = 1;
+			add(overrideButt, c);
 
+			c.gridx = 0;
+			c.gridy = 2;
+			add(fill1, c);
+			
+			c.gridx = 0;
+			c.gridy = 3;
+			add(enterName, c);
 
-			add(errorPan);
-			add(enterPan);
-			add(savePan);
+			c.insets = new Insets(0,0,0,0);
+			c.gridx = 0;
+			c.gridy = 4;
+			add(fill2, c);
+
+			c.gridx = 0;
+			c.gridy = 5;
+			add(saveButt, c);
+
 		}
 
 		public void adjust(){
-			//savePan.adjust(width, height/3, "UP", 1f);
-			savePan.adjust(width, height/3);
-			enterPan.adjust(width, height/3);
+			error.setPreferredSize(new Dimension(width/5,height/9));
+			fill1.setPreferredSize(new Dimension(100,80));
+			enterName.setPreferredSize(new Dimension(width/3,height/9));
+			fill2.setPreferredSize(new Dimension(100,80));
+			saveButt.setPreferredSize(new Dimension(width/3,height/9));
 		}
 
 		public String getName(){
@@ -201,45 +219,41 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 		public void noNameError(){
 			error.setText("Enter a name before saving");
-			errorPan.setVisible(true);
+			error.setVisible(true);
 		}
 
 		public void noGamesPlayedError(){
 			error.setText("Play some games before saving!");
-			errorPan.setVisible(true);
+			error.setVisible(true);
 		}
 
 		public void success(){
 			error.setText("Profile saved!");
-			errorPan.setVisible(true);
+			error.setVisible(true);
 		}
 
 		public void override(){
 			error.setText("A profile already exists with that name. Override?");
 			overrideButt.setVisible(true);
-			errorPan.setVisible(true);
+			error.setVisible(true);
 		}
 
 		public void removeError(){
 			error.setText("");
-			errorPan.setVisible(false);
+			error.setVisible(false);
 			overrideButt.setVisible(false);
 		}
 
 		public void updateColors(Color backgroundColor, Color foregroundColor){
 			setBackground(backgroundColor);
 			setForeground(foregroundColor);
-			errorPan.setBackground(backgroundColor);
-			errorPan.setForeground(foregroundColor);
-			enterPan.setBackground(backgroundColor);
-			//enterPan.setForeground(foregroundColor);
-			savePan.setBackground(backgroundColor);
-			savePan.setForeground(foregroundColor);
+			error.setBackground(backgroundColor);
+			error.setForeground(foregroundColor);
+			enterName.setForeground(Color.black);
+			overrideButt.setBackground(foregroundColor);
+			overrideButt.setForeground(backgroundColor);
 			saveButt.setBackground(foregroundColor);
 			saveButt.setForeground(backgroundColor);
-			combPan.setBackground(backgroundColor);
-			combPan.setForeground(foregroundColor);
-			error.setForeground(foregroundColor);
 		}
 	}
 
@@ -247,39 +261,46 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		private static final long serialVersionUID = 0000;
 
 		private GameStatsComponent parent;
-		private GridLayout glay;
-
 		private JButton loadButt;
 		private JList<String> fileList;
 		private JScrollPane filePan;
-
-		private FillerPanel loadPan;
-		private FillerPanel pickPan;
+		private Filler fill1;
+		private GridBagConstraints c;
 
 		public LoadProfileComp(GameStatsComponent parent){
-			glay = new GridLayout(2,1);
-			setLayout(glay);
+			setLayout(new GridBagLayout());
+			c = new GridBagConstraints();
 			this.parent = parent;
 
 			loadButt = new JButton("Load");
 			updateList();
 			filePan = new JScrollPane(fileList);
+			fill1 = new Filler();
 
 			loadButt.setFont(Styles.buttonFont2);
 			loadButt.setBorderPainted(true);
 			loadButt.addActionListener(parent);
 			loadButt.setFocusable(false);
 
-			loadPan = new FillerPanel(loadButt, "vertical");
-			pickPan = new FillerPanel(filePan, "vertical");
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.weighty = 0.5;
+			c.weightx = 1;
+
+			c.insets = new Insets(0, width/3, 0, width/3);
+			c.gridx = 0;
+			c.gridy = 0;
+			add(filePan, c);
+
+			c.insets = new Insets(0, width/4, 0, width/4);
+			c.gridx = 0;
+			c.gridy = 2;
+			add(loadButt, c);
 			
-			add(pickPan);
-			add(loadPan);
 		}
 
 		public void adjust(){
-			loadPan.adjust(width, height/2);
-			pickPan.adjust(width, height/2, "DOWN", 0.7f);
+			filePan.setPreferredSize(new Dimension(width/3,height/3));
+			loadButt.setPreferredSize(new Dimension(width/2,height/3));
 		}
 
 		public String getName(){
@@ -298,10 +319,6 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		public void updateColors(Color backgroundColor, Color foregroundColor){
 			setBackground(backgroundColor);
 			setForeground(foregroundColor);
-			pickPan.setBackground(backgroundColor);
-			pickPan.setForeground(foregroundColor);
-			loadPan.setBackground(backgroundColor);
-			loadPan.setForeground(foregroundColor);
 			loadButt.setBackground(foregroundColor);
 			loadButt.setForeground(backgroundColor);
 		}
@@ -350,10 +367,19 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		mainComp.updateColors(backgroundColor, foregroundColor);
 		loadComp.updateColors(backgroundColor, foregroundColor);
 		saveComp.updateColors(backgroundColor, foregroundColor);
-
+		buttons.setBackground(backgroundColor);
+		buttons.setForeground(foregroundColor);
+		viewStatsButt.setBackground(foregroundColor);
+		viewStatsButt.setForeground(backgroundColor);
+		saveProfileButt.setBackground(foregroundColor);
+		saveProfileButt.setForeground(backgroundColor);
+		loadProfileButt.setBackground(foregroundColor);
+		loadProfileButt.setForeground(backgroundColor);
 	}
 
 	public void setPrefSize(){
+		width = frame.getFrameSize()[0];
+		height = 6*frame.getFrameSize()[1]/8;
 		buttons.setPreferredSize(new Dimension(width/2, height/8));
 		mainComp.setPreferredSize(new Dimension(width/2, 7*height/8));
 		saveComp.adjust();

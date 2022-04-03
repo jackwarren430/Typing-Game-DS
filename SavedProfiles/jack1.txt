@@ -1,36 +1,20 @@
 ProfileName: jack1
-#Games: 4
-AvgWPM: 62
-FreqMissedWords: [,   won't,   these,   sail,   try]
+#Games: 2
+AvgWPM: 64
+FreqMissedWords: [dollar]
 %
 tag: 0
 Game Size: 8
-Total Errors: 1
+Total Errors: 0
 Missed Words: []
-Final Time(s): 9
-Words Per Minute (WPM): 53
-Characters Per Second (CPS): 4.22
+Final Time(s): 7
+Words Per Minute (WPM): 68
+Characters Per Second (CPS): 5.14
 %
 tag: 1
 Game Size: 8
 Total Errors: 1
-Missed Words: []
-Final Time(s): 7
-Words Per Minute (WPM): 68
-Characters Per Second (CPS): 4.86
-%
-tag: 2
-Game Size: 8
-Total Errors: 1
-Missed Words: []
-Final Time(s): 7
-Words Per Minute (WPM): 68
-Characters Per Second (CPS): 4.86
-%
-tag: 3
-Game Size: 8
-Total Errors: 4
-Missed Words: [won't,   these,   sail,   try]
+Missed Words: [dollar]
 Final Time(s): 8
 Words Per Minute (WPM): 60
-Characters Per Second (CPS): 4.38
+Characters Per Second (CPS): 5.0

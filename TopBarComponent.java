@@ -73,4 +73,17 @@ public class TopBarComponent extends JPanel implements ActionListener{
 		frame.getBottomBarComp().display();
 		frame.revalidate();
 	}
+
+	public void updateColors(Color backgroundColor, Color foregroundColor){
+		homeButt.setBackground(foregroundColor);
+		homeButt.setForeground(backgroundColor);
+		statsButt.setBackground(foregroundColor);
+		statsButt.setForeground(backgroundColor);
+		settingsButt.setBackground(foregroundColor);
+		settingsButt.setForeground(backgroundColor);
+		gameOptButt.setBackground(foregroundColor);
+		gameOptButt.setForeground(backgroundColor);
+		infoButt.setBackground(foregroundColor);
+		infoButt.setForeground(backgroundColor);
+	}
 }

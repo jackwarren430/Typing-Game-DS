@@ -4,6 +4,10 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.*;
 
+// ******
+// 	THIS CODE HAS BEEN DECAPRaTATED - REPLACED BY GRIDBAGLAYOUT
+// ******
+
 public class FillerPanel extends JPanel {
 	private static final long serialVersionUID = 0000;
 	private Filler fill1;

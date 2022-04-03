@@ -118,7 +118,7 @@ public class TyperFrame extends JFrame{
   		mainPanel.setForeground(foregroundColor);
   		bottomBarComp.updateColors(backgroundColor, foregroundColor);
   		gameStatsComp.updateColors(backgroundColor, foregroundColor);
-
+  		menuBarComp.updateColors(backgroundColor, foregroundColor);
 
   	}
 
