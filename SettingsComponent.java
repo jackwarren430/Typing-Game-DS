@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.lang.Math;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SettingsComponent extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 0000;
@@ -36,8 +37,8 @@ public class SettingsComponent extends JPanel implements ActionListener {
 
 		settingsLabel = new JLabel("SETTINGS", JLabel.CENTER);
 
-		colorSchemes = Styles.colorSchemes;
 		colorMap = Styles.getColorMap();
+		colorSchemes = new ArrayList<String>(colorMap.keySet());
 		colorLabel = new JLabel("Color Scheme: ", JLabel.CENTER);
 		whichColorLabel = new JLabel(colorSchemes.get(0));
 		nextColorButt = new JButton(">");
