@@ -30,6 +30,8 @@ public class GameComponent extends JComponent {
 
 	public void paintComponent(Graphics g){
 		Graphics2D pen = (Graphics2D) g;
+		pen.setStroke(new BasicStroke(6));
+
 		width = frame.getFrameSize()[0];
 		height = 6*frame.getFrameSize()[1]/8;;
 
@@ -47,6 +49,7 @@ public class GameComponent extends JComponent {
 
 	private void paintWords(Graphics2D pen){
 		pen.setFont(stringFont);
+		pen.setStroke(new BasicStroke(2));
 		ArrayList<String> wordArr = game.getWordArr();
 		int wordsPerRow = frame.getGameSize() / 4;
 		for (int i = 0; i < 4; i++){
@@ -57,6 +60,9 @@ public class GameComponent extends JComponent {
 				pen.drawString(currWord, locX, locY);
 			}
 		}
+		int[] overlayLoc = frame.getOverlayLoc(width/8, 6*height/32);
+		Rectangle overlay = new Rectangle(overlayLoc[0], overlayLoc[1], 10, 40);
+		pen.draw(overlay);
 		
 	}	
 

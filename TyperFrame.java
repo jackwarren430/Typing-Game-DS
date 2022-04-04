@@ -234,6 +234,14 @@ public class TyperFrame extends JFrame{
 
     }
 
+    public int[] getOverlayLoc(int lWidth, int lHeight){
+    	int[] loc = new int[2];
+    	loc[0] = lWidth + 1;
+    	loc[1] = lHeight + (lHeight/4) * gameInput.size()/(gameSize/4);
+
+    	return loc;
+    }
+
     public void goHomePage(){
     	if (!isHome && !gameStart){
     		clearNavVars();
