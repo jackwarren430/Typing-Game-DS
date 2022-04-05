@@ -107,7 +107,7 @@ public class TyperFrame extends JFrame{
   		mainPanel.add(gameComp, BorderLayout.CENTER, SwingConstants.CENTER);
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
 
-  		updateColors(Styles.purple, Styles.lilac);
+  		updateColors(Styles.teal, Styles.coral);
   		//updateFont();
 
   		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
@@ -202,6 +202,7 @@ public class TyperFrame extends JFrame{
 
    	class KeyBoardListener implements KeyListener {
 
+
 		public void keyTyped(KeyEvent e){}
 		public void keyReleased(KeyEvent e){}
 		public void keyPressed(KeyEvent e){
@@ -227,19 +228,34 @@ public class TyperFrame extends JFrame{
 					} else {
 						tempIn += charIn;
 					}
+					if (gameInput.size() > 0 && (tempIn.length() > gameComp.getGame().getWordArr().get(gameInput.size()-1).length() || !tempIn.equals(gameComp.getGame().getWordArr().get(gameInput.size() - 1).substring(0,tempIn.length())))){
+						TyperGame game = gameComp.getGame();
+						Sting s = game.getWordArr().get(gameInput.size()-1)
+						game.getWordArr().get(gameInput.size()-1) = s.substring(0, s.length() - tempIn.length()) + 
+						//gameComp.addErrorLoc(getOverlayLoc(getFrameSize()[0]/8, 9*getFrameSize()[1]/64));
+					}
 				} else if (gameMode.equals("time")){
 
 				}
+			} else if (isHome){
+				if (e.getKeyCode() == 32){
+					try{
+						gameComp.INITTYPINGWIZARD();
+					} catch (IOException flipOff) {
+						flipOff.printStackTrace();
+					}
+					
+				}
 			}
+
 		}
 
     }
 
     public int[] getOverlayLoc(int lWidth, int lHeight){
     	int[] loc = new int[2];
-    	Graphics g = = new Graphics();
-    	loc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(gameInput.size()%(gameSize/4)) + (int)((double)tempIn.length()*10.5) + 40;
-    	loc[1] = lHeight + ((int)((double)lHeight/1.5) * (gameInput.size()/(gameSize/4))) + 50;
+    	loc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(gameInput.size()%(gameSize/4)) + (int)((double)tempIn.length()*10.5) + lWidth/4;
+    	loc[1] = lHeight + ((int)((double)lHeight/1.5) * (gameInput.size()/(gameSize/4))) + lHeight/2;
     	return loc;
     }
 

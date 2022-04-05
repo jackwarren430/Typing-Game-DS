@@ -32,7 +32,7 @@ public class GameStat {
 		String toReturn = "";
 		toReturn += "Game Size: " + gameSize + "\n";
 		toReturn += "Total Errors: " + numMissedWords + "\n";
-		toReturn += "Missed Words: " + missedWords + "\n";
+		toReturn += "Missed Words: " + arrListToString(missedWords) + "\n";
 		toReturn += "Final Time(s): " + finalTime + "\n";
 		toReturn += "Words Per Minute (WPM): " + WPM + "\n";
 		toReturn += "Characters Per Second (CPS): " + CPS;

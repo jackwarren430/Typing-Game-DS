@@ -30,12 +30,22 @@ public class TyperGame {
 		return wordArr;
 	}
 
+	public void setWordArr(ArrayList<String> a){
+		wordArr = a;
+	}
+
 	public int getTotalCharCount(){
 		return totalCharCount;
 	}
 
 	public void initWordArr() throws IOException{
-		Scanner scan = new Scanner(new File("dictionary.txt"));
+		Scanner scan = null;
+		try {
+			scan = new Scanner(new File("dictionary.txt"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		ArrayList<String> hold = new ArrayList<String>();
 		wordArr = new ArrayList<String>();
 		while (scan.hasNextLine()){

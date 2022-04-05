@@ -17,15 +17,16 @@ public class GameComponent extends JComponent {
 	private Polygon startButton;
 	private Font stringFont;
 
+	private ArrayList<int[]> errorLocs;
+
 	public GameComponent(TyperFrame frame) throws IOException{
 		//frame = (TyperFrame)this.getTopLevelAncestor();
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
 		height = 6*frame.getFrameSize()[1]/8;
-
 		game = null;
-
 		stringFont = Styles.roman;
+		errorLocs = new ArrayList<int[]>();
 	}
 
 	public void paintComponent(Graphics g){
@@ -33,9 +34,7 @@ public class GameComponent extends JComponent {
 		pen.setStroke(new BasicStroke(6));
 
 		width = frame.getFrameSize()[0];
-		height = 6*frame.getFrameSize()[1]/8;;
-
-		//height = height - 50;
+		height = 6*frame.getFrameSize()[1]/8;
 
 		if (!frame.getGameStart()){
 			pen.drawRect(width/8, height/8, 3*width/4, 3*height/4);
@@ -63,8 +62,24 @@ public class GameComponent extends JComponent {
 		int[] overlayLoc = frame.getOverlayLoc(width/8, 6*height/32);
 		Rectangle overlay = new Rectangle(overlayLoc[0], overlayLoc[1], 10, 40);
 		pen.draw(overlay);
-		
+		drawErrors();
 	}	
+
+	public void drawErrors(){
+		for (int[] l : errorLocs){
+
+		}
+	}
+
+	public void addErrorLoc(int[] locs){
+		errorLocs.add(locs);
+	}
+
+	public void removeErrorLoc(){
+		if (errorLocs.size() > 0){
+			errorLocs.remove(errorLocs.size()-1);
+		}
+	}
 
 	private void paintStartButton(Graphics2D pen){
 		int[] xVals = new int[] {9*width/16, 7*width/16, 7*width/16 };
@@ -87,8 +102,17 @@ public class GameComponent extends JComponent {
 		}
 	}
 
+	public void INITTYPINGWIZARD() throws IOException{
+		game = new TyperGame(frame.getGameSize());
+		frame.startGame();
+	}
+
 	public void changeFont(Font f){
 		stringFont = f;
+	}
+
+	public TyperGame getGame(){
+		return game;
 	}
 
 

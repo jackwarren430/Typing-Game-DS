@@ -30,7 +30,7 @@ public class Profile {
 			String temp = "";
 			for (int i = 0; i < fmw.length(); i++){
 				String c = fmw.substring(i,i+1);
-				if (c.equals(",") || c.equals("]")){
+				if (c.equals(",") || c.equals("\n")){
 					freqMissedWords.add(temp);
 					temp = "";
 				} else {
@@ -47,7 +47,7 @@ public class Profile {
 				temp = "";
 				for (int j = 0; j < mw.length(); j++){
 					String c = mw.substring(j,j+1);
-					if (c.equals(",") || c.equals("]")){
+					if (c.equals(",") || c.equals("\n")){
 						missedWords.add(temp);
 						temp = "";
 					} else {
@@ -109,7 +109,7 @@ public class Profile {
 		toReturn += "ProfileName: " + playerName + "\n";
 		toReturn += "#Games: " + gamesPlayed.size() + "\n";
 		toReturn += "AvgWPM: " + calcAvgWPM() + "\n";
-		toReturn += "FreqMissedWords: " + freqMissedWords;
+		toReturn += "FreqMissedWords: " + GameStat.arrListToString(freqMissedWords);
 		int count = 0;
 		for (GameStat stat : gamesPlayed){
 			toReturn += "\n%\ntag: " + count + "\n";
