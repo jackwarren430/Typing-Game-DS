@@ -201,8 +201,6 @@ public class TyperFrame extends JFrame{
   	}
 
    	class KeyBoardListener implements KeyListener {
-
-
 		public void keyTyped(KeyEvent e){}
 		public void keyReleased(KeyEvent e){}
 		public void keyPressed(KeyEvent e){
@@ -228,12 +226,22 @@ public class TyperFrame extends JFrame{
 					} else {
 						tempIn += charIn;
 					}
-					if (gameInput.size() > 0 && (tempIn.length() > gameComp.getGame().getWordArr().get(gameInput.size()-1).length() || !tempIn.equals(gameComp.getGame().getWordArr().get(gameInput.size() - 1).substring(0,tempIn.length())))){
-						TyperGame game = gameComp.getGame();
-						Sting s = game.getWordArr().get(gameInput.size()-1)
-						game.getWordArr().get(gameInput.size()-1) = s.substring(0, s.length() - tempIn.length()) + 
-						//gameComp.addErrorLoc(getOverlayLoc(getFrameSize()[0]/8, 9*getFrameSize()[1]/64));
+					//checking for errors
+					ArrayList<int[]> errorLocs = new ArrayList<int[]>();
+					for (int i = 0; i < gameInput.size(); i++){
+						String actualWord = gameComp.getGame().getWordArr().get(i).toLowerCase();
+						String inWord = gameInput.get(i).toLowerCase();
+						if (!inWord.equals(actualWord)){
+							int[] errorLoc = new int[3];
+							int lWidth = getFrameSize()[0]/8;
+							int lHeight = 9*getFrameSize()[1]/64;
+							errorLoc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(i%(gameSize/4)) + lWidth/4;
+    						errorLoc[1] = lHeight + ((int)((double)lHeight/1.5) * (i/(gameSize/4))) + lHeight/2;
+							errorLoc[2] = actualWord.length();
+							errorLocs.add(errorLoc);
+						}
 					}
+					gameComp.setErrorLocs(errorLocs);
 				} else if (gameMode.equals("time")){
 
 				}
