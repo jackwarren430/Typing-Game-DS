@@ -43,6 +43,18 @@ public class Styles {
 	public static Font labelsFont = new Font("Ariel", Font.BOLD, 20);
 	public static Font logiFont = new Font("Ariel", Font.PLAIN, 15);
 
+	public static Font roman = new Font("TimesRoman", Font.PLAIN, 25);
+	public static Font dialog = new Font("Dialog", Font.PLAIN, 25);
+	public static Font courier = new Font("Courier", Font.PLAIN, 25);
+
+	public static HashMap<String, Font> fontMap = new HashMap<String, Font>();
+	public static HashMap<String, Font> getFontMap(){
+		fontMap.put("Times Roman", roman);
+		fontMap.put("Dialog", dialog);
+		fontMap.put("Courier", courier);
+		return fontMap;
+	}
+
 	public static HashMap<String, Color[]> colorMap = new HashMap<String, Color[]>();
 	public static HashMap<String, Color[]> getColorMap(){
 		colorMap.put("Reef", new Color[] {teal, coral});

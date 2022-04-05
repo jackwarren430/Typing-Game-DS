@@ -25,7 +25,7 @@ public class GameComponent extends JComponent {
 
 		game = null;
 
-		stringFont = new Font( "GillSans", Font. PLAIN, width / 40);
+		stringFont = Styles.roman;
 	}
 
 	public void paintComponent(Graphics g){
@@ -87,8 +87,8 @@ public class GameComponent extends JComponent {
 		}
 	}
 
-	public void changeFont(){
-
+	public void changeFont(Font f){
+		stringFont = f;
 	}
 
 

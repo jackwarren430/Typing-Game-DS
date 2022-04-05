@@ -22,6 +22,13 @@ public class SettingsComponent extends JPanel implements ActionListener {
 	private JButton nextColorButt;
 	private JButton prevColorButt;
 
+	private ArrayList<String> fonts;
+	private HashMap<String, Font> fontMap;
+	private JLabel fontLabel;
+	private JLabel whichFontLabel;
+	private JButton nextFontButt;
+	private JButton prevFontButt;
+
 	private JLabel settingsLabel;
 	private JButton applyChangesButt;
 
@@ -44,12 +51,21 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		nextColorButt = new JButton(">");
 		prevColorButt = new JButton("<");
 
+		fontMap = Styles.getFontMap();
+		fonts = new ArrayList<String>(fontMap.keySet());
+		fontLabel = new JLabel("Font: ", JLabel.CENTER);
+		whichFontLabel = new JLabel(fonts.get(0));
+		nextFontButt = new JButton(">");
+		prevFontButt = new JButton("<");
+
+
 		applyChangesButt = new JButton("Apply Changes");
 
 		prepareGUI();
 	}
 
 	public void prepareGUI(){
+		//adding colors
 		c.gridx = 1;
 		c.gridy = 0;
 		c.gridwidth = 2;
@@ -76,31 +92,72 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		c.gridy = 3;
 		add(nextColorButt, c);
 
+		//adding fonts
+		c.gridx = 1;
+		c.gridy = 4;
+		add(fontLabel, c);
+
+		c.gridx = 2;
+		c.gridy = 4;
+		add(whichFontLabel, c);
+
+		prevFontButt.addActionListener(this);
+		prevFontButt.setFocusable(false);
+		c.gridx = 1;
+		c.gridy = 5;
+		add(prevFontButt, c);
+
+		nextFontButt.addActionListener(this);
+		nextFontButt.setFocusable(false);
+		c.gridx = 2;
+		c.gridy = 5;
+		add(nextFontButt, c);
+
 		applyChangesButt.addActionListener(this);
 		applyChangesButt.setFocusable(false);
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		c.gridwidth = 2;
 		add(applyChangesButt, c);
 
 	}
 
 	public void actionPerformed(ActionEvent e){
-		if (e.getActionCommand().equals(">")){
+		if (e.getSource() == nextColorButt){
 			if (colorSchemes.indexOf(whichColorLabel.getText()) == colorSchemes.size() - 1){
 				whichColorLabel.setText(colorSchemes.get(0));
 			} else {
 				whichColorLabel.setText(colorSchemes.get(colorSchemes.indexOf(whichColorLabel.getText()) + 1));
 			}
-		} else if (e.getActionCommand().equals("<")){
+		} else if (e.getSource() == prevColorButt){
 			if (colorSchemes.indexOf(whichColorLabel.getText()) == 0){
 				whichColorLabel.setText(colorSchemes.get(colorSchemes.size() - 1));
 			} else {
 				whichColorLabel.setText(colorSchemes.get(colorSchemes.indexOf(whichColorLabel.getText()) - 1));
 			}
-		} else if (e.getActionCommand().equals("Apply Changes")){
+		} else if (e.getSource() == applyChangesButt){
+			//apply changes
 			frame.updateColors(colorMap.get(whichColorLabel.getText())[0], colorMap.get(whichColorLabel.getText())[1]);
+			frame.updateFont(fontMap.get(whichFontLabel.getText()));
+		} else if (e.getSource() == nextFontButt){
+			if (fonts.indexOf(whichFontLabel.getText()) == fonts.size() - 1){
+				whichFontLabel.setText(fonts.get(0));
+			} else {
+				whichFontLabel.setText(fonts.get(fonts.indexOf(whichFontLabel.getText()) + 1));
+			}
+		} else if (e.getSource() == prevFontButt){
+			if (fonts.indexOf(whichFontLabel.getText()) == 0){
+				whichFontLabel.setText(fonts.get(fonts.size() - 1));
+			} else {
+				whichFontLabel.setText(fonts.get(fonts.indexOf(whichFontLabel.getText()) - 1));
+			}
 		}
+	}
+
+	public void updateColors(Color backgroundColor, Color foregroundColor){
+		setBackground(backgroundColor);
+		setForeground(foregroundColor);
+
 	}
 
 

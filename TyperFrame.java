@@ -41,6 +41,7 @@ public class TyperFrame extends JFrame{
 	private int gameTimeCount;
 	private int gameTimeLength;
 	private String gameMode; // "count" -> end at gameSize; "time" -> end at GameTimeLength
+	private String tempIn;
 
 	//storage/stats
 	private Profile loadedProfile;
@@ -59,8 +60,9 @@ public class TyperFrame extends JFrame{
 		isStatsPage = false;
 		isGameOptPage = false;
 		isSettingsPage = false;
+		tempIn = "";
 
-		gameSize = 8;
+		gameSize = 24;
 		gameTimeLength = 30;
 		gameMode = "count";
 
@@ -105,7 +107,7 @@ public class TyperFrame extends JFrame{
   		mainPanel.add(gameComp, BorderLayout.CENTER, SwingConstants.CENTER);
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
 
-  		updateColors(Styles.teal, Styles.coral);
+  		updateColors(Styles.purple, Styles.lilac);
   		//updateFont();
 
   		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
@@ -119,11 +121,11 @@ public class TyperFrame extends JFrame{
   		bottomBarComp.updateColors(backgroundColor, foregroundColor);
   		gameStatsComp.updateColors(backgroundColor, foregroundColor);
   		menuBarComp.updateColors(backgroundColor, foregroundColor);
-
+  		settingsComp.updateColors(backgroundColor, foregroundColor);
   	}
 
   	public void updateFont(Font f){
-  		
+  		gameComp.changeFont(f);
   	}
 
   	public void startGame(){
@@ -199,7 +201,6 @@ public class TyperFrame extends JFrame{
   	}
 
    	class KeyBoardListener implements KeyListener {
-   		private String tempIn = "";
 
 		public void keyTyped(KeyEvent e){}
 		public void keyReleased(KeyEvent e){}
@@ -236,9 +237,9 @@ public class TyperFrame extends JFrame{
 
     public int[] getOverlayLoc(int lWidth, int lHeight){
     	int[] loc = new int[2];
-    	loc[0] = lWidth + 1;
-    	loc[1] = lHeight + (lHeight/4) * gameInput.size()/(gameSize/4);
-
+    	Graphics g = = new Graphics();
+    	loc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(gameInput.size()%(gameSize/4)) + (int)((double)tempIn.length()*10.5) + 40;
+    	loc[1] = lHeight + ((int)((double)lHeight/1.5) * (gameInput.size()/(gameSize/4))) + 50;
     	return loc;
     }
 
