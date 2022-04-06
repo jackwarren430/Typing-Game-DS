@@ -26,12 +26,12 @@ public class Profile {
 			playerName = scan.nextLine().substring(13);
 			int numGames = Integer.valueOf(scan.nextLine().substring(8));
 			avgWPM = Integer.valueOf(scan.nextLine().substring(8));
-			String fmw = scan.nextLine().substring(18);
+			String fmw = scan.nextLine().substring(16);
 			String temp = "";
 			for (int i = 0; i < fmw.length(); i++){
 				String c = fmw.substring(i,i+1);
 				if (c.equals(",") || c.equals("\n")){
-					freqMissedWords.add(temp);
+					freqMissedWords.add(temp.substring(0,temp.length()));
 					temp = "";
 				} else {
 					temp += c;
@@ -43,12 +43,12 @@ public class Profile {
 				int gameSize = Integer.valueOf(scan.nextLine().substring(11));
 				int numErrors = Integer.valueOf(scan.nextLine().substring(14));
 				ArrayList<String> missedWords = new ArrayList<String>();
-				String mw = scan.nextLine().substring(15);
+				String mw = scan.nextLine().substring(13);
 				temp = "";
 				for (int j = 0; j < mw.length(); j++){
 					String c = mw.substring(j,j+1);
 					if (c.equals(",") || c.equals("\n")){
-						missedWords.add(temp);
+						missedWords.add(temp.substring(0,temp.length()));
 						temp = "";
 					} else {
 						temp += c;

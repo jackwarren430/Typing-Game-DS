@@ -128,7 +128,7 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 				center.setVisible(false);
 				add(mainComp, BorderLayout.CENTER);
 				mainComp.setVisible(true);
-
+				frame.goStatsPage();
 			} else {
 				System.out.println("Nothing selected");
 			}
