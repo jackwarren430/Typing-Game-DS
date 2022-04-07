@@ -133,12 +133,12 @@ public class TyperFrame extends JFrame{
   		gameStart = true;
   		gameTimeCount = 0;
   		gameInput = new ArrayList<String>();
+  		errorLocs = new ArrayList<int[]>();
   	}
 
   	public void endGame(){
   		gameStart = false;
   		gameComp.wrapUpGame(gameInput, gameTimeCount);
-  		errorLocs = new ArrayList<int[]>();
   	}
 
   	public int[] getFrameSize(){
@@ -162,6 +162,8 @@ public class TyperFrame extends JFrame{
     		mainLayout.getLayoutComponent(BorderLayout.CENTER).setPreferredSize(new Dimension(getFrameSize()[0], 6*getFrameSize()[1]/8));
     		if (isStatsPage){
     			gameStatsComp.setPrefSize();
+    		} else if (isSettingsPage){
+    			settingsComp.setPrefSize();
     		}
     		if (count == 10){
     			if (gameStart){
@@ -228,7 +230,6 @@ public class TyperFrame extends JFrame{
 						tempIn += charIn;
 					}
 					//checking for errors
-					errorLocs = new ArrayList<int[]>();
 					for (int i = 0; i < gameInput.size(); i++){
 						String actualWord = gameComp.getGame().getWordArr().get(i).toLowerCase();
 						String inWord = gameInput.get(i).toLowerCase();
@@ -242,7 +243,6 @@ public class TyperFrame extends JFrame{
 							errorLocs.add(errorLoc);
 						}
 					}
-					gameComp.setErrorLocs(errorLocs);
 				} else if (gameMode.equals("time")){
 
 				}
@@ -422,6 +422,10 @@ public class TyperFrame extends JFrame{
 
     public void setLoadedProfile(Profile p){
     	loadedProfile = p;
+    }
+
+    public ArrayList<int[]> getErrorLocs(){
+    	return errorLocs;
     }
 
 }

@@ -62,21 +62,18 @@ public class GameComponent extends JComponent {
 		int[] overlayLoc = frame.getOverlayLoc(width/8, 6*height/32);
 		Rectangle overlay = new Rectangle(overlayLoc[0], overlayLoc[1], 10, 40);
 		pen.draw(overlay);
+		errorLocs = frame.getErrorLocs();
 		drawErrors(pen);
 
 	}	
 
 	public void drawErrors(Graphics2D pen){
 		for (int[] l : errorLocs){
-			//System.out.println("drawing err");
 			Rectangle err = new Rectangle(l[0], l[1], l[2]*10, 10);
 			pen.draw(err);
 		}
 	}
 
-	public void setErrorLocs(ArrayList<int[]> locs){
-		errorLocs = locs;
-	}
 
 	public void removeErrorLoc(){
 		if (errorLocs.size() > 0){

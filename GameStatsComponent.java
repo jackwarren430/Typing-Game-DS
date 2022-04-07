@@ -309,11 +309,25 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 
 		public void updateList(){
 			String[] list = new File("SavedProfiles").list();
-			String[] goodList = new String[list.length-1];
-			for (int i = 0; i < list.length - 1; i++){
-				goodList[i] = list[i+1].substring(0, list[i+1].length()-4);
+			ArrayList<String> goodList = new ArrayList<String>();
+			for (int i = 0; i < list.length; i++){
+				if (list[i] != null && !list[i].equals(".DS_S") && !list[i].equals(".DS_Store")){
+					goodList.add(list[i].substring(0, list[i].length() - 4));
+				}
 			}
-			fileList = new JList<String>(goodList);
+			String[] toAdd = new String[goodList.size()];
+			for (int i = 0; i < toAdd.length; i++){
+				toAdd[i] = goodList.get(i);
+			}
+			fileList = new JList<String>(toAdd);
+			// System.out.println("list: " + list.length + ", good: " + goodList.length);
+			// for (String s : list){
+			// 	System.out.println(s);
+			// }
+			// for (String s : goodList){
+			// 	System.out.println(s);
+			// }
+			
 		}
 
 		public void updateColors(Color backgroundColor, Color foregroundColor){

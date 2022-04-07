@@ -31,7 +31,7 @@ public class Profile {
 			for (int i = 0; i < fmw.length(); i++){
 				String c = fmw.substring(i,i+1);
 				if (c.equals(",") || c.equals("\n")){
-					freqMissedWords.add(temp.substring(0,temp.length()));
+					freqMissedWords.add(temp.substring(1,temp.length()));
 					temp = "";
 				} else {
 					temp += c;
@@ -48,7 +48,7 @@ public class Profile {
 				for (int j = 0; j < mw.length(); j++){
 					String c = mw.substring(j,j+1);
 					if (c.equals(",") || c.equals("\n")){
-						missedWords.add(temp.substring(0,temp.length()));
+						missedWords.add(temp.substring(1,temp.length()));
 						temp = "";
 					} else {
 						temp += c;

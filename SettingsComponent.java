@@ -122,6 +122,10 @@ public class SettingsComponent extends JPanel implements ActionListener {
 
 	}
 
+	public void setPrefSize(){
+		settingsLabel.setPreferredSize(new Dimension(500, 500));
+	}
+
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == nextColorButt){
 			if (colorSchemes.indexOf(whichColorLabel.getText()) == colorSchemes.size() - 1){
@@ -157,6 +161,23 @@ public class SettingsComponent extends JPanel implements ActionListener {
 	public void updateColors(Color backgroundColor, Color foregroundColor){
 		setBackground(backgroundColor);
 		setForeground(foregroundColor);
+		settingsLabel.setForeground(foregroundColor);
+		applyChangesButt.setBackground(foregroundColor);
+		applyChangesButt.setForeground(backgroundColor);
+		//colors
+		colorLabel.setForeground(foregroundColor);
+		whichColorLabel.setForeground(foregroundColor);
+		nextColorButt.setBackground(foregroundColor);
+		nextColorButt.setForeground(backgroundColor);
+		prevColorButt.setBackground(foregroundColor);
+		prevColorButt.setForeground(backgroundColor);
+		//fonts
+		fontLabel.setForeground(foregroundColor);
+		whichFontLabel.setForeground(foregroundColor);
+		nextFontButt.setBackground(foregroundColor);
+		nextFontButt.setForeground(backgroundColor);
+		prevFontButt.setBackground(foregroundColor);
+		prevFontButt.setForeground(backgroundColor);
 
 	}
 
