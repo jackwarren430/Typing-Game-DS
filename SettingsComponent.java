@@ -58,18 +58,31 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		nextFontButt = new JButton(">");
 		prevFontButt = new JButton("<");
 
-
 		applyChangesButt = new JButton("Apply Changes");
 
 		prepareGUI();
 	}
 
 	public void prepareGUI(){
-		//adding colors
+		
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		int top = height / 40;
+		int bottom = height / 40;
+		int left = width / 10;
+		int right = width / 10;
+		Insets i = new Insets(top, left, bottom, right);
+		c.insets = i;
+
 		c.gridx = 1;
 		c.gridy = 0;
 		c.gridwidth = 2;
 		add(settingsLabel, c);
+
+		//adding colors
+		bottom = height / 70;
+		left = width / 20;
+		right = width / 20;
+		c.insets = new Insets(top, left, bottom, right);
 
 		c.gridx = 1;
 		c.gridy = 1;
@@ -79,6 +92,11 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		c.gridx = 2;
 		c.gridy = 1;
 		add(whichColorLabel, c);
+
+		left = width / 10;
+		right = width / 10;
+		bottom = height / 40;
+		c.insets = new Insets(top, left, bottom, right);
 
 		prevColorButt.addActionListener(this);
 		prevColorButt.setFocusable(false);
@@ -93,6 +111,11 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		add(nextColorButt, c);
 
 		//adding fonts
+		bottom = height / 70;
+		left = width / 20;
+		right = width / 20;
+		c.insets = new Insets(top, left, bottom, right);
+
 		c.gridx = 1;
 		c.gridy = 4;
 		add(fontLabel, c);
@@ -100,6 +123,11 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		c.gridx = 2;
 		c.gridy = 4;
 		add(whichFontLabel, c);
+
+		left = 0;
+		right = 0;
+		bottom = height / 40;
+		c.insets = new Insets(top, left, bottom, right);
 
 		prevFontButt.addActionListener(this);
 		prevFontButt.setFocusable(false);
@@ -123,7 +151,18 @@ public class SettingsComponent extends JPanel implements ActionListener {
 	}
 
 	public void setPrefSize(){
-		settingsLabel.setPreferredSize(new Dimension(500, 500));
+		width = frame.getFrameSize()[0];
+		height = 7*frame.getFrameSize()[1]/8;
+
+		settingsLabel.setFont(Styles.buttonFont2);
+		nextColorButt.setPreferredSize(new Dimension(width/14, height/16));
+		prevColorButt.setPreferredSize(new Dimension(width/14, height/16));
+		nextFontButt.setPreferredSize(new Dimension(width/14, height/16));
+		prevFontButt.setPreferredSize(new Dimension(width/14, height/16));
+
+		applyChangesButt.setPreferredSize(new Dimension(width/4, height/14));
+
+		prepareGUI();
 	}
 
 	public void actionPerformed(ActionEvent e){
