@@ -15,19 +15,24 @@ public class SettingsComponent extends JPanel implements ActionListener {
 
 	private GridBagConstraints c;
 
+	// change colors
 	private ArrayList<String> colorSchemes;
 	private HashMap<String, Color[]> colorMap;
-	private JLabel colorLabel;
 	private JLabel whichColorLabel;
 	private JButton nextColorButt;
 	private JButton prevColorButt;
 
+	//change fonts
 	private ArrayList<String> fonts;
 	private HashMap<String, Font> fontMap;
-	private JLabel fontLabel;
 	private JLabel whichFontLabel;
 	private JButton nextFontButt;
 	private JButton prevFontButt;
+
+	//delete profiles
+	private JButton deleteCurrProfileButt;
+	
+	//private JLabel
 
 	private JLabel settingsLabel;
 	private JButton applyChangesButt;
@@ -46,15 +51,15 @@ public class SettingsComponent extends JPanel implements ActionListener {
 
 		colorMap = Styles.getColorMap();
 		colorSchemes = new ArrayList<String>(colorMap.keySet());
-		colorLabel = new JLabel("Color Scheme: ", JLabel.CENTER);
-		whichColorLabel = new JLabel(colorSchemes.get(0));
+		//colorLabel = new JLabel("Color Scheme: ", JLabel.CENTER);
+		whichColorLabel = new JLabel("Color Scheme : " + colorSchemes.get(0));
 		nextColorButt = new JButton(">");
 		prevColorButt = new JButton("<");
 
 		fontMap = Styles.getFontMap();
 		fonts = new ArrayList<String>(fontMap.keySet());
-		fontLabel = new JLabel("Font: ", JLabel.CENTER);
-		whichFontLabel = new JLabel(fonts.get(0));
+		//fontLabel = new JLabel("Font: ", JLabel.CENTER);
+		whichFontLabel = new JLabel("Game font: " + fonts.get(0));
 		nextFontButt = new JButton(">");
 		prevFontButt = new JButton("<");
 
@@ -84,24 +89,27 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		right = width / 20;
 		c.insets = new Insets(top, left, bottom, right);
 
+		// c.gridx = 1;
+		// c.gridy = 1;
+		// c.gridwidth = 1;
+		// add(colorLabel, c);
+
 		c.gridx = 1;
 		c.gridy = 1;
-		c.gridwidth = 1;
-		add(colorLabel, c);
-
-		c.gridx = 2;
-		c.gridy = 1;
+		c.gridwidth = 2;
 		add(whichColorLabel, c);
 
 		left = width / 10;
 		right = width / 10;
 		bottom = height / 40;
 		c.insets = new Insets(top, left, bottom, right);
+		
 
 		prevColorButt.addActionListener(this);
 		prevColorButt.setFocusable(false);
 		c.gridx = 1;
 		c.gridy = 3;
+		c.gridwidth = 1;
 		add(prevColorButt, c);
 
 		nextColorButt.addActionListener(this);
@@ -116,14 +124,16 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		right = width / 20;
 		c.insets = new Insets(top, left, bottom, right);
 
+		// c.gridx = 1;
+		// c.gridy = 4;
+		// add(fontLabel, c);
+
 		c.gridx = 1;
 		c.gridy = 4;
-		add(fontLabel, c);
-
-		c.gridx = 2;
-		c.gridy = 4;
+		c.gridwidth = 2;
 		add(whichFontLabel, c);
 
+		
 		left = 0;
 		right = 0;
 		bottom = height / 40;
@@ -133,6 +143,7 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		prevFontButt.setFocusable(false);
 		c.gridx = 1;
 		c.gridy = 5;
+		c.gridwidth = 1;
 		add(prevFontButt, c);
 
 		nextFontButt.addActionListener(this);
@@ -167,32 +178,38 @@ public class SettingsComponent extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == nextColorButt){
-			if (colorSchemes.indexOf(whichColorLabel.getText()) == colorSchemes.size() - 1){
-				whichColorLabel.setText(colorSchemes.get(0));
+			String currColor = whichColorLabel.getText().substring(14);
+			if (colorSchemes.indexOf(currColor) == colorSchemes.size() - 1){
+				whichColorLabel.setText("Color Scheme: " + colorSchemes.get(0));
 			} else {
-				whichColorLabel.setText(colorSchemes.get(colorSchemes.indexOf(whichColorLabel.getText()) + 1));
+				whichColorLabel.setText("Color Scheme: " + colorSchemes.get(colorSchemes.indexOf(currColor) + 1));
 			}
 		} else if (e.getSource() == prevColorButt){
-			if (colorSchemes.indexOf(whichColorLabel.getText()) == 0){
-				whichColorLabel.setText(colorSchemes.get(colorSchemes.size() - 1));
+			String currColor = whichColorLabel.getText().substring(14);
+			if (colorSchemes.indexOf(currColor) == 0){
+				whichColorLabel.setText("Color Scheme: " + colorSchemes.get(colorSchemes.size() - 1));
 			} else {
-				whichColorLabel.setText(colorSchemes.get(colorSchemes.indexOf(whichColorLabel.getText()) - 1));
+				whichColorLabel.setText("Color Scheme: " + colorSchemes.get(colorSchemes.indexOf(currColor) - 1));
 			}
 		} else if (e.getSource() == applyChangesButt){
+			String currFont = whichFontLabel.getText().substring(11);
+			String currColor = whichColorLabel.getText().substring(14);
 			//apply changes
-			frame.updateColors(colorMap.get(whichColorLabel.getText())[0], colorMap.get(whichColorLabel.getText())[1]);
-			frame.updateFont(fontMap.get(whichFontLabel.getText()));
+			frame.updateColors(colorMap.get(currColor)[0], colorMap.get(currColor)[1]);
+			frame.updateFont(fontMap.get(currFont));
 		} else if (e.getSource() == nextFontButt){
-			if (fonts.indexOf(whichFontLabel.getText()) == fonts.size() - 1){
-				whichFontLabel.setText(fonts.get(0));
+			String currFont = whichFontLabel.getText().substring(11);
+			if (fonts.indexOf(currFont) == fonts.size() - 1){
+				whichFontLabel.setText("Game Font: " + fonts.get(0));
 			} else {
-				whichFontLabel.setText(fonts.get(fonts.indexOf(whichFontLabel.getText()) + 1));
+				whichFontLabel.setText("Game Font: " + fonts.get(fonts.indexOf(currFont) + 1));
 			}
 		} else if (e.getSource() == prevFontButt){
-			if (fonts.indexOf(whichFontLabel.getText()) == 0){
-				whichFontLabel.setText(fonts.get(fonts.size() - 1));
+			String currFont = whichFontLabel.getText().substring(11);
+			if (fonts.indexOf(currFont) == 0){
+				whichFontLabel.setText("Game Font: " + fonts.get(fonts.size() - 1));
 			} else {
-				whichFontLabel.setText(fonts.get(fonts.indexOf(whichFontLabel.getText()) - 1));
+				whichFontLabel.setText("Game Font: " + fonts.get(fonts.indexOf(currFont) - 1));
 			}
 		}
 	}
@@ -204,14 +221,14 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		applyChangesButt.setBackground(foregroundColor);
 		applyChangesButt.setForeground(backgroundColor);
 		//colors
-		colorLabel.setForeground(foregroundColor);
+		//colorLabel.setForeground(foregroundColor);
 		whichColorLabel.setForeground(foregroundColor);
 		nextColorButt.setBackground(foregroundColor);
 		nextColorButt.setForeground(backgroundColor);
 		prevColorButt.setBackground(foregroundColor);
 		prevColorButt.setForeground(backgroundColor);
 		//fonts
-		fontLabel.setForeground(foregroundColor);
+		//fontLabel.setForeground(foregroundColor);
 		whichFontLabel.setForeground(foregroundColor);
 		nextFontButt.setBackground(foregroundColor);
 		nextFontButt.setForeground(backgroundColor);

@@ -230,6 +230,7 @@ public class TyperFrame extends JFrame{
 						tempIn += charIn;
 					}
 					//checking for errors
+					errorLocs = new ArrayList<int[]>();
 					for (int i = 0; i < gameInput.size(); i++){
 						String actualWord = gameComp.getGame().getWordArr().get(i).toLowerCase();
 						String inWord = gameInput.get(i).toLowerCase();
