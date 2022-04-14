@@ -31,6 +31,8 @@ public class SettingsComponent extends JPanel implements ActionListener {
 
 	//delete profiles
 	private JButton deleteCurrProfileButt;
+	private JButton initDeleteButt;
+	private JButton finDeleteButt;
 	
 	//private JLabel
 
@@ -49,27 +51,35 @@ public class SettingsComponent extends JPanel implements ActionListener {
 
 		settingsLabel = new JLabel("SETTINGS", JLabel.CENTER);
 
+		//colors
 		colorMap = Styles.getColorMap();
 		colorSchemes = new ArrayList<String>(colorMap.keySet());
-		//colorLabel = new JLabel("Color Scheme: ", JLabel.CENTER);
 		whichColorLabel = new JLabel("Color Scheme : " + colorSchemes.get(0));
 		nextColorButt = new JButton(">");
 		prevColorButt = new JButton("<");
 
+		//fonts
 		fontMap = Styles.getFontMap();
 		fonts = new ArrayList<String>(fontMap.keySet());
-		//fontLabel = new JLabel("Font: ", JLabel.CENTER);
 		whichFontLabel = new JLabel("Game font: " + fonts.get(0));
 		nextFontButt = new JButton(">");
 		prevFontButt = new JButton("<");
 
 		applyChangesButt = new JButton("Apply Changes");
 
+		initDeleteButt = new JButton("Delete Current Profile");
+		deleteCurrProfileButt = initDeleteButt;
+		initDeleteButt.addActionListener(this);
+		initDeleteButt.setFocusable(false);
+		finDeleteButt = new JButton("Are you sure?");
+		finDeleteButt.addActionListener(this);
+		finDeleteButt.setFocusable(false);
+
 		prepareGUI();
 	}
 
 	public void prepareGUI(){
-		
+		setLayout(new GridBagLayout());
 		//c.fill = GridBagConstraints.HORIZONTAL;
 		int top = height / 40;
 		int bottom = height / 40;
@@ -159,6 +169,14 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		c.gridwidth = 2;
 		add(applyChangesButt, c);
 
+		top = height / 15;
+		c.insets = new Insets(top, left, bottom, right);
+		c.gridx = 1;
+		c.gridy = 7;
+		System.out.println(deleteCurrProfileButt.getText());
+		add(deleteCurrProfileButt, c);
+		//deleteCurrProfileButt.setVisible(true);
+
 	}
 
 	public void setPrefSize(){
@@ -170,10 +188,10 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		prevColorButt.setPreferredSize(new Dimension(width/14, height/16));
 		nextFontButt.setPreferredSize(new Dimension(width/14, height/16));
 		prevFontButt.setPreferredSize(new Dimension(width/14, height/16));
-
 		applyChangesButt.setPreferredSize(new Dimension(width/4, height/14));
 
 		prepareGUI();
+
 	}
 
 	public void actionPerformed(ActionEvent e){
@@ -211,6 +229,13 @@ public class SettingsComponent extends JPanel implements ActionListener {
 			} else {
 				whichFontLabel.setText("Game Font: " + fonts.get(fonts.indexOf(currFont) - 1));
 			}
+		} else if (e.getSource() == initDeleteButt){
+			deleteCurrProfileButt = finDeleteButt;
+			//initDeleteButt.setVisible(false);
+
+			
+			//remove(initDeleteButt)
+			System.out.println("called");
 		}
 	}
 
@@ -236,6 +261,5 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		prevFontButt.setForeground(backgroundColor);
 
 	}
-
 
 }
