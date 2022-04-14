@@ -85,7 +85,6 @@ public class TyperFrame extends JFrame{
   	public void addPanel() throws IOException{
   		configurePanel();
   		this.add(mainPanel);
-  		//mainPanel.setOpaque(false);
 		t = new Timer(100, new MovementListener());
 		this.addMouseListener(new MouseMovementListener());
 		this.addKeyListener(new KeyBoardListener());
@@ -108,7 +107,7 @@ public class TyperFrame extends JFrame{
   		mainPanel.add(gameComp, BorderLayout.CENTER, SwingConstants.CENTER);
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
 
-  		updateColors(Styles.teal, Styles.coral);
+  		updateColors(Styles.navy, Styles.lightBlue);
   		//updateFont();
 
   		bottomBarComp.setPreferredSize(new Dimension(getFrameSize()[0], getFrameSize()[1]/8));
@@ -321,7 +320,6 @@ public class TyperFrame extends JFrame{
     		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
     		mainLayout.removeLayoutComponent(mainComp);
     		mainComp.setVisible(false);
-
     		Filler fill = new Filler();
     		mainPanel.add(fill);
 
@@ -339,6 +337,7 @@ public class TyperFrame extends JFrame{
     		mainComp.setVisible(false);
     		mainPanel.add(settingsComp, BorderLayout.CENTER);
     		settingsComp.setVisible(true);
+    		settingsComp.resetDeleteButt();
     		
     	}
     }

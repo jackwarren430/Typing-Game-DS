@@ -99,11 +99,6 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		right = width / 20;
 		c.insets = new Insets(top, left, bottom, right);
 
-		// c.gridx = 1;
-		// c.gridy = 1;
-		// c.gridwidth = 1;
-		// add(colorLabel, c);
-
 		c.gridx = 1;
 		c.gridy = 1;
 		c.gridwidth = 2;
@@ -133,10 +128,6 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		left = width / 20;
 		right = width / 20;
 		c.insets = new Insets(top, left, bottom, right);
-
-		// c.gridx = 1;
-		// c.gridy = 4;
-		// add(fontLabel, c);
 
 		c.gridx = 1;
 		c.gridy = 4;
@@ -168,14 +159,6 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		c.gridy = 6;
 		c.gridwidth = 2;
 		add(applyChangesButt, c);
-
-		top = height / 15;
-		c.insets = new Insets(top, left, bottom, right);
-		c.gridx = 1;
-		c.gridy = 7;
-		System.out.println(deleteCurrProfileButt.getText());
-		add(deleteCurrProfileButt, c);
-		//deleteCurrProfileButt.setVisible(true);
 
 	}
 
@@ -230,13 +213,21 @@ public class SettingsComponent extends JPanel implements ActionListener {
 				whichFontLabel.setText("Game Font: " + fonts.get(fonts.indexOf(currFont) - 1));
 			}
 		} else if (e.getSource() == initDeleteButt){
-			deleteCurrProfileButt = finDeleteButt;
-			//initDeleteButt.setVisible(false);
-
-			
-			//remove(initDeleteButt)
-			System.out.println("called");
+			remove(initDeleteButt);
+			c.insets = new Insets(height/15, 0, height / 40, 0);
+			c.gridx = 1;
+			c.gridy = 7;
+			add(finDeleteButt, c);
 		}
+	}
+
+	public void resetDeleteButt(){
+		remove(finDeleteButt);
+		remove(initDeleteButt);
+		c.insets = new Insets(height/15, 0, height / 40, 0);
+		c.gridx = 1;
+		c.gridy = 7;
+		add(initDeleteButt, c);
 	}
 
 	public void updateColors(Color backgroundColor, Color foregroundColor){
