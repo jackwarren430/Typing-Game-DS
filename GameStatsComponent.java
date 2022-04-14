@@ -176,40 +176,34 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			overrideButt.setFocusable(false);
 			overrideButt.setVisible(false);
 
-			c.insets = new Insets(0,60,0,60);
+			prepareGUI();
+
+		}
+
+		public void prepareGUI(){
+			c.insets = new Insets(0,0, 20 ,0);
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 0;
 			add(error, c);
 
+			c.insets = new Insets(0,0, height/8 ,0);
 			c.gridx = 0;
 			c.gridy = 1;
 			add(overrideButt, c);
 
 			c.gridx = 0;
 			c.gridy = 2;
-			add(fill1, c);
-			
-			c.gridx = 0;
-			c.gridy = 3;
 			add(enterName, c);
 
-			c.insets = new Insets(0,0,0,0);
 			c.gridx = 0;
-			c.gridy = 4;
-			add(fill2, c);
-
-			c.gridx = 0;
-			c.gridy = 5;
+			c.gridy = 3;
 			add(saveButt, c);
-
 		}
 
 		public void adjust(){
 			error.setPreferredSize(new Dimension(width/5,height/9));
-			fill1.setPreferredSize(new Dimension(100,80));
-			enterName.setPreferredSize(new Dimension(width/3,height/9));
-			fill2.setPreferredSize(new Dimension(100,80));
+			enterName.setPreferredSize(new Dimension(width/3,height/7));
 			saveButt.setPreferredSize(new Dimension(width/3,height/9));
 		}
 
@@ -282,25 +276,23 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 			loadButt.addActionListener(parent);
 			loadButt.setFocusable(false);
 
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.weighty = 0.5;
-			c.weightx = 1;
-
-			c.insets = new Insets(0, width/3, 0, width/3);
+			c.insets = new Insets(0, 0, height/8, 0);
 			c.gridx = 0;
 			c.gridy = 0;
 			add(filePan, c);
 
-			c.insets = new Insets(0, width/4, 0, width/4);
+			c.insets = new Insets(0, 0, 0, 0);
 			c.gridx = 0;
 			c.gridy = 2;
 			add(loadButt, c);
+
+			adjust();
 			
 		}
 
 		public void adjust(){
-			filePan.setPreferredSize(new Dimension(width/3,height/3));
-			loadButt.setPreferredSize(new Dimension(width/2,height/3));
+			filePan.setPreferredSize(new Dimension(width/3, 3*height/8));
+			loadButt.setPreferredSize(new Dimension(width/4, 1*height/8));
 		}
 
 		public String getName(){
