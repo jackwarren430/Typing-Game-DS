@@ -26,6 +26,7 @@ public class TyperFrame extends JFrame{
 	private InfoComponent infoComp;
 	private GameStatsComponent gameStatsComp;
 	private SettingsComponent settingsComp;
+	private GameOptComponent optComp;
 
 	//navigation vars
 	private Boolean gameStart;
@@ -102,7 +103,8 @@ public class TyperFrame extends JFrame{
   		menuBarComp = new TopBarComponent(this);
   		infoComp = new InfoComponent(this);
   		settingsComp = new SettingsComponent(this);
-  		
+			optComp = new GameOptComponent(this);
+
   		mainPanel.add(menuBarComp, BorderLayout.NORTH);
   		mainPanel.add(gameComp, BorderLayout.CENTER, SwingConstants.CENTER);
   		mainPanel.add(bottomBarComp, BorderLayout.SOUTH);
@@ -175,7 +177,7 @@ public class TyperFrame extends JFrame{
     		} else {
     			count++;
     		}
-    		
+
     	}
    }
 
@@ -253,7 +255,7 @@ public class TyperFrame extends JFrame{
 					} catch (IOException flipOff) {
 						flipOff.printStackTrace();
 					}
-					
+
 				}
 			}
 
@@ -320,8 +322,7 @@ public class TyperFrame extends JFrame{
     		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
     		mainLayout.removeLayoutComponent(mainComp);
     		mainComp.setVisible(false);
-    		Filler fill = new Filler();
-    		mainPanel.add(fill);
+    		mainPanel.add(optComp);
 
     	}
     }
@@ -338,7 +339,7 @@ public class TyperFrame extends JFrame{
     		mainPanel.add(settingsComp, BorderLayout.CENTER);
     		settingsComp.setVisible(true);
     		settingsComp.resetDeleteButt();
-    		
+
     	}
     }
 
@@ -429,7 +430,3 @@ public class TyperFrame extends JFrame{
     }
 
 }
-
-
-
-
