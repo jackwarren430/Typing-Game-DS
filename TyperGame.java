@@ -16,7 +16,7 @@ public class TyperGame {
 
 	public ArrayList<String> getErrors(ArrayList<String> finalInput){
 		ArrayList<String> missedWords = new ArrayList<String>();
-		for (int i = 0; i < gameSize; i++){
+		for (int i = 0; i < finalInput.size(); i++){
 			String inWord = finalInput.get(i).strip().toLowerCase();
 			String gWord = wordArr.get(i).strip().toLowerCase();
 			if (!gWord.equals(inWord)){

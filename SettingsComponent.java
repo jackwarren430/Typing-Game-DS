@@ -219,14 +219,14 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		} else if (e.getActionCommand().equals("Permanently Delete " + frame.getLoadedProfile().getName() + "?")){
 			
 			File profileFile = new File("SavedProfiles" + File.separator + frame.getLoadedProfile().getName() + ".txt");
-			System.out.println(profileFile.exists());
+			//System.out.println(profileFile.exists());
 			System.gc();
-			
-			if (profileFile.delete()) {
-            	System.out.println("File deleted successfully");
-	        } else {
-	            System.out.println("Failed to delete the file: " + "SavedProfiles" + File.separator + frame.getLoadedProfile().getName() + ".txt");
-	        }
+			profileFile.delete();
+			// if (profileFile.delete()) {
+   //          	System.out.println("File deleted successfully");
+	  //       } else {
+	  //           System.out.println("Failed to delete the file: " + "SavedProfiles" + File.separator + frame.getLoadedProfile().getName() + ".txt");
+	  //       }
 	        frame.setLoadedProfile(new Profile());
 			resetDeleteButt();
 		}

@@ -14,20 +14,21 @@ public class GameOptComponent extends JPanel implements ActionListener{
     private int width;
     private int height;
     private GridBagConstraints c;
+    private GridBagLayout mainLayout;
 
     private JLabel optLabel;
 
     private JLabel gameModeLabel;
-    private JButton nextModeButt;
-    private JButton prevModeButt;
+    private JButton toggleModeButt;
     private ArrayList<String> gameModes;
-    private int whichGameMode;
+    private String gameMode;
 
     private JLabel freqWordsLabel;
     private JButton toggleFreqWordsButt;
     private Boolean isFreqWords;
 
     private WordCountModeComponent countModeComp;
+    private TimedModeComponent timeModeComp;
     
 
     public GameOptComponent(TyperFrame frame){
@@ -39,7 +40,7 @@ public class GameOptComponent extends JPanel implements ActionListener{
         gameModes.add("count");
         gameModes.add("time");
 
-        optLabel = new JLabel("GameMode", JLabel.CENTER);
+        optLabel = new JLabel("Game Options", JLabel.CENTER);
 
         isFreqWords = false;
         freqWordsLabel = new JLabel("Frequently Missed Words");
@@ -47,23 +48,22 @@ public class GameOptComponent extends JPanel implements ActionListener{
         toggleFreqWordsButt.addActionListener(this);
         toggleFreqWordsButt.setFocusable(false);
 
-        gameModeLabel = new JLabel("Game Mode: count");
-        nextModeButt = new JButton(">");
-        prevModeButt = new JButton("<");
-        whichGameMode = 0;
-        nextModeButt.addActionListener(this);
-        nextModeButt.setFocusable(false);
-        prevModeButt.addActionListener(this);
-        prevModeButt.setFocusable(false);
+        gameModeLabel = new JLabel("Game Mode:");
+        toggleModeButt = new JButton("count");
+        gameMode = "count";
+        toggleModeButt.addActionListener(this);
+        toggleModeButt.setFocusable(false);
 
         countModeComp = new WordCountModeComponent(this);
+        timeModeComp = new TimedModeComponent(this);
 
         prepareGUI();
 
     }   
 
     public void prepareGUI(){
-        setLayout(new GridBagLayout());
+        mainLayout = new GridBagLayout();
+        setLayout(mainLayout);
         c = new GridBagConstraints();
 
         c.gridx = 0;
@@ -84,11 +84,8 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
         c.gridx = 0;
         c.gridy = 3;
-        add(prevModeButt, c);
-
-        c.gridx = 1;
-        c.gridy = 3;
-        add(nextModeButt, c);
+        c.gridwidth = 2;
+        add(toggleModeButt, c);
 
         c.gridx = 0;
         c.gridy = 4;
@@ -172,6 +169,77 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
     }
 
+    class TimedModeComponent extends JPanel {
+        private static final long serialVersionUID = 0000;
+
+        GameOptComponent parent;
+        private GridBagLayout layout;
+        private GridBagConstraints c;
+
+        private int time;
+        private JLabel timeLabel;
+        private JButton addTimeButt;
+        private JButton subTimeButt;
+
+        public TimedModeComponent(GameOptComponent parent){
+            this.parent = parent;
+
+            time = 20;
+            timeLabel = new JLabel("Game Time: " + time);
+            addTimeButt = new JButton("+");
+            addTimeButt.addActionListener(parent);
+            addTimeButt.setFocusable(false);
+            subTimeButt = new JButton("-");
+            subTimeButt.addActionListener(parent);
+            subTimeButt.setFocusable(false);
+
+            prepareGUI();
+        }
+
+        public void prepareGUI(){
+            layout = new GridBagLayout();
+            setLayout(layout);
+            c = new GridBagConstraints();
+
+            c.gridx = 0;
+            c.gridy = 0;
+            add(timeLabel, c);
+
+            c.gridx = 0;
+            c.gridy = 1;
+            add(subTimeButt, c);
+
+            c.gridx = 1;
+            c.gridy = 1;
+            add(addTimeButt, c);
+        }
+
+        public void addTime(){
+            if (time < 100){
+                time += 2;
+                timeLabel.setText("Game Time: " + time);
+                frame.setGameTimeLength(time);
+            }
+        }
+
+        public void subTime(){
+            if (time > 10){
+                time -= 2;
+                timeLabel.setText("Game Time: " + time);
+                frame.setGameTimeLength(time);
+            }
+        }
+
+        public JButton getAdd(){
+            return addTimeButt;
+        }
+
+        public JButton getSub(){
+            return subTimeButt;
+        }
+
+    }
+
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == toggleFreqWordsButt){
             isFreqWords = !isFreqWords;
@@ -180,8 +248,26 @@ public class GameOptComponent extends JPanel implements ActionListener{
             countModeComp.addWords();
         } else if (e.getSource() == countModeComp.getSub()){
             countModeComp.subWords();
+        } else if (e.getSource() == toggleModeButt){   
+            gameMode = gameMode.equals("time") ? "count" : "time";
+            toggleModeButt.setText(gameMode);
+            frame.setGameMode(gameMode);
+            remove(gameMode.equals("time") ? countModeComp : timeModeComp);
+            c.gridx = 0;
+            c.gridy = 4;
+            c.gridwidth = 2;
+            add(gameMode.equals("time") ? timeModeComp : countModeComp, c);
+            if (gameMode.equals("time")){
+                frame.setGameSize(24);
+            }
+        } else if (e.getSource() == timeModeComp.getAdd()){
+            timeModeComp.addTime();
+        } else if (e.getSource() == timeModeComp.getSub()){
+            timeModeComp.subTime();
         }
     }
+
+
 
 
 }

@@ -90,7 +90,7 @@ public class GameComponent extends JComponent {
 
 	public void wrapUpGame(ArrayList<String> finalInput, int finalTime){
 		ArrayList<String> missedWords = game.getErrors(finalInput);
-		GameStat recentGameStat = new GameStat(missedWords, finalTime, game.getTotalCharCount(), frame.getGameSize());
+		GameStat recentGameStat = new GameStat(missedWords, finalTime, game.getTotalCharCount(), finalInput.size());
 		frame.getLoadedProfile().add(recentGameStat, missedWords);
 	}
 

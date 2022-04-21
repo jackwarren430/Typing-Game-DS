@@ -65,7 +65,7 @@ public class TyperFrame extends JFrame{
 		tempIn = "";
 
 		gameSize = 24;
-		gameTimeLength = 30;
+		gameTimeLength = 20;
 		gameMode = "count";
 
 		loadedProfile = new Profile();
@@ -170,8 +170,6 @@ public class TyperFrame extends JFrame{
     			if (gameStart){
 	    			gameTimeCount++;
 	    			updateBottomBar();
-	    		} else {
-
 	    		}
 	    		count = 0;
     		} else {
@@ -231,22 +229,30 @@ public class TyperFrame extends JFrame{
 						tempIn += charIn;
 					}
 					//checking for errors
-					errorLocs = new ArrayList<int[]>();
-					for (int i = 0; i < gameInput.size(); i++){
-						String actualWord = gameComp.getGame().getWordArr().get(i).toLowerCase();
-						String inWord = gameInput.get(i).toLowerCase();
-						if (!inWord.equals(actualWord)){
-							int[] errorLoc = new int[3];
-							int lWidth = getFrameSize()[0]/8;
-							int lHeight = 9*getFrameSize()[1]/64;
-							errorLoc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(i%(gameSize/4)) + lWidth/4;
-    						errorLoc[1] = lHeight + ((int)((double)lHeight/1.5) * (i/(gameSize/4))) + 9*lHeight/10;
-							errorLoc[2] = actualWord.length();
-							errorLocs.add(errorLoc);
-						}
-					}
+					checkForErrors();
 				} else if (gameMode.equals("time")){
-
+					if (keyCode == 32 || keyCode == 10){
+						if (!tempIn.strip().equals("")){
+							gameInput.add(tempIn);
+							tempIn = "";
+							if (gameTimeCount >= gameTimeLength){
+								endGame();
+							}
+							if (gameInput.size() == gameSize){
+								
+							}
+						}
+					} else if (keyCode == 8){
+						if (tempIn.equals("") && !gameInput.isEmpty()){
+							tempIn = gameInput.remove(gameInput.size()-1);
+						} else if (!tempIn.equals("")){
+							tempIn = tempIn.substring(0, tempIn.length()-1);
+						}
+					} else {
+						tempIn += charIn;
+					}
+					//checking for errors
+					checkForErrors();
 				}
 			} else if (isHome){
 				if (e.getKeyCode() == 32){
@@ -261,6 +267,23 @@ public class TyperFrame extends JFrame{
 
 		}
 
+    }
+
+    public void checkForErrors(){
+    	errorLocs = new ArrayList<int[]>();
+		for (int i = 0; i < gameInput.size(); i++){
+			String actualWord = gameComp.getGame().getWordArr().get(i).toLowerCase();
+			String inWord = gameInput.get(i).toLowerCase();
+			if (!inWord.equals(actualWord)){
+				int[] errorLoc = new int[3];
+				int lWidth = getFrameSize()[0]/8;
+				int lHeight = 9*getFrameSize()[1]/64;
+				errorLoc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(i%(gameSize/4)) + lWidth/4;
+				errorLoc[1] = lHeight + ((int)((double)lHeight/1.5) * (i/(gameSize/4))) + 9*lHeight/10;
+				errorLoc[2] = actualWord.length();
+				errorLocs.add(errorLoc);
+			}
+		}
     }
 
     public int[] getOverlayLoc(int lWidth, int lHeight){
@@ -400,6 +423,14 @@ public class TyperFrame extends JFrame{
 
     public void setGameSize(int s){
     	gameSize = s;
+    }
+
+    public int getGameTimeLength(){
+    	return gameTimeLength;
+    }
+
+    public void setGameTimeLength(int i){
+    	gameTimeLength = i;
     }
 
     public String getGameMode(){
