@@ -404,6 +404,10 @@ public class GameStatsComponent extends JPanel implements ActionListener{
 		return whichGameStat;
 	}
 
+	public void setLoadedProfile(Profile p){
+		loadedProfile = p;
+	}
+
 	
 }
 

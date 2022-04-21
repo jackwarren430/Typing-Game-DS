@@ -115,8 +115,13 @@ public class GameOptComponent extends JPanel implements ActionListener{
             this.parent = parent;
             wordCount = frame.getGameSize();
             addWordCountButt = new JButton("+");
+            addWordCountButt.setFocusable(false);
+            addWordCountButt.addActionListener(parent);
             subWordCountButt = new JButton("-");
+            subWordCountButt.setFocusable(false);
+            subWordCountButt.addActionListener(parent);
             wordCountLabel = new JLabel("Word Count: " + wordCount);
+
 
             prepareGUI();
         }
@@ -136,15 +141,16 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
             c.gridx = 1;
             c.gridy = 1;
-            add(subWordCountButt, c);
+            add(addWordCountButt, c);
 
 
         }
 
         public void addWords(){
-            if (wordCount < 40){
+            if (wordCount < 32){
                 wordCount += 4;
                 wordCountLabel.setText("Word Count: " + wordCount);
+                frame.setGameSize(wordCount);
             }
         }
 
@@ -152,6 +158,7 @@ public class GameOptComponent extends JPanel implements ActionListener{
             if (wordCount > 12){
                 wordCount -= 4;
                 wordCountLabel.setText("Word Count: " + wordCount);
+                frame.setGameSize(wordCount);
             }
         }
 

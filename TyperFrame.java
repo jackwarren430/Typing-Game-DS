@@ -316,13 +316,14 @@ public class TyperFrame extends JFrame{
     public void goGameOptPage(){
     	if (!gameStart){
     		clearNavVars();
-    		isGameOptPage = true;
+    		isSettingsPage = true;
     		mainLayout.removeLayoutComponent(bottomBarComp);
     		bottomBarComp.setVisible(false);
     		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
-    		mainLayout.removeLayoutComponent(mainComp);
+    		mainLayout.removeLayoutComponent(mainLayout.getLayoutComponent(BorderLayout.CENTER));
     		mainComp.setVisible(false);
-    		mainPanel.add(optComp);
+    		mainPanel.add(optComp, BorderLayout.CENTER);
+    		optComp.setVisible(true);
 
     	}
     }
@@ -338,7 +339,7 @@ public class TyperFrame extends JFrame{
     		mainComp.setVisible(false);
     		mainPanel.add(settingsComp, BorderLayout.CENTER);
     		settingsComp.setVisible(true);
-    		settingsComp.resetDeleteButt();
+    		//settingsComp.resetDeleteButt();
 
     	}
     }
@@ -423,6 +424,7 @@ public class TyperFrame extends JFrame{
 
     public void setLoadedProfile(Profile p){
     	loadedProfile = p;
+    	gameStatsComp.setLoadedProfile(p);
     }
 
     public ArrayList<int[]> getErrorLocs(){

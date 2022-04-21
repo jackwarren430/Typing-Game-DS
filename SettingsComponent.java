@@ -5,6 +5,7 @@ import java.awt.geom.*;
 import java.lang.Math;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.*;
 
 public class SettingsComponent extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 0000;
@@ -68,12 +69,8 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		applyChangesButt = new JButton("Apply Changes");
 
 		initDeleteButt = new JButton("Delete Current Profile");
-		deleteCurrProfileButt = initDeleteButt;
 		initDeleteButt.addActionListener(this);
 		initDeleteButt.setFocusable(false);
-		finDeleteButt = new JButton("Are you sure?");
-		finDeleteButt.addActionListener(this);
-		finDeleteButt.setFocusable(false);
 
 		prepareGUI();
 	}
@@ -160,6 +157,11 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		c.gridwidth = 2;
 		add(applyChangesButt, c);
 
+		c.gridx = 1;
+		c.gridy = 7;
+		c.gridwidth = 2;
+		add(initDeleteButt, c);
+
 	}
 
 	public void setPrefSize(){
@@ -212,22 +214,26 @@ public class SettingsComponent extends JPanel implements ActionListener {
 			} else {
 				whichFontLabel.setText("Game Font: " + fonts.get(fonts.indexOf(currFont) - 1));
 			}
-		} else if (e.getSource() == initDeleteButt){
-			remove(initDeleteButt);
-			c.insets = new Insets(height/15, 0, height / 40, 0);
-			c.gridx = 1;
-			c.gridy = 7;
-			add(finDeleteButt, c);
+		} else if (e.getActionCommand().equals("Delete Current Profile")){
+			initDeleteButt.setText("Permanently Delete " + frame.getLoadedProfile().getName() + "?");
+		} else if (e.getActionCommand().equals("Permanently Delete " + frame.getLoadedProfile().getName() + "?")){
+			
+			File profileFile = new File("SavedProfiles" + File.separator + frame.getLoadedProfile().getName() + ".txt");
+			System.out.println(profileFile.exists());
+			System.gc();
+			
+			if (profileFile.delete()) {
+            	System.out.println("File deleted successfully");
+	        } else {
+	            System.out.println("Failed to delete the file: " + "SavedProfiles" + File.separator + frame.getLoadedProfile().getName() + ".txt");
+	        }
+	        frame.setLoadedProfile(new Profile());
+			resetDeleteButt();
 		}
 	}
 
 	public void resetDeleteButt(){
-		remove(finDeleteButt);
-		remove(initDeleteButt);
-		c.insets = new Insets(height/15, 0, height / 40, 0);
-		c.gridx = 1;
-		c.gridy = 7;
-		add(initDeleteButt, c);
+		initDeleteButt.setText("Delete Current Profile");
 	}
 
 	public void updateColors(Color backgroundColor, Color foregroundColor){
@@ -236,21 +242,18 @@ public class SettingsComponent extends JPanel implements ActionListener {
 		settingsLabel.setForeground(foregroundColor);
 		applyChangesButt.setBackground(foregroundColor);
 		applyChangesButt.setForeground(backgroundColor);
-		//colors
-		//colorLabel.setForeground(foregroundColor);
 		whichColorLabel.setForeground(foregroundColor);
 		nextColorButt.setBackground(foregroundColor);
 		nextColorButt.setForeground(backgroundColor);
 		prevColorButt.setBackground(foregroundColor);
 		prevColorButt.setForeground(backgroundColor);
-		//fonts
-		//fontLabel.setForeground(foregroundColor);
 		whichFontLabel.setForeground(foregroundColor);
 		nextFontButt.setBackground(foregroundColor);
 		nextFontButt.setForeground(backgroundColor);
 		prevFontButt.setBackground(foregroundColor);
 		prevFontButt.setForeground(backgroundColor);
-
+		initDeleteButt.setForeground(backgroundColor);
+		initDeleteButt.setBackground(foregroundColor);
 	}
 
 }

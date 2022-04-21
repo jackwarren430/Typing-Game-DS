@@ -69,6 +69,9 @@ public class BottomBarComponent extends JPanel implements ActionListener {
 		width = frame.getFrameSize()[0];
 		height = frame.getFrameSize()[1] - 25;
 		
+		if(frame.getIsGameOptPage()){
+			add(timeLabel);
+		}
 
 		if (frame.getIsHome()){
 			add(timeLabel);
