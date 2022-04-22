@@ -49,7 +49,24 @@ public class GameComponent extends JComponent {
 	private void paintWords(Graphics2D pen){
 		pen.setFont(stringFont);
 		pen.setStroke(new BasicStroke(2));
-		ArrayList<String> wordArr = game.getWordArr();
+		ArrayList<String> wordArr = new ArrayList<String>();
+		if (frame.getGameMode().equals("count")){
+			wordArr = game.getWordArr();
+		} else {
+			ArrayList<String> temp = game.getWordArr();
+			wordArr = new ArrayList<String>();
+			int toStart = frame.getGameSize() * (frame.getGameInput().size() / frame.getGameSize());
+			for (int i = toStart; i < toStart + frame.getGameSize(); i++){
+				wordArr.add(game.getWordArr().get(i));
+			}
+			if (wordArr.size() != frame.getGameSize()){
+				System.out.println("logic is wrong here");
+			} 
+			// System.out.println(toStart);
+			// System.out.println("input size: " + frame.getGameInput().size());
+			// System.out.println(game.getWordArr().size());
+		}
+		
 		int wordsPerRow = frame.getGameSize() / 4;
 		for (int i = 0; i < 4; i++){
 			for (int j = 0; j < wordsPerRow; j++){

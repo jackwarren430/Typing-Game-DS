@@ -44,6 +44,7 @@ public class TyperFrame extends JFrame{
 	private String gameMode; // "count" -> end at gameSize; "time" -> end at GameTimeLength
 	private String tempIn;
 	private ArrayList<int[]> errorLocs;
+	private int timeModePage;
 
 	//storage/stats
 	private Profile loadedProfile;
@@ -64,6 +65,7 @@ public class TyperFrame extends JFrame{
 		isSettingsPage = false;
 		tempIn = "";
 
+		timeModePage = 0;
 		gameSize = 24;
 		gameTimeLength = 20;
 		gameMode = "count";
@@ -131,6 +133,7 @@ public class TyperFrame extends JFrame{
   	}
 
   	public void startGame(){
+  		timeModePage = 0;
   		gameStart = true;
   		gameTimeCount = 0;
   		gameInput = new ArrayList<String>();
@@ -239,7 +242,13 @@ public class TyperFrame extends JFrame{
 								endGame();
 							}
 							if (gameInput.size() == gameSize){
-								
+								try {
+									gameComp.getGame().initWordArr();
+								} catch (IOException f){
+									f.printStackTrace();
+								}
+								//System.out.println("gamesize == input");
+								timeModePage++;
 							}
 						}
 					} else if (keyCode == 8){
@@ -271,7 +280,14 @@ public class TyperFrame extends JFrame{
 
     public void checkForErrors(){
     	errorLocs = new ArrayList<int[]>();
-		for (int i = 0; i < gameInput.size(); i++){
+    	int toStart = 0;
+    	int toEnd = gameInput.size();
+    	if (gameMode.equals("time")){
+    		toStart = gameSize * (gameInput.size() / gameSize);
+    		toEnd = gameInput.size() - toStart;
+    	}
+    	
+		for (int i = toStart; i < toEnd; i++){
 			String actualWord = gameComp.getGame().getWordArr().get(i).toLowerCase();
 			String inWord = gameInput.get(i).toLowerCase();
 			if (!inWord.equals(actualWord)){
@@ -289,7 +305,7 @@ public class TyperFrame extends JFrame{
     public int[] getOverlayLoc(int lWidth, int lHeight){
     	int[] loc = new int[2];
     	loc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(gameInput.size()%(gameSize/4)) + (int)((double)tempIn.length()*10.5) + lWidth/4;
-    	loc[1] = lHeight + ((int)((double)lHeight/1.5) * (gameInput.size()/(gameSize/4))) + lHeight/2;
+    	loc[1] = lHeight + ((int)((double)lHeight/1.5) * (gameInput.size()/(gameSize/4) - (4 * timeModePage))) + lHeight/2;
     	return loc;
     }
 
@@ -460,6 +476,10 @@ public class TyperFrame extends JFrame{
 
     public ArrayList<int[]> getErrorLocs(){
     	return errorLocs;
+    }
+
+    public ArrayList<String> getGameInput(){
+    	return gameInput;
     }
 
 }

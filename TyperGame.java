@@ -11,6 +11,7 @@ public class TyperGame {
 	public TyperGame(int gameSize) throws IOException{
 		this.gameSize = gameSize;
 		totalCharCount = 0;
+		wordArr = new ArrayList<String>();
 		initWordArr();
 	}
 
@@ -47,10 +48,10 @@ public class TyperGame {
 		}
 		
 		ArrayList<String> hold = new ArrayList<String>();
-		wordArr = new ArrayList<String>();
 		while (scan.hasNextLine()){
 			hold.add(scan.nextLine().strip());
 		}
+		scan.close();
 		for (int i = 0; i < gameSize; i++){
 			int randInt =  (int)((Math.random() * hold.size()));
 			String word = hold.get(randInt);
@@ -58,4 +59,8 @@ public class TyperGame {
 			totalCharCount += word.length();
 		}
 	}
+
+
+
+
 }
