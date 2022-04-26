@@ -33,8 +33,8 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
     public GameOptComponent(TyperFrame frame){
         this.frame = frame;
-        width = 7*frame.getFrameSize()[0]/8;
-        height = frame.getFrameSize()[1];
+        width = frame.getFrameSize()[0];
+        height = 7*frame.getFrameSize()[1]/8;
 
         gameModes = new ArrayList<String>();
         gameModes.add("count");
@@ -66,26 +66,44 @@ public class GameOptComponent extends JPanel implements ActionListener{
         setLayout(mainLayout);
         c = new GridBagConstraints();
 
+        Insets i = new Insets(50,100,50,0);
+        c.insets = i;
+
         c.gridx = 0;
         c.gridy = 0;
         add(optLabel, c);
+
+        i = new Insets(50,0,50,50);
+        c.insets = i;
 
         c.gridx = 0;
         c.gridy = 1;
         add(freqWordsLabel, c);
 
+        i = new Insets(50,50,50,0);
+        c.insets = i;
+
         c.gridx = 2;
         c.gridy = 1;
         add(toggleFreqWordsButt, c);
+
+        i = new Insets(50,0,50,0);
+        c.insets = i;
 
         c.gridx = 0;
         c.gridy = 2;
         add(gameModeLabel, c);
 
+        i = new Insets(50,0,30,0);
+        c.insets = i;
+
         c.gridx = 0;
         c.gridy = 3;
         c.gridwidth = 2;
         add(toggleModeButt, c);
+
+        i = new Insets(50,0,70,0);
+        c.insets = i;
 
         c.gridx = 0;
         c.gridy = 4;
@@ -128,6 +146,8 @@ public class GameOptComponent extends JPanel implements ActionListener{
             setLayout(layout);
             c = new GridBagConstraints();
 
+            Insets i = new Insets(0,0,0,0);
+            c.insets = i;
             c.gridx = 0;
             c.gridy = 0;
             add(wordCountLabel, c);
@@ -165,6 +185,16 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
         public JButton getSub(){
             return subWordCountButt;
+        }
+
+        public void updateColors(Color backgroundColor, Color foregroundColor){
+            setBackground(backgroundColor);
+            setForeground(foregroundColor);
+            wordCountLabel.setForeground(foregroundColor);
+            subWordCountButt.setBackground(foregroundColor);
+            subWordCountButt.setForeground(backgroundColor);
+            addWordCountButt.setForeground(backgroundColor);
+            addWordCountButt.setBackground(foregroundColor);
         }
 
     }
@@ -238,6 +268,25 @@ public class GameOptComponent extends JPanel implements ActionListener{
             return subTimeButt;
         }
 
+        public void updateColors(Color backgroundColor, Color foregroundColor){
+            setBackground(backgroundColor);
+            setForeground(foregroundColor);
+            timeLabel.setForeground(foregroundColor);
+            subTimeButt.setBackground(foregroundColor);
+            subTimeButt.setForeground(backgroundColor);
+            addTimeButt.setForeground(backgroundColor);
+            addTimeButt.setBackground(foregroundColor);
+        }
+    }
+
+    public void setPrefSize(){
+        width = frame.getFrameSize()[0];
+        height = 7*frame.getFrameSize()[1]/8;
+
+        optLabel.setFont(Styles.buttonFont2);
+        
+        toggleFreqWordsButt.setPreferredSize(new Dimension(width/3, height/6));
+       
     }
 
     public void actionPerformed(ActionEvent e){
@@ -267,7 +316,20 @@ public class GameOptComponent extends JPanel implements ActionListener{
         }
     }
 
+    public void updateColors(Color backgroundColor, Color foregroundColor){
+        setBackground(backgroundColor);
+        setForeground(foregroundColor);
+        optLabel.setForeground(foregroundColor);
+        freqWordsLabel.setForeground(foregroundColor);
+        toggleFreqWordsButt.setForeground(backgroundColor);
+        toggleFreqWordsButt.setBackground(foregroundColor);
+        toggleModeButt.setForeground(backgroundColor);
+        toggleModeButt.setBackground(foregroundColor);
+        gameModeLabel.setForeground(foregroundColor);
 
+        countModeComp.updateColors(backgroundColor, foregroundColor);
+        timeModeComp.updateColors(backgroundColor, foregroundColor);
+    }
 
 
 }

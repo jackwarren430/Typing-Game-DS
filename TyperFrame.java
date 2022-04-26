@@ -105,7 +105,7 @@ public class TyperFrame extends JFrame{
   		menuBarComp = new TopBarComponent(this);
   		infoComp = new InfoComponent(this);
   		settingsComp = new SettingsComponent(this);
-			optComp = new GameOptComponent(this);
+		optComp = new GameOptComponent(this);
 
   		mainPanel.add(menuBarComp, BorderLayout.NORTH);
   		mainPanel.add(gameComp, BorderLayout.CENTER, SwingConstants.CENTER);
@@ -126,6 +126,7 @@ public class TyperFrame extends JFrame{
   		gameStatsComp.updateColors(backgroundColor, foregroundColor);
   		menuBarComp.updateColors(backgroundColor, foregroundColor);
   		settingsComp.updateColors(backgroundColor, foregroundColor);
+  		optComp.updateColors(backgroundColor, foregroundColor);
   	}
 
   	public void updateFont(Font f){
@@ -168,6 +169,8 @@ public class TyperFrame extends JFrame{
     			gameStatsComp.setPrefSize();
     		} else if (isSettingsPage){
     			settingsComp.setPrefSize();
+    		} else if (isGameOptPage){
+    			optComp.setPrefSize();
     		}
     		if (count == 10){
     			if (gameStart){
@@ -355,7 +358,7 @@ public class TyperFrame extends JFrame{
     public void goGameOptPage(){
     	if (!gameStart){
     		clearNavVars();
-    		isSettingsPage = true;
+    		isGameOptPage = true;
     		mainLayout.removeLayoutComponent(bottomBarComp);
     		bottomBarComp.setVisible(false);
     		Component mainComp = mainLayout.getLayoutComponent(BorderLayout.CENTER);
