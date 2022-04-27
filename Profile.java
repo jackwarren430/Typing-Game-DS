@@ -123,6 +123,10 @@ public class Profile {
 		return GameStat.arrListToString(freqMissedWords);
 	}
 
+	public ArrayList<String> getFreqWordsArr(){
+		return freqMissedWords;
+	}
+
 	public String getName(){
 		return playerName;
 	}

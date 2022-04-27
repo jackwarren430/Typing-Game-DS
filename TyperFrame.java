@@ -45,6 +45,7 @@ public class TyperFrame extends JFrame{
 	private String tempIn;
 	private ArrayList<int[]> errorLocs;
 	private int timeModePage;
+	private Boolean freqMode;
 
 	//storage/stats
 	private Profile loadedProfile;
@@ -63,6 +64,7 @@ public class TyperFrame extends JFrame{
 		isStatsPage = false;
 		isGameOptPage = false;
 		isSettingsPage = false;
+		freqMode = false;
 		tempIn = "";
 
 		timeModePage = 0;
@@ -366,7 +368,7 @@ public class TyperFrame extends JFrame{
     		mainComp.setVisible(false);
     		mainPanel.add(optComp, BorderLayout.CENTER);
     		optComp.setVisible(true);
-
+    		optComp.prepareGUI();
     	}
     }
 
@@ -381,8 +383,6 @@ public class TyperFrame extends JFrame{
     		mainComp.setVisible(false);
     		mainPanel.add(settingsComp, BorderLayout.CENTER);
     		settingsComp.setVisible(true);
-    		//settingsComp.resetDeleteButt();
-
     	}
     }
 
@@ -446,6 +446,10 @@ public class TyperFrame extends JFrame{
 
     public int getGameTimeLength(){
     	return gameTimeLength;
+    }
+
+    public void toggleFreqMode(){
+    	freqMode = !freqMode;
     }
 
     public void setGameTimeLength(int i){

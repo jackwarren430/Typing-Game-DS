@@ -1,0 +1,60 @@
+ProfileName: jack
+#Games: 7
+AvgWPM: 66
+FreqMissedWords: party, won't, measure, record, nose, talk, cross, surface, period, forward, 
+%
+tag: 0
+Game Size: 12
+Total Errors: 1
+Missed Words: party, 
+Final Time(s): 12
+Words Per Minute (WPM): 60
+Characters Per Second (CPS): 5.25
+%
+tag: 1
+Game Size: 12
+Total Errors: 0
+Missed Words: 
+Final Time(s): 13
+Words Per Minute (WPM): 55
+Characters Per Second (CPS): 5.23
+%
+tag: 2
+Game Size: 12
+Total Errors: 0
+Missed Words: 
+Final Time(s): 8
+Words Per Minute (WPM): 90
+Characters Per Second (CPS): 5.75
+%
+tag: 3
+Game Size: 12
+Total Errors: 1
+Missed Words: won't, 
+Final Time(s): 12
+Words Per Minute (WPM): 60
+Characters Per Second (CPS): 5.0
+%
+tag: 4
+Game Size: 12
+Total Errors: 5
+Missed Words: measure, record, nose, talk, cross, 
+Final Time(s): 10
+Words Per Minute (WPM): 72
+Characters Per Second (CPS): 6.1
+%
+tag: 5
+Game Size: 12
+Total Errors: 1
+Missed Words: surface, 
+Final Time(s): 11
+Words Per Minute (WPM): 65
+Characters Per Second (CPS): 5.09
+%
+tag: 6
+Game Size: 12
+Total Errors: 2
+Missed Words: period, forward, 
+Final Time(s): 12
+Words Per Minute (WPM): 60
+Characters Per Second (CPS): 4.83

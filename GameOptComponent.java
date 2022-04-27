@@ -66,35 +66,35 @@ public class GameOptComponent extends JPanel implements ActionListener{
         setLayout(mainLayout);
         c = new GridBagConstraints();
 
-        Insets i = new Insets(50,100,50,0);
+        Insets i = new Insets(height/12,0,height/10,0);
         c.insets = i;
 
         c.gridx = 0;
         c.gridy = 0;
         add(optLabel, c);
 
-        i = new Insets(50,0,50,50);
+        i = new Insets(0,0,height/10,0);
         c.insets = i;
 
         c.gridx = 0;
         c.gridy = 1;
         add(freqWordsLabel, c);
 
-        i = new Insets(50,50,50,0);
+        i = new Insets(0,width/15,height/10,0);
         c.insets = i;
 
         c.gridx = 2;
         c.gridy = 1;
         add(toggleFreqWordsButt, c);
 
-        i = new Insets(50,0,50,0);
+        i = new Insets(0,0,height/10,0);
         c.insets = i;
 
         c.gridx = 0;
         c.gridy = 2;
         add(gameModeLabel, c);
 
-        i = new Insets(50,0,30,0);
+        i = new Insets(0,0,height/10,0);
         c.insets = i;
 
         c.gridx = 0;
@@ -102,7 +102,7 @@ public class GameOptComponent extends JPanel implements ActionListener{
         c.gridwidth = 2;
         add(toggleModeButt, c);
 
-        i = new Insets(50,0,70,0);
+        i = new Insets(0,0,height/9,0);
         c.insets = i;
 
         c.gridx = 0;
@@ -285,14 +285,18 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
         optLabel.setFont(Styles.buttonFont2);
         
-        toggleFreqWordsButt.setPreferredSize(new Dimension(width/3, height/6));
+        toggleFreqWordsButt.setPreferredSize(new Dimension(width/6, height/12));
        
     }
 
     public void actionPerformed(ActionEvent e){
+
         if (e.getSource() == toggleFreqWordsButt){
-            isFreqWords = !isFreqWords;
-            toggleFreqWordsButt.setText(isFreqWords ? "on" : "off");
+            if (frame.getLoadedProfile().getFreqWordsArr().size() > 8){
+                frame.toggleFreqMode();
+                isFreqWords = !isFreqWords;
+                toggleFreqWordsButt.setText(isFreqWords ? "on" : "off");
+            }
         } else if (e.getSource() == countModeComp.getAdd()){
             countModeComp.addWords();
         } else if (e.getSource() == countModeComp.getSub()){
