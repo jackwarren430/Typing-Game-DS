@@ -141,6 +141,18 @@ public class TyperFrame extends JFrame{
   		gameTimeCount = 0;
   		gameInput = new ArrayList<String>();
   		errorLocs = new ArrayList<int[]>();
+  		// if (gameMode.equals("time")){
+  		// 	try {
+				// if (freqMode){
+				// 	gameComp.getGame().initWordArr("1");
+				// } else {
+				// 	gameComp.getGame().initWordArr("");
+				// }
+  		// 	} catch (IOException e){
+  		// 		e.printStackTrace();
+  		// 	}
+  			
+  		// }
   	}
 
   	public void endGame(){
@@ -246,9 +258,15 @@ public class TyperFrame extends JFrame{
 							if (gameTimeCount >= gameTimeLength){
 								endGame();
 							}
-							if (gameInput.size() == gameSize){
+							if (gameInput.size() == gameSize * (timeModePage + 1)){
 								try {
-									gameComp.getGame().initWordArr();
+									//System.out.println("ADDING TO WORDARR");
+									if (freqMode){
+										gameComp.getGame().initWordArr("1");
+									} else {
+										gameComp.getGame().initWordArr("");
+									}
+									
 								} catch (IOException f){
 									f.printStackTrace();
 								}
@@ -289,7 +307,7 @@ public class TyperFrame extends JFrame{
     	int toEnd = gameInput.size();
     	if (gameMode.equals("time")){
     		toStart = gameSize * (gameInput.size() / gameSize);
-    		toEnd = gameInput.size() - toStart;
+    		toEnd = (gameInput.size() - toStart) + (gameSize*timeModePage);
     	}
     	
 		for (int i = toStart; i < toEnd; i++){
@@ -300,7 +318,7 @@ public class TyperFrame extends JFrame{
 				int lWidth = getFrameSize()[0]/8;
 				int lHeight = 9*getFrameSize()[1]/64;
 				errorLoc[0] = lWidth + ((lWidth*6)/(gameSize/4))*(i%(gameSize/4)) + lWidth/4;
-				errorLoc[1] = lHeight + ((int)((double)lHeight/1.5) * (i/(gameSize/4))) + 9*lHeight/10;
+				errorLoc[1] = lHeight + ((int)((double)lHeight/1.5) * (i/(gameSize/4) - (4 * timeModePage))) + 9*lHeight/10;
 				errorLoc[2] = actualWord.length();
 				errorLocs.add(errorLoc);
 			}
@@ -448,10 +466,6 @@ public class TyperFrame extends JFrame{
     	return gameTimeLength;
     }
 
-    public void toggleFreqMode(){
-    	freqMode = !freqMode;
-    }
-
     public void setGameTimeLength(int i){
     	gameTimeLength = i;
     }
@@ -476,6 +490,10 @@ public class TyperFrame extends JFrame{
     	return loadedProfile;
     }
 
+    public void toggleFreqMode(){
+    	freqMode = !freqMode;
+    }
+
     public void setLoadedProfile(Profile p){
     	loadedProfile = p;
     	gameStatsComp.setLoadedProfile(p);
@@ -487,6 +505,10 @@ public class TyperFrame extends JFrame{
 
     public ArrayList<String> getGameInput(){
     	return gameInput;
+    }
+
+    public GameComponent getGameComp(){
+    	return gameComp;
     }
 
 }

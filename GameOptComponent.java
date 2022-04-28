@@ -43,12 +43,12 @@ public class GameOptComponent extends JPanel implements ActionListener{
         optLabel = new JLabel("Game Options", JLabel.CENTER);
 
         isFreqWords = false;
-        freqWordsLabel = new JLabel("Frequently Missed Words");
+        freqWordsLabel = new JLabel("Frequently Missed Words:", JLabel.CENTER);
         toggleFreqWordsButt = new JButton("off");
         toggleFreqWordsButt.addActionListener(this);
         toggleFreqWordsButt.setFocusable(false);
 
-        gameModeLabel = new JLabel("Game Mode:");
+        gameModeLabel = new JLabel("Game Mode:", JLabel.CENTER);
         toggleModeButt = new JButton("count");
         gameMode = "count";
         toggleModeButt.addActionListener(this);
@@ -56,6 +56,10 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
         countModeComp = new WordCountModeComponent(this);
         timeModeComp = new TimedModeComponent(this);
+
+        optLabel.setFont(Styles.buttonFont2);
+        freqWordsLabel.setFont(Styles.logiFont);
+        gameModeLabel.setFont(Styles.logiFont);
 
         prepareGUI();
 
@@ -66,9 +70,13 @@ public class GameOptComponent extends JPanel implements ActionListener{
         setLayout(mainLayout);
         c = new GridBagConstraints();
 
+        remove(timeModeComp);
+        remove(countModeComp);
+        c.fill = GridBagConstraints.HORIZONTAL;
+
         Insets i = new Insets(height/12,0,height/10,0);
         c.insets = i;
-
+        c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 0;
         add(optLabel, c);
@@ -76,11 +84,12 @@ public class GameOptComponent extends JPanel implements ActionListener{
         i = new Insets(0,0,height/10,0);
         c.insets = i;
 
+        c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 1;
         add(freqWordsLabel, c);
 
-        i = new Insets(0,width/15,height/10,0);
+        i = new Insets(0,width/32,height/10,0);
         c.insets = i;
 
         c.gridx = 2;
@@ -89,7 +98,7 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
         i = new Insets(0,0,height/10,0);
         c.insets = i;
-
+        c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 2;
         add(gameModeLabel, c);
@@ -97,19 +106,26 @@ public class GameOptComponent extends JPanel implements ActionListener{
         i = new Insets(0,0,height/10,0);
         c.insets = i;
 
-        c.gridx = 0;
-        c.gridy = 3;
+        c.gridx = 1;
+        c.gridy = 2;
         c.gridwidth = 2;
         add(toggleModeButt, c);
 
         i = new Insets(0,0,height/9,0);
         c.insets = i;
-
+        c.gridwidth = 2;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 3;
         add(countModeComp, c);
 
 
+    }
+
+    public void setPrefSize(){
+        width = frame.getFrameSize()[0];
+        height = 7*frame.getFrameSize()[1]/8;
+        toggleFreqWordsButt.setPreferredSize(new Dimension(width/16, height/20));
+        toggleModeButt.setPreferredSize(new Dimension(width/16, height/20));
     }
 
     class WordCountModeComponent extends JPanel {
@@ -136,7 +152,7 @@ public class GameOptComponent extends JPanel implements ActionListener{
             subWordCountButt.setFocusable(false);
             subWordCountButt.addActionListener(parent);
             wordCountLabel = new JLabel("Word Count: " + wordCount);
-
+            wordCountLabel.setFont(Styles.logiFont);
 
             prepareGUI();
         }
@@ -146,11 +162,14 @@ public class GameOptComponent extends JPanel implements ActionListener{
             setLayout(layout);
             c = new GridBagConstraints();
 
-            Insets i = new Insets(0,0,0,0);
+            Insets i = new Insets(0,0,height/20,0);
             c.insets = i;
             c.gridx = 0;
             c.gridy = 0;
             add(wordCountLabel, c);
+
+            i = new Insets(0,0,0,0);
+            c.insets = i;
 
             c.gridx = 0;
             c.gridy = 1;
@@ -162,6 +181,8 @@ public class GameOptComponent extends JPanel implements ActionListener{
 
 
         }
+
+
 
         public void addWords(){
             if (wordCount < 32){
@@ -222,7 +243,7 @@ public class GameOptComponent extends JPanel implements ActionListener{
             subTimeButt = new JButton("-");
             subTimeButt.addActionListener(parent);
             subTimeButt.setFocusable(false);
-
+            timeLabel.setFont(Styles.logiFont);
             prepareGUI();
         }
 
@@ -231,9 +252,15 @@ public class GameOptComponent extends JPanel implements ActionListener{
             setLayout(layout);
             c = new GridBagConstraints();
 
+            Insets i = new Insets(0,0,height/20,0);
+            c.insets = i;
+
             c.gridx = 0;
             c.gridy = 0;
             add(timeLabel, c);
+
+            i = new Insets(0,0,0,0);
+            c.insets = i;
 
             c.gridx = 0;
             c.gridy = 1;
@@ -279,22 +306,14 @@ public class GameOptComponent extends JPanel implements ActionListener{
         }
     }
 
-    public void setPrefSize(){
-        width = frame.getFrameSize()[0];
-        height = 7*frame.getFrameSize()[1]/8;
-
-        optLabel.setFont(Styles.buttonFont2);
-        
-        toggleFreqWordsButt.setPreferredSize(new Dimension(width/6, height/12));
-       
-    }
+    
 
     public void actionPerformed(ActionEvent e){
-
         if (e.getSource() == toggleFreqWordsButt){
             if (frame.getLoadedProfile().getFreqWordsArr().size() > 8){
-                frame.toggleFreqMode();
                 isFreqWords = !isFreqWords;
+                frame.toggleFreqMode();
+                frame.getGameComp().setFreqMode(isFreqWords);
                 toggleFreqWordsButt.setText(isFreqWords ? "on" : "off");
             }
         } else if (e.getSource() == countModeComp.getAdd()){

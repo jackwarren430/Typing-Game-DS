@@ -17,16 +17,18 @@ public class GameComponent extends JComponent {
 	private Polygon startButton;
 	private Font stringFont;
 
+	private Boolean isFreqMode;
+
 	private ArrayList<int[]> errorLocs;
 
 	public GameComponent(TyperFrame frame) throws IOException{
-		//frame = (TyperFrame)this.getTopLevelAncestor();
 		this.frame = frame;
 		width = frame.getFrameSize()[0];
 		height = 6*frame.getFrameSize()[1]/8;
 		game = null;
 		stringFont = Styles.roman;
 		errorLocs = new ArrayList<int[]>();
+		isFreqMode = false;
 	}
 
 	public void paintComponent(Graphics g){
@@ -62,9 +64,6 @@ public class GameComponent extends JComponent {
 			if (wordArr.size() != frame.getGameSize()){
 				System.out.println("logic is wrong here");
 			} 
-			// System.out.println(toStart);
-			// System.out.println("input size: " + frame.getGameInput().size());
-			// System.out.println(game.getWordArr().size());
 		}
 		
 		int wordsPerRow = frame.getGameSize() / 4;
@@ -114,14 +113,21 @@ public class GameComponent extends JComponent {
 	public void checkForStartClick(int x, int y) throws IOException{
 		y = 6*y/8;
 		if (startButton.contains(x, y)){
-			game = new TyperGame(frame.getGameSize());
-			frame.startGame();
+			INITTYPINGWIZARD();
 		}
 	}
 
 	public void INITTYPINGWIZARD() throws IOException{
-		game = new TyperGame(frame.getGameSize());
+		if (isFreqMode){
+			game = new TyperGame(frame.getGameSize(), frame.getLoadedProfile());
+		} else {
+			game = new TyperGame(frame.getGameSize());
+		}
 		frame.startGame();
+	}
+
+	public void setFreqMode(Boolean b){
+		isFreqMode = b;
 	}
 
 	public void changeFont(Font f){

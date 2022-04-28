@@ -1,0 +1,20 @@
+ProfileName: octavius
+#Games: 2
+AvgWPM: 65
+FreqMissedWords: true, cook, expect, 
+%
+tag: 0
+Game Size: 24
+Total Errors: 1
+Missed Words: true, 
+Final Time(s): 18
+Words Per Minute (WPM): 80
+Characters Per Second (CPS): 5.94
+%
+tag: 1
+Game Size: 24
+Total Errors: 2
+Missed Words: cook, expect, 
+Final Time(s): 28
+Words Per Minute (WPM): 51
+Characters Per Second (CPS): 4.71
